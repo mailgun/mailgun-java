@@ -15,8 +15,6 @@
 [![License](http://img.shields.io/:license-apache-brightgreen.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 [//]: # (* [Issues][sdk-issues])
-ª
-[//]: # (* [SDK Blog][blog])
 
 [//]: # (* [Getting Help]&#40;#getting-help&#41;)
 
