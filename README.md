@@ -10,9 +10,10 @@
 
 # Mailgun SDK for Java
 
-[![Build Status](https://app.travis-ci.com/github/mailgun/mailgun-java.svg?master)](https://app.travis-ci.com/github/mailgun/mailgun-java)
+[![Build Status](https://app.travis-ci.com/mailgun/mailgun-java.svg?branch=main)](https://app.travis-ci.com/github/mailgun/mailgun-java)
 [![maven_central](https://maven-badges.herokuapp.com/maven-central/mailgun/mailgun-java/badge.svg)](https://maven-badges.herokuapp.com/maven-central/mailgun/mailgun-java)
 [![License](http://img.shields.io/:license-apache-brightgreen.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
+
 
 [//]: # (* [Issues][sdk-issues])
 
