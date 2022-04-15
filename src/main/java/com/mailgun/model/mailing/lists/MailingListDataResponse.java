@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * <p>
  * Mailing list response.
- * </p
+ * </p>
  *
  * @see <a href="https://documentation.mailgun.com/en/latest/api-mailinglists.html#mailing-lists">Mailing Lists</a>
  */

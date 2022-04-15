@@ -11,7 +11,7 @@
 # Mailgun SDK for Java
 
 [![Build Status](https://app.travis-ci.com/mailgun/mailgun-java.svg?branch=main)](https://app.travis-ci.com/github/mailgun/mailgun-java)
-[![maven_central](https://maven-badges.herokuapp.com/maven-central/mailgun/mailgun-java/badge.svg)](https://maven-badges.herokuapp.com/maven-central/mailgun/mailgun-java)
+[![maven central](https://img.shields.io/maven-central/v/com.mailgun/mailgun-java.svg?label=maven%20central)](https://search.maven.org/search?q=g:%22com.mailgun%22%20AND%20a:%22mailgun-java%22)
 [![License](http://img.shields.io/:license-apache-brightgreen.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 
@@ -62,9 +62,11 @@ To run the SDK, you will need **Java 1.8+**.
 
 ### Install the SDK
 
-The recommended way to use the AWS SDK for Java in your project is to consume it from Maven.
+The recommended way to use the AWS SDK for Java in your project: 
 
-[//]: # (TODO add a link to Maven.)
+[Choose version you need](https://search.maven.org/search?q=g:%22com.mailgun%22%20AND%20a:%22mailgun-java%22)
+
+Maven.
 
 Add the following to your `pom.xml`:
 
@@ -79,6 +81,13 @@ Add the following to your `pom.xml`:
   ...
 </dependencies>
 ```
+
+Gradle Groovy DSL .
+
+```xml
+implementation 'com.mailgun:mailgun-java:1.0.0'
+```
+
 
 
 ### Authentication
@@ -365,7 +374,7 @@ More information:
 
 ### Messages
 
-[MailgunMessagesApi](https://github.com/mailgun/mailgun-java/blob/master/src/main/java/com/mailgun/api/v3/MailgunMessagesApi.java)
+[MailgunMessagesApi](https://github.com/mailgun/mailgun-java/blob/main/src/main/java/com/mailgun/api/v3/MailgunMessagesApi.java)
 allows you to send emails.
 
 [Mailgun Messages documentation](https://documentation.mailgun.com/en/latest/api-sending.html).
@@ -480,12 +489,12 @@ When you submit messages for delivery, Mailgun places them in a message queue.
         MessageResponse messageResponse = mailgunMessagesApi.sendMessage(DOMAIN, message);
 ```
 
-More examples - [MailgunMessagesIntegrationTest](https://github.com/mailgun/mailgun-java/blob/master/src/test/java/com/mailgun/integration/MailgunMessagesIntegrationTest.java)
+More examples - [MailgunMessagesIntegrationTest](https://github.com/mailgun/mailgun-java/blob/main/src/test/java/com/mailgun/integration/MailgunMessagesIntegrationTest.java)
 
 
 ### Domains
 
-[MailgunDomainsApi](https://github.com/mailgun/mailgun-java/blob/master/src/main/java/com/mailgun/api/v3/MailgunDomainsApi.java)
+[MailgunDomainsApi](https://github.com/mailgun/mailgun-java/blob/main/src/main/java/com/mailgun/api/v3/MailgunDomainsApi.java)
 allows you to create, access, and validate domains programmatically. 
 
 [Mailgun Domains documentation](https://documentation.mailgun.com/en/latest/api-domains.html).
@@ -625,12 +634,12 @@ Updates unsubscribe tracking settings for a domain.
 
         UpdateDomainUnsubscribeTrackingSettingsResponse response = mailgunDomainsApi.updateDomainUnsubscribeConnectionSettings(TEST_DOMAIN_NAME, request);
 ```
-More examples - [MailgunDomainsIntegrationTest](https://github.com/mailgun/mailgun-java/blob/master/src/test/java/com/mailgun/integration/MailgunDomainsIntegrationTest.java)
+More examples - [MailgunDomainsIntegrationTest](https://github.com/mailgun/mailgun-java/blob/main/src/test/java/com/mailgun/integration/MailgunDomainsIntegrationTest.java)
 
 
 ### IPs
 
-[MailgunIPsApi](https://github.com/mailgun/mailgun-java/blob/master/src/main/java/com/mailgun/api/v3/MailgunIPsApi.java)
+[MailgunIPsApi](https://github.com/mailgun/mailgun-java/blob/main/src/main/java/com/mailgun/api/v3/MailgunIPsApi.java)
 allows you to access information regarding the IPs allocated to your Mailgun account used for outbound sending.
 
 [Mailgun IPs documentation](https://documentation.mailgun.com/en/latest/api-ips.html).
@@ -684,12 +693,12 @@ Unassign an IP from the domain specified.
 ```java
         ResponseWithMessage response = mailgunIPsApi.unassignIPFromDomain(DOMAIN, IP);
 ``` 
-More examples - [MailgunIPsIntegrationTest](https://github.com/mailgun/mailgun-java/blob/master/src/test/java/com/mailgun/integration/MailgunIPsIntegrationTest.java)
+More examples - [MailgunIPsIntegrationTest](https://github.com/mailgun/mailgun-java/blob/main/src/test/java/com/mailgun/integration/MailgunIPsIntegrationTest.java)
 
 
 ### Events
 
-[MailgunEventsApi](https://github.com/mailgun/mailgun-java/blob/master/src/main/java/com/mailgun/api/v3/MailgunEventsApi.java)
+[MailgunEventsApi](https://github.com/mailgun/mailgun-java/blob/main/src/main/java/com/mailgun/api/v3/MailgunEventsApi.java)
 Mailgun tracks every event that happens to your emails and makes this data available to you through the Events API.
 
 [Mailgun Events documentation](https://documentation.mailgun.com/en/latest/api-events.html).
@@ -726,12 +735,12 @@ Fetches the next page of log records, assuming that the previous request returne
 ``` 
 
 
-More examples - [MailgunEventsIntegrationTest](https://github.com/mailgun/mailgun-java/blob/master/src/test/java/com/mailgun/integration/MailgunEventsIntegrationTest.java)
+More examples - [MailgunEventsIntegrationTest](https://github.com/mailgun/mailgun-java/blob/main/src/test/java/com/mailgun/integration/MailgunEventsIntegrationTest.java)
 
 
 ### Stats
 
-[MailgunStatisticsApi](https://github.com/mailgun/mailgun-java/blob/master/src/main/java/com/mailgun/api/v3/MailgunStatisticsApi.java)
+[MailgunStatisticsApi](https://github.com/mailgun/mailgun-java/blob/main/src/main/java/com/mailgun/api/v3/MailgunStatisticsApi.java)
 Mailgun collects many different events and generates event statistics available via this API.
 
 [Mailgun Statistics documentation](https://documentation.mailgun.com/en/latest/api-stats.html).
@@ -755,13 +764,13 @@ Returns total statistics for a given domain.
         StatsResult result = mailgunStatisticsApi.getDomainStats(DOMAIN, statsOptions);
 ```
 
-More examples - [MailgunStatisticsIntegrationTest](https://github.com/mailgun/mailgun-java/blob/master/src/test/java/com/mailgun/integration/MailgunStatisticsIntegrationTest.java)
+More examples - [MailgunStatisticsIntegrationTest](https://github.com/mailgun/mailgun-java/blob/main/src/test/java/com/mailgun/integration/MailgunStatisticsIntegrationTest.java)
 
 
 
 ### Tags
 
-[MailgunTagsApi](https://github.com/mailgun/mailgun-java/blob/master/src/main/java/com/mailgun/api/v3/MailgunTagsApi.java)
+[MailgunTagsApi](https://github.com/mailgun/mailgun-java/blob/main/src/main/java/com/mailgun/api/v3/MailgunTagsApi.java)
 Mailgun lets you tag each outgoing message with a custom value and provides statistics on the tag level.
 
 [Mailgun Tags documentation](https://documentation.mailgun.com/en/latest/api-tags.html).
@@ -838,7 +847,7 @@ Returns a list of devices for a given domain that have triggered event types.
         TagDevicesResponse response = mailgunTagsApi.listTagDevices(DOMAIN, TAG);
 ``` 
 
-More examples - [MailgunTagsApiIntegrationTest](https://github.com/mailgun/mailgun-java/blob/master/src/test/java/com/mailgun/integration/MailgunTagsApiIntegrationTest.java)
+More examples - [MailgunTagsApiIntegrationTest](https://github.com/mailgun/mailgun-java/blob/main/src/test/java/com/mailgun/integration/MailgunTagsApiIntegrationTest.java)
 
 
 
@@ -849,7 +858,7 @@ More examples - [MailgunTagsApiIntegrationTest](https://github.com/mailgun/mailg
 
 ### Suppression Bounces
 
-[MailgunSuppressionBouncesApi](https://github.com/mailgun/mailgun-java/blob/master/src/main/java/com/mailgun/api/v3/suppression/MailgunSuppressionBouncesApi.java)
+[MailgunSuppressionBouncesApi](https://github.com/mailgun/mailgun-java/blob/main/src/main/java/com/mailgun/api/v3/suppression/MailgunSuppressionBouncesApi.java)
 
 [Mailgun Suppression Bounces documentation](https://documentation.mailgun.com/en/latest/api-suppressions.html#bounces).
 
@@ -927,14 +936,14 @@ Delete all bounced email addresses for a domain.
 ``` 
 
 
-More examples - [MailgunSuppressionBouncesApiIntegrationTest](https://github.com/mailgun/mailgun-java/blob/master/src/test/java/com/mailgun/integration/MailgunSuppressionBouncesApiIntegrationTest.java)
+More examples - [MailgunSuppressionBouncesApiIntegrationTest](https://github.com/mailgun/mailgun-java/blob/main/src/test/java/com/mailgun/integration/MailgunSuppressionBouncesApiIntegrationTest.java)
 
 
 
 
 ### Suppression Complaints
 
-[MailgunSuppressionComplaintsApi](https://github.com/mailgun/mailgun-java/blob/master/src/main/java/com/mailgun/api/v3/suppression/MailgunSuppressionComplaintsApi.java)
+[MailgunSuppressionComplaintsApi](https://github.com/mailgun/mailgun-java/blob/main/src/main/java/com/mailgun/api/v3/suppression/MailgunSuppressionComplaintsApi.java)
 
 [Mailgun Suppression Complaints documentation](https://documentation.mailgun.com/en/latest/api-suppressions.html#complaints).
 
@@ -996,14 +1005,14 @@ Remove Address From Complaints.
 ``` 
 
 
-More examples - [MailgunSuppressionComplaintsApiIntegrationTest](https://github.com/mailgun/mailgun-java/blob/master/src/test/java/com/mailgun/integration/MailgunSuppressionComplaintsApiIntegrationTest.java)
+More examples - [MailgunSuppressionComplaintsApiIntegrationTest](https://github.com/mailgun/mailgun-java/blob/main/src/test/java/com/mailgun/integration/MailgunSuppressionComplaintsApiIntegrationTest.java)
 
 
 
 
 ### Suppression Unsubscribe
 
-[MailgunSuppressionUnsubscribeApi](https://github.com/mailgun/mailgun-java/blob/master/src/main/java/com/mailgun/api/v3/suppression/MailgunSuppressionUnsubscribeApi.java)
+[MailgunSuppressionUnsubscribeApi](https://github.com/mailgun/mailgun-java/blob/main/src/main/java/com/mailgun/api/v3/suppression/MailgunSuppressionUnsubscribeApi.java)
 
 [Mailgun Suppression Unsubscribe documentation](https://documentation.mailgun.com/en/latest/api-suppressions.html#unsubscribes).
 
@@ -1074,13 +1083,13 @@ Completely remove an address from the unsubscribes list.
 ``` 
 
 
-More examples - [MailgunSuppressionUnsubscribeApiIntegrationTest](https://github.com/mailgun/mailgun-java/blob/master/src/test/java/com/mailgun/integration/MailgunSuppressionUnsubscribeApiIntegrationTest.java)
+More examples - [MailgunSuppressionUnsubscribeApiIntegrationTest](https://github.com/mailgun/mailgun-java/blob/main/src/test/java/com/mailgun/integration/MailgunSuppressionUnsubscribeApiIntegrationTest.java)
 
 
 
 ### Suppression Whitelists
 
-[MailgunSuppressionWhitelistsApi](https://github.com/mailgun/mailgun-java/blob/master/src/main/java/com/mailgun/api/v3/suppression/MailgunSuppressionWhitelistsApi.java)
+[MailgunSuppressionWhitelistsApi](https://github.com/mailgun/mailgun-java/blob/main/src/main/java/com/mailgun/api/v3/suppression/MailgunSuppressionWhitelistsApi.java)
 
 [Mailgun Suppression Whitelists documentation](https://documentation.mailgun.com/en/latest/api-suppressions.html#whitelists).
 
@@ -1127,14 +1136,14 @@ Delete a single record from whitelist table.
         WhitelistsRemoveRecordResponse response = suppressionWhitelistsApi.removeRecordFromWhitelists(DOMAIN, EMAIL);
 ``` 
 
-More examples - [MailgunSuppressionWhitelistsApiIntegrationTest](https://github.com/mailgun/mailgun-java/blob/master/src/test/java/com/mailgun/integration/MailgunSuppressionWhitelistsApiIntegrationTest.java)
+More examples - [MailgunSuppressionWhitelistsApiIntegrationTest](https://github.com/mailgun/mailgun-java/blob/main/src/test/java/com/mailgun/integration/MailgunSuppressionWhitelistsApiIntegrationTest.java)
 
 
 
 
 ### Routes
 
-[MailgunRoutesApi](https://github.com/mailgun/mailgun-java/blob/master/src/main/java/com/mailgun/api/v3/MailgunRoutesApi.java)
+[MailgunRoutesApi](https://github.com/mailgun/mailgun-java/blob/main/src/main/java/com/mailgun/api/v3/MailgunRoutesApi.java)
 allows you to work with routes programmatically.
 
 [Mailgun Routes documentation](https://documentation.mailgun.com/en/latest/api-routes.html).
@@ -1199,13 +1208,13 @@ Deletes a route based on the id.
         ResponseWithMessage response = mailgunRoutesApi.deleteRoute(ROUTE_ID);
 ``` 
 
-More examples - [MailgunRoutesIntegrationTest](https://github.com/mailgun/mailgun-java/blob/master/src/test/java/com/mailgun/integration/MailgunRoutesIntegrationTest.java)
+More examples - [MailgunRoutesIntegrationTest](https://github.com/mailgun/mailgun-java/blob/main/src/test/java/com/mailgun/integration/MailgunRoutesIntegrationTest.java)
 
 
 
 ### Webhooks
 
-[MailgunWebhooksApi](https://github.com/mailgun/mailgun-java/blob/master/src/main/java/com/mailgun/api/v3/MailgunWebhooksApi.java) 
+[MailgunWebhooksApi](https://github.com/mailgun/mailgun-java/blob/main/src/main/java/com/mailgun/api/v3/MailgunWebhooksApi.java) 
 allows you to create, access, and delete webhooks programmatically.
 
 [Mailgun Webhooks documentation](https://documentation.mailgun.com/en/latest/api-webhooks.html).
@@ -1260,13 +1269,13 @@ Deletes an existing webhook.
         WebhookResult result = mailgunWebhooksApi.deleteWebhook(DOMAIN, WebhookName.CLICKED);
 ``` 
 
-More examples - [MailgunWebhooksApiIntegrationTest](https://github.com/mailgun/mailgun-java/blob/master/src/test/java/com/mailgun/integration/MailgunWebhooksApiIntegrationTest.java)
+More examples - [MailgunWebhooksApiIntegrationTest](https://github.com/mailgun/mailgun-java/blob/main/src/test/java/com/mailgun/integration/MailgunWebhooksApiIntegrationTest.java)
 
 
 
 ### Mailing Lists
 
-You can programmatically create mailing lists using [MailgunMailingListApi](https://github.com/mailgun/mailgun-java/blob/master/src/main/java/com/mailgun/api/v3/MailgunMailingListApi.java)
+You can programmatically create mailing lists using [MailgunMailingListApi](https://github.com/mailgun/mailgun-java/blob/main/src/main/java/com/mailgun/api/v3/MailgunMailingListApi.java)
 
 [Mailgun Mailing Lists documentation](https://documentation.mailgun.com/en/latest/api-mailinglists.html).
 
@@ -1426,14 +1435,14 @@ Delete a mailing list member.
         MailingListMemberResponse response = mailgunMailingListApi.deleteMemberFromMailingList(MAILING_LIST_ADDRESS, MEMBER_EMAIL);
 ``` 
 
-More examples - [MailgunMailingListApiIntegrationTest](https://github.com/mailgun/mailgun-java/blob/master/src/test/java/com/mailgun/integration/MailgunMailingListApiIntegrationTest.java)
+More examples - [MailgunMailingListApiIntegrationTest](https://github.com/mailgun/mailgun-java/blob/main/src/test/java/com/mailgun/integration/MailgunMailingListApiIntegrationTest.java)
 
 
 
 
 ### Templates
 
-[MailgunTemplatesApi](https://github.com/mailgun/mailgun-java/blob/master/src/main/java/com/mailgun/api/v3/MailgunTemplatesApi.java)
+[MailgunTemplatesApi](https://github.com/mailgun/mailgun-java/blob/main/src/main/java/com/mailgun/api/v3/MailgunTemplatesApi.java)
 allows you to access information regarding the IPs allocated to your Mailgun account that is used for outbound sending.
 
 [Mailgun Templates documentation](https://documentation.mailgun.com/en/latest/api-templates.html).
@@ -1568,7 +1577,7 @@ Delete a specific version of the template.
         TemplateVersionResponse response = mailgunTemplatesApi.deleteSpecificTemplateVersion(DOMAIN, TEMPLATE_NAME, TEMPLATE_VERSION_TAG);
 ``` 
 
-More examples - [MailgunTemplatesIntegrationTest](https://github.com/mailgun/mailgun-java/blob/master/src/test/java/com/mailgun/integration/MailgunTemplatesIntegrationTest.java)
+More examples - [MailgunTemplatesIntegrationTest](https://github.com/mailgun/mailgun-java/blob/main/src/test/java/com/mailgun/integration/MailgunTemplatesIntegrationTest.java)
 
 
 
@@ -1576,7 +1585,7 @@ More examples - [MailgunTemplatesIntegrationTest](https://github.com/mailgun/mai
 
 ### Email Validation/Verification
 
-[MailgunEmailVerificationApi](https://github.com/mailgun/mailgun-java/blob/master/src/main/java/com/mailgun/api/v4/MailgunEmailVerificationApi.java)
+[MailgunEmailVerificationApi](https://github.com/mailgun/mailgun-java/blob/main/src/main/java/com/mailgun/api/v4/MailgunEmailVerificationApi.java)
 is an email address verification service.
 
 [Mailgun Email Validation/Verification documentation](https://documentation.mailgun.com/en/latest/api-email-validation.html).
@@ -1594,7 +1603,7 @@ Given an arbitrary address, validates address based on defined checks.
         AddressValidationResponse result = mailgunEmailVerificationApi.validateAddress(EMAIL);
 ```
 
-More examples - [MailgunEmailVerificationIntegrationTest](https://github.com/mailgun/mailgun-java/blob/master/src/test/java/com/mailgun/integration/MailgunEmailVerificationIntegrationTest.java)
+More examples - [MailgunEmailVerificationIntegrationTest](https://github.com/mailgun/mailgun-java/blob/main/src/test/java/com/mailgun/integration/MailgunEmailVerificationIntegrationTest.java)
 
 
 

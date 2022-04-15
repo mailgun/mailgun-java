@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * <p>
  * Mailing list new member request.
- * </p
+ * </p>
  *
  * @see <a href="https://documentation.mailgun.com/en/latest/api-mailinglists.html#mailing-lists">Mailing Lists</a>
  */
@@ -67,8 +67,8 @@ public class MailingListNewMemberRequest {
         /**
          * <p>
          * <code>true</code> to add as subscribed (default).
-         * <p>
          * </p>
+         * <p>
          * <code>false</code> as unsubscribed.
          * </p>
          *

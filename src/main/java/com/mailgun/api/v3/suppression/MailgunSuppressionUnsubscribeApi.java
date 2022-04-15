@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * <p>
  * Mailgun Suppression Unsubscribe Api
- * </p
+ * </p>
  *
  * <p>
  * Mailgun keeps three lists of addresses it blocks the delivery to: bounces, unsubscribes and complaints.

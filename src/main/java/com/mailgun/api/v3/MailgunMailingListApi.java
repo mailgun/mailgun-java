@@ -24,7 +24,7 @@ import feign.Response;
 /**
  * <p>
  * Mailgun Mailing Lists Api.
- * </p
+ * </p>
  * <p>
  * You can programmatically create mailing lists using Mailgun Mailing List API.
  * </p>

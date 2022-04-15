@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * <p>
  * Mailing list member update request.
- * </p
+ * </p>
  *
  * @see <a href="https://documentation.mailgun.com/en/latest/api-mailinglists.html#mailing-lists">Mailing Lists</a>
  */
@@ -57,8 +57,8 @@ public class MailingListMemberUpdateRequest {
         /**
          * <p>
          * <code>false</code> to set unsubscribed.
-         * <p>
          * </p>
+         * <p>
          * <code>true</code> as subscribed.
          * </p>
          *

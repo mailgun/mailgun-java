@@ -16,7 +16,7 @@ import static com.mailgun.util.Constants.RFC_2822_DATE_TIME_PATTERN_TIME_ZONE_NU
 /**
  * <p>
  * Mailgun list data.
- * </p
+ * </p>
  *
  * @see <a href="https://documentation.mailgun.com/en/latest/api-mailinglists.html#mailing-lists">Mailing Lists</a>
  */

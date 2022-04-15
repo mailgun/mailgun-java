@@ -28,12 +28,12 @@ import feign.Response;
  * </p>
  * <p>
  * The API has the following limitations:
+ * </p>
  * <pre>
  * 100 templates per domain
  * 10 versions per template
  * 100Kb max template size
  * </pre>
- * </p>
  *
  * @see <a href="https://documentation.mailgun.com/en/latest/api-templates.html">Templates</a>
  */
@@ -144,8 +144,8 @@ public interface MailgunTemplatesApi extends MailgunApi {
     /**
      * <p>
      * This API stores a new template, including its name, description and (optionally) the template content.
-     * <p>
      * </p>
+     * <p>
      * If the template content is provided, a new version is automatically created and becomes the active version.
      * </p>
      *

@@ -8,8 +8,8 @@ public enum AccessLevel {
     /**
      * <p>
      * Only authenticated users can post to this list. It is used for mass announcements and newsletters.
-     * <p>
      * </p>
+     * <p>
      * This is the default access level.
      * </p>
      */

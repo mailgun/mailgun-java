@@ -11,7 +11,7 @@ import lombok.ToString;
 /**
  * <p>
  * Mailgun lists request.
- * </p
+ * </p>
  *
  * @see <a href="https://documentation.mailgun.com/en/latest/api-mailinglists.html#mailing-lists">Mailing Lists</a>
  */

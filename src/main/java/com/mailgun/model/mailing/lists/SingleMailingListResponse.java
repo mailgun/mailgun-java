@@ -8,7 +8,7 @@ import lombok.extern.jackson.Jacksonized;
 /**
  * <p>
  * Update mailgun lists request.
- * </p
+ * </p>
  *
  * @see <a href="https://documentation.mailgun.com/en/latest/api-mailinglists.html#mailing-lists">Mailing Lists</a>
  */

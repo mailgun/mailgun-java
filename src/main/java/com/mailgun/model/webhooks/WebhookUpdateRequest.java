@@ -56,4 +56,7 @@ public class WebhookUpdateRequest {
         }
     }
 
+    public static class WebhookUpdateRequestBuilder {
+    }
+
 }

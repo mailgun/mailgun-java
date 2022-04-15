@@ -47,8 +47,7 @@ class MailgunMessagesIntegrationTest {
     void message_MinimumFields_Test() {
         Message message = Message.builder()
                 .from(EMAIL_FROM)
-//                .to(EMAIL_TO)
-                .to("serzhcello@gmail.com")
+                .to(EMAIL_TO)
                 .subject("Minimum fields example")
                 .text(TEST_EMAIL_TEXT)
                 .build();

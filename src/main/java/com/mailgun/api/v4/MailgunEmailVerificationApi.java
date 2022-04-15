@@ -14,6 +14,7 @@ import feign.Response;
  * </p>
  * <p>
  * We will verify the given address based on:
+ * </p>
  * <pre>
  * Mailbox detection
  * Syntax checks (RFC defined grammar)
@@ -21,7 +22,6 @@ import feign.Response;
  * Spell checks
  * Email Service Provider (ESP) specific local-part grammar (if available).
  * </pre>
- * </p>
  *
  * @see <a href="https://documentation.mailgun.com/en/latest/api-email-validation.html">Email Validation/Verification</a>
  */

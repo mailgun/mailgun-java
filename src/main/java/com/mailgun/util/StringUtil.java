@@ -12,6 +12,9 @@ public class StringUtil {
      * <p>
      * Method that can be used to serialize any Java value as a String.
      * </p>
+     *
+     * @param obj any Java value
+     * @return serialized result
      */
     public String asJsonString(final Object obj) {
         try {

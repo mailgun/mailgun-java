@@ -21,12 +21,15 @@ import java.util.List;
 public class ObjectMapperUtil {
 
     /**
+     * <p>
      * Retrieves the response object decoded from the body from {@link feign.Response}.
+     * </p>
      *
      * @param response {@link feign.Response}
      * @param valueType expected response object type
+     * @param <T> the specific kind of response object
      * @return return the response object decoded from the body from {@link feign.Response}
-     * @throws IOException – If an I/O error occurs
+     * @throws IOException  – If an I/O error occurs
      */
     public <T> T decode(Response response, Class<T> valueType) throws IOException {
         if (response.body() == null)

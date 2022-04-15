@@ -83,6 +83,7 @@ public class EventsQueryOptions {
      * </p>
      * <p>
      * Examples:
+     * </p>
      * <pre>
      * <code>foo bar</code>	Matches field values that contain both term foo and term bar.
      * <code>foo AND bar</code>	Same as above.
@@ -90,13 +91,12 @@ public class EventsQueryOptions {
      * <code>“foo bar”</code>	Matches field values that literally contain foo bar.
      * <code>NOT foo</code>	Matches field values that do not contain term foo.
      * </pre>
-     * </p>
      * <p>
      * Note that more then one expression can be used as a filter value and parentheses can be used to specify grouping.
+     * </p>
      * <pre>
      * E.g.: <code>(Hello AND NOT Rachel) OR (Farewell AND Monica)</code>.
      * </pre>
-     * </p>
      */
     String from;
 
@@ -110,6 +110,7 @@ public class EventsQueryOptions {
      * </p>
      * <p>
      * Examples:
+     * </p>
      * <pre>
      * <code>foo bar</code>	Matches field values that contain both term foo and term bar.
      * <code>foo AND bar</code>	Same as above.
@@ -117,13 +118,12 @@ public class EventsQueryOptions {
      * <code>“foo bar”</code>	Matches field values that literally contain foo bar.
      * <code>NOT foo</code>	Matches field values that do not contain term foo.
      * </pre>
-     * </p>
      * <p>
      * Note that more then one expression can be used as a filter value and parentheses can be used to specify grouping.
+     * </p>
      * <pre>
      * E.g.: <code>(Hello AND NOT Rachel) OR (Farewell AND Monica)</code>.
      * </pre>
-     * </p>
      */
     @Param("message-id")
     String messageId;
@@ -138,6 +138,7 @@ public class EventsQueryOptions {
      * </p>
      * <p>
      * Examples:
+     * </p>
      * <pre>
      * <code>foo bar</code>	Matches field values that contain both term foo and term bar.
      * <code>foo AND bar</code>	Same as above.
@@ -145,13 +146,12 @@ public class EventsQueryOptions {
      * <code>“foo bar”</code>	Matches field values that literally contain foo bar.
      * <code>NOT foo</code>	Matches field values that do not contain term foo.
      * </pre>
-     * </p>
      * <p>
      * Note that more then one expression can be used as a filter value and parentheses can be used to specify grouping.
+     * </p>
      * <pre>
      * E.g.: <code>(Hello AND NOT Rachel) OR (Farewell AND Monica)</code>.
      * </pre>
-     * </p>
      */
     String subject;
 
@@ -165,6 +165,7 @@ public class EventsQueryOptions {
      * </p>
      * <p>
      * Examples:
+     * </p>
      * <pre>
      * <code>foo bar</code>	Matches field values that contain both term foo and term bar.
      * <code>foo AND bar</code>	Same as above.
@@ -172,13 +173,12 @@ public class EventsQueryOptions {
      * <code>“foo bar”</code>	Matches field values that literally contain foo bar.
      * <code>NOT foo</code>	Matches field values that do not contain term foo.
      * </pre>
-     * </p>
      * <p>
      * Note that more then one expression can be used as a filter value and parentheses can be used to specify grouping.
+     * </p>
      * <pre>
      * E.g.: <code>(Hello AND NOT Rachel) OR (Farewell AND Monica)</code>.
      * </pre>
-     * </p>
      */
     String to;
 
@@ -192,12 +192,11 @@ public class EventsQueryOptions {
      * </p>
      * <p>
      * Examples:
+     * </p>
      * <pre>
-     * <code>>10000</code>	Matches values that greater then 10000.
-     * <code>>10000 <20000</code>	Matches values that are greater then 10000 and less then 20000.
+     * <code>10000</code> Matches values that greater then 10000.
+     * <code>&gt;10000 &lt;20000</code> Matches values that are greater then 10000 and less then 20000.
      * </pre>
-     * </p>
-     * </p>
      */
     String size;
 
@@ -211,6 +210,7 @@ public class EventsQueryOptions {
      * </p>
      * <p>
      * Examples:
+     * </p>
      * <pre>
      * <code>foo bar</code>	Matches field values that contain both term foo and term bar.
      * <code>foo AND bar</code>	Same as above.
@@ -218,13 +218,12 @@ public class EventsQueryOptions {
      * <code>“foo bar”</code>	Matches field values that literally contain foo bar.
      * <code>NOT foo</code>	Matches field values that do not contain term foo.
      * </pre>
-     * </p>
      * <p>
      * Note that more then one expression can be used as a filter value and parentheses can be used to specify grouping.
+     * </p>
      * <pre>
      * E.g.: <code>(Hello AND NOT Rachel) OR (Farewell AND Monica)</code>.
      * </pre>
-     * </p>
      */
     String recipient;
 
@@ -238,6 +237,7 @@ public class EventsQueryOptions {
      * </p>
      * <p>
      * Examples:
+     * </p>
      * <pre>
      * <code>foo bar</code>	Matches field values that contain both term foo and term bar.
      * <code>foo AND bar</code>	Same as above.
@@ -245,13 +245,12 @@ public class EventsQueryOptions {
      * <code>“foo bar”</code>	Matches field values that literally contain foo bar.
      * <code>NOT foo</code>	Matches field values that do not contain term foo.
      * </pre>
-     * </p>
      * <p>
      * Note that more then one expression can be used as a filter value and parentheses can be used to specify grouping.
+     * </p>
      * <pre>
      * E.g.: <code>(Hello AND NOT Rachel) OR (Farewell AND Monica)</code>.
      * </pre>
-     * </p>
      */
     String recipients;
 
@@ -265,6 +264,7 @@ public class EventsQueryOptions {
      * </p>
      * <p>
      * Examples:
+     * </p>
      * <pre>
      * <code>foo bar</code>	Matches field values that contain both term foo and term bar.
      * <code>foo AND bar</code>	Same as above.
@@ -272,13 +272,12 @@ public class EventsQueryOptions {
      * <code>“foo bar”</code>	Matches field values that literally contain foo bar.
      * <code>NOT foo</code>	Matches field values that do not contain term foo.
      * </pre>
-     * </p>
      * <p>
      * Note that more then one expression can be used as a filter value and parentheses can be used to specify grouping.
+     * </p>
      * <pre>
      * E.g.: <code>(Hello AND NOT Rachel) OR (Farewell AND Monica)</code>.
      * </pre>
-     * </p>
      */
     String tags;
 
@@ -385,6 +384,7 @@ public class EventsQueryOptions {
          * </p>
          * <p>
          * Examples:
+         * </p>
          * <pre>
          * <code>foo bar</code>	Matches field values that contain both term foo and term bar.
          * <code>foo AND bar</code>	Same as above.
@@ -392,13 +392,12 @@ public class EventsQueryOptions {
          * <code>“foo bar”</code>	Matches field values that literally contain foo bar.
          * <code>NOT foo</code>	Matches field values that do not contain term foo.
          * </pre>
-         * </p>
          * <p>
          * Note that more then one expression can be used as a filter value and parentheses can be used to specify grouping.
+         * </p>
          * <pre>
          * E.g.: <code>(Hello AND NOT Rachel) OR (Farewell AND Monica)</code>.
          * </pre>
-         * </p>
          *
          * @param filterExpression Filter Expression
          * @return Returns a reference to this object so that method calls can be chained together.
@@ -432,6 +431,7 @@ public class EventsQueryOptions {
          * </p>
          * <p>
          * Examples:
+         * </p>
          * <pre>
          * <code>foo bar</code>	Matches field values that contain both term foo and term bar.
          * <code>foo AND bar</code>	Same as above.
@@ -439,13 +439,12 @@ public class EventsQueryOptions {
          * <code>“foo bar”</code>	Matches field values that literally contain foo bar.
          * <code>NOT foo</code>	Matches field values that do not contain term foo.
          * </pre>
-         * </p>
          * <p>
          * Note that more then one expression can be used as a filter value and parentheses can be used to specify grouping.
+         * </p>
          * <pre>
          * E.g.: <code>(Hello AND NOT Rachel) OR (Farewell AND Monica)</code>.
          * </pre>
-         * </p>
          *
          * @param filterExpression Filter Expression
          * @return Returns a reference to this object so that method calls can be chained together.
@@ -465,6 +464,7 @@ public class EventsQueryOptions {
          * </p>
          * <p>
          * Examples:
+         * </p>
          * <pre>
          * <code>foo bar</code>	Matches field values that contain both term foo and term bar.
          * <code>foo AND bar</code>	Same as above.
@@ -472,13 +472,12 @@ public class EventsQueryOptions {
          * <code>“foo bar”</code>	Matches field values that literally contain foo bar.
          * <code>NOT foo</code>	Matches field values that do not contain term foo.
          * </pre>
-         * </p>
          * <p>
          * Note that more then one expression can be used as a filter value and parentheses can be used to specify grouping.
+         * </p>
          * <pre>
          * E.g.: <code>(Hello AND NOT Rachel) OR (Farewell AND Monica)</code>.
          * </pre>
-         * </p>
          *
          * @param filterExpression Filter Expression
          * @return Returns a reference to this object so that method calls can be chained together.
@@ -498,6 +497,7 @@ public class EventsQueryOptions {
          * </p>
          * <p>
          * Examples:
+         * </p>
          * <pre>
          * <code>foo bar</code>	Matches field values that contain both term foo and term bar.
          * <code>foo AND bar</code>	Same as above.
@@ -505,13 +505,12 @@ public class EventsQueryOptions {
          * <code>“foo bar”</code>	Matches field values that literally contain foo bar.
          * <code>NOT foo</code>	Matches field values that do not contain term foo.
          * </pre>
-         * </p>
          * <p>
          * Note that more then one expression can be used as a filter value and parentheses can be used to specify grouping.
+         * </p>
          * <pre>
          * E.g.: <code>(Hello AND NOT Rachel) OR (Farewell AND Monica)</code>.
          * </pre>
-         * </p>
          *
          * @param filterExpression Filter Expression
          * @return Returns a reference to this object so that method calls can be chained together.
@@ -531,6 +530,7 @@ public class EventsQueryOptions {
          * </p>
          * <p>
          * Examples:
+         * </p>
          * <pre>
          * <code>foo bar</code>	Matches field values that contain both term foo and term bar.
          * <code>foo AND bar</code>	Same as above.
@@ -538,13 +538,12 @@ public class EventsQueryOptions {
          * <code>“foo bar”</code>	Matches field values that literally contain foo bar.
          * <code>NOT foo</code>	Matches field values that do not contain term foo.
          * </pre>
-         * </p>
          * <p>
          * Note that more then one expression can be used as a filter value and parentheses can be used to specify grouping.
+         * </p>
          * <pre>
          * E.g.: <code>(Hello AND NOT Rachel) OR (Farewell AND Monica)</code>.
          * </pre>
-         * </p>
          *
          * @param filterExpression Filter Expression
          * @return Returns a reference to this object so that method calls can be chained together.
@@ -564,6 +563,7 @@ public class EventsQueryOptions {
          * </p>
          * <p>
          * Examples:
+         * </p>
          * <pre>
          * <code>foo bar</code>	Matches field values that contain both term foo and term bar.
          * <code>foo AND bar</code>	Same as above.
@@ -571,13 +571,12 @@ public class EventsQueryOptions {
          * <code>“foo bar”</code>	Matches field values that literally contain foo bar.
          * <code>NOT foo</code>	Matches field values that do not contain term foo.
          * </pre>
-         * </p>
          * <p>
          * Note that more then one expression can be used as a filter value and parentheses can be used to specify grouping.
+         * </p>
          * <pre>
          * E.g.: <code>(Hello AND NOT Rachel) OR (Farewell AND Monica)</code>.
          * </pre>
-         * </p>
          *
          * @param filterExpression Filter Expression
          * @return Returns a reference to this object so that method calls can be chained together.
@@ -597,12 +596,11 @@ public class EventsQueryOptions {
          * </p>
          * <p>
          * Examples:
+         * </p>
          * <pre>
-         * <code>>10000</code>	Matches values that greater then 10000.
-         * <code>>10000 <20000</code>	Matches values that are greater then 10000 and less then 20000.
+         * <code>10000</code> Matches values that greater then 10000.
+         * <code>&gt;10000 &lt;20000</code> Matches values that are greater then 10000 and less then 20000.
          * </pre>
-         * </p>
-         * </p>
          *
          * @param filterExpression Filter Expression
          * @return Returns a reference to this object so that method calls can be chained together.
@@ -622,6 +620,7 @@ public class EventsQueryOptions {
          * </p>
          * <p>
          * Examples:
+         * </p>
          * <pre>
          * <code>foo bar</code>	Matches field values that contain both term foo and term bar.
          * <code>foo AND bar</code>	Same as above.
@@ -629,13 +628,12 @@ public class EventsQueryOptions {
          * <code>“foo bar”</code>	Matches field values that literally contain foo bar.
          * <code>NOT foo</code>	Matches field values that do not contain term foo.
          * </pre>
-         * </p>
          * <p>
          * Note that more then one expression can be used as a filter value and parentheses can be used to specify grouping.
+         * </p>
          * <pre>
          * E.g.: <code>(Hello AND NOT Rachel) OR (Farewell AND Monica)</code>.
          * </pre>
-         * </p>
          *
          * @param filterExpression Filter Expression
          * @return Returns a reference to this object so that method calls can be chained together.
@@ -655,6 +653,7 @@ public class EventsQueryOptions {
          * </p>
          * <p>
          * Examples:
+         * </p>
          * <pre>
          * <code>foo bar</code>	Matches field values that contain both term foo and term bar.
          * <code>foo AND bar</code>	Same as above.
@@ -662,13 +661,12 @@ public class EventsQueryOptions {
          * <code>“foo bar”</code>	Matches field values that literally contain foo bar.
          * <code>NOT foo</code>	Matches field values that do not contain term foo.
          * </pre>
-         * </p>
          * <p>
          * Note that more then one expression can be used as a filter value and parentheses can be used to specify grouping.
+         * </p>
          * <pre>
          * E.g.: <code>(Hello AND NOT Rachel) OR (Farewell AND Monica)</code>.
          * </pre>
-         * </p>
          *
          * @param filterExpression Filter Expression
          * @return Returns a reference to this object so that method calls can be chained together.
@@ -688,6 +686,7 @@ public class EventsQueryOptions {
          * </p>
          * <p>
          * Examples:
+         * </p>
          * <pre>
          * <code>foo bar</code>	Matches field values that contain both term foo and term bar.
          * <code>foo AND bar</code>	Same as above.
@@ -695,13 +694,12 @@ public class EventsQueryOptions {
          * <code>“foo bar”</code>	Matches field values that literally contain foo bar.
          * <code>NOT foo</code>	Matches field values that do not contain term foo.
          * </pre>
-         * </p>
          * <p>
          * Note that more then one expression can be used as a filter value and parentheses can be used to specify grouping.
+         * </p>
          * <pre>
          * E.g.: <code>(Hello AND NOT Rachel) OR (Farewell AND Monica)</code>.
          * </pre>
-         * </p>
          *
          * @param filterExpression Filter Expression
          * @return Returns a reference to this object so that method calls can be chained together.

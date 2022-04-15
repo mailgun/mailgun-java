@@ -9,7 +9,7 @@ import lombok.extern.jackson.Jacksonized;
 /**
  * <p>
  * Creation mailing list response.
- * </p
+ * </p>
  *
  * @see <a href="https://documentation.mailgun.com/en/latest/api-mailinglists.html#mailing-lists">Mailing Lists</a>
  */

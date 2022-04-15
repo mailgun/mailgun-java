@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * <p>
  * Request to add members to the mailing list.
- * </p
+ * </p>
  *
  * @see <a href="https://documentation.mailgun.com/en/latest/api-mailinglists.html#mailing-lists">Mailing Lists</a>
  */

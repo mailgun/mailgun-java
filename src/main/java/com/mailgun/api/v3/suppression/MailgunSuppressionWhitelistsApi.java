@@ -14,7 +14,7 @@ import feign.Response;
 /**
  * <p>
  * Mailgun Suppression Whitelists Api
- * </p
+ * </p>
  *
  * <p>
  * Mailgun keeps three lists of addresses it blocks the delivery to: bounces, unsubscribes and complaints.

@@ -17,7 +17,7 @@ import feign.Response;
 /**
  * <p>
  * Mailgun Routes Api
- * </p
+ * </p>
  * <p>
  * Mailgun Routes are a powerful way to handle the incoming traffic.
  * </p>
@@ -30,12 +30,12 @@ import feign.Response;
  * This API allows you to work with routes programmatically.
  * <p>
  * Routes are comprised of the following arguments:
+ * </p>
  * <pre>
  * A filter (when to do something).
  * A priority (in what order).
  * An action (what to do).
  * </pre>
- * </p>
  *
  * @see <a href="https://documentation.mailgun.com/en/latest/api-routes.html">Routes</a>
  */
