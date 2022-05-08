@@ -7,7 +7,7 @@ import lombok.extern.jackson.Jacksonized;
 
 /**
  * <p>
- * Bulk verification job status summary result.
+ * Bulk verification status summary result.
  * </p>
  *
  * @see <a href="https://documentation.mailgun.com/en/latest/api-email-validation.html#bulk-verification">Bulk Verification</a>
@@ -15,7 +15,7 @@ import lombok.extern.jackson.Jacksonized;
 @Value
 @Jacksonized
 @Builder
-public class BulkVerificationJobStatusSummaryResult {
+public class BulkVerificationStatusSummaryResult {
 
     /**
      * <p>

@@ -1,5 +1,6 @@
 package com.mailgun.model.verification;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Value;
@@ -7,30 +8,30 @@ import lombok.extern.jackson.Jacksonized;
 
 /**
  * <p>
- * Summary of the verifications in the list provided.
+ * Bulk verification creating response.
  * </p>
- *
  * @see <a href="https://documentation.mailgun.com/en/latest/api-email-validation.html#bulk-verification">Bulk Verification</a>
  */
 @Value
 @Jacksonized
 @Builder
-public class BulkVerificationJobStatusSummary {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class BulkVerificationCreatingResponse {
 
     /**
      * <p>
-     * Nested results count.
+     * Result status message.
      * </p>
      */
-    @JsonProperty("result")
-    BulkVerificationJobStatusSummaryResult result;
+    @JsonProperty("id")
+    String id;
 
     /**
      * <p>
-     * Nested risk assessment count.
+     * Result status message.
      * </p>
      */
-    @JsonProperty("risk")
-    BulkVerificationJobStatusSummaryRisk risk;
+    @JsonProperty("message")
+    String message;
 
 }

@@ -12,7 +12,7 @@ import static com.mailgun.util.Constants.RFC_2822_DATE_TIME_PATTERN_TIME_ZONE_NA
 
 /**
  * <p>
- * Bulk verification job status Response.
+ * Bulk verification preview status Response.
  * </p>
  *
  * @see <a href="https://documentation.mailgun.com/en/latest/api-email-validation.html#bulk-verification">Bulk Verification</a>
@@ -20,7 +20,7 @@ import static com.mailgun.util.Constants.RFC_2822_DATE_TIME_PATTERN_TIME_ZONE_NA
 @Value
 @Jacksonized
 @Builder
-public class BulkVerificationJobStatusResponse {
+public class BulkVerificationPreviewStatusResponse {
 
     /**
      * <p>
@@ -32,7 +32,7 @@ public class BulkVerificationJobStatusResponse {
 
     /**
      * <p>
-     * Number of total items in the list to be verified.
+     * Number of total items in the list to be previewed.
      * </p>
      */
     @JsonProperty("quantity")
@@ -40,15 +40,7 @@ public class BulkVerificationJobStatusResponse {
 
     /**
      * <p>
-     * De-duplicated total of verified email addresses.
-     * </p>
-     */
-    @JsonProperty("records_processed")
-    Integer recordsProcessed;
-
-    /**
-     * <p>
-     * Job status.
+     * Current state of the list verification request.
      * </p>
      */
     @JsonProperty("status")
@@ -56,11 +48,21 @@ public class BulkVerificationJobStatusResponse {
 
     /**
      * <p>
+     * A boolean to represent if the list is valid.
+     * </p>
+     */
+    @JsonProperty("valid")
+    Boolean valid;
+
+    @JsonProperty("reason")
+    String reason;
+
+    /**
+     * <p>
      * Summary of the verifications in the list provided.
      * </p>
      */
-    @JsonProperty("summary")
-    BulkVerificationStatusSummary summary;
+    @JsonProperty("summary") BulkVerificationStatusSummary summary;
 
     /**
      * <p>
@@ -71,14 +73,5 @@ public class BulkVerificationJobStatusResponse {
     @JsonFormat(pattern = RFC_2822_DATE_TIME_PATTERN_TIME_ZONE_NAME)
     @JsonProperty("created_at")
     ZonedDateTime createdAt;
-
-    /**
-     * <p>
-     * <code>csv</code> and <code>json</code> representation of the download link for the results of the bulk verifications.
-     * </p>
-     * {@link BulkVerificationDownloadUrl}
-     */
-    @JsonProperty("download_url")
-    BulkVerificationDownloadUrl downloadUrl;
 
 }

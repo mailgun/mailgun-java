@@ -14,14 +14,18 @@ import org.junit.jupiter.api.Test;
 import com.mailgun.api.v4.MailgunEmailVerificationApi;
 import com.mailgun.client.MailgunClient;
 import com.mailgun.model.verification.AddressValidationResponse;
+import com.mailgun.model.verification.BulkVerificationCreatingResponse;
 import com.mailgun.model.verification.BulkVerificationDownloadUrl;
-import com.mailgun.model.verification.BulkVerificationJobCreatingResponse;
 import com.mailgun.model.verification.BulkVerificationJobListResponse;
-import com.mailgun.model.verification.BulkVerificationJobStatusRequest;
 import com.mailgun.model.verification.BulkVerificationJobStatusResponse;
-import com.mailgun.model.verification.BulkVerificationJobStatusSummary;
-import com.mailgun.model.verification.BulkVerificationJobStatusSummaryResult;
-import com.mailgun.model.verification.BulkVerificationJobStatusSummaryRisk;
+import com.mailgun.model.verification.BulkVerificationPreviewListResponse;
+import com.mailgun.model.verification.BulkVerificationPreviewResponse;
+import com.mailgun.model.verification.BulkVerificationPreviewStatusResponse;
+import com.mailgun.model.verification.BulkVerificationStatusRequest;
+import com.mailgun.model.verification.BulkVerificationStatusSummary;
+import com.mailgun.model.verification.BulkVerificationStatusSummaryResult;
+import com.mailgun.model.verification.BulkVerificationStatusSummaryRisk;
+import feign.Response;
 
 import static com.mailgun.constants.IntegrationTestConstants.EMAIL_FROM;
 import static com.mailgun.constants.IntegrationTestConstants.EMAIL_TO;
@@ -100,11 +104,11 @@ class MailgunEmailVerificationIntegrationTest {
         assertTrue(csvOutputFile.exists());
         csvOutputFile.deleteOnExit();
 
-        BulkVerificationJobStatusRequest request = BulkVerificationJobStatusRequest.builder()
+        BulkVerificationStatusRequest request = BulkVerificationStatusRequest.builder()
             .file(csvOutputFile)
             .build();
 
-        BulkVerificationJobCreatingResponse result = mailgunEmailVerificationApi
+        BulkVerificationCreatingResponse result = mailgunEmailVerificationApi
             .createBulkVerificationJob(TEST_LIST_NAME, request);
 
         assertNotNull(result.getId());
@@ -139,15 +143,15 @@ class MailgunEmailVerificationIntegrationTest {
         assertNotNull(result.getQuantity());
         assertNotNull(result.getRecordsProcessed());
         assertTrue(StringUtils.isNotBlank(result.getStatus()));
-        BulkVerificationJobStatusSummary summary = result.getSummary();
+        BulkVerificationStatusSummary summary = result.getSummary();
         assertNotNull(summary);
-        BulkVerificationJobStatusSummaryResult summaryResult = summary.getResult();
+        BulkVerificationStatusSummaryResult summaryResult = summary.getResult();
         assertNotNull(summaryResult.getCatchAll());
         assertNotNull(summaryResult.getDeliverable());
         assertNotNull(summaryResult.getDoNotSend());
         assertNotNull(summaryResult.getUndeliverable());
         assertNotNull(summaryResult.getUnknown());
-        BulkVerificationJobStatusSummaryRisk risk = summary.getRisk();
+        BulkVerificationStatusSummaryRisk risk = summary.getRisk();
         assertNotNull(risk);
         assertNotNull(risk.getHigh());
         assertNotNull(risk.getLow());
@@ -165,6 +169,33 @@ class MailgunEmailVerificationIntegrationTest {
         String result = mailgunEmailVerificationApi.cancelBulkVerificationJob(TEST_LIST_NAME);
 
         assertEquals("Validation job canceled.", result);
+    }
+
+    @Test
+    void getBulkVerificationPreviewListSuccessTest() {
+        BulkVerificationPreviewListResponse result = mailgunEmailVerificationApi.getBulkVerificationPreviewList();
+
+        assertNotNull(result.getPreviews());
+    }
+
+    @Test
+    void getBulkVerificationPreviewStatusSuccessTest() {
+        BulkVerificationPreviewResponse result = mailgunEmailVerificationApi.getBulkVerificationPreviewStatus(TEST_LIST_NAME);
+
+        BulkVerificationPreviewStatusResponse preview = result.getPreview();
+        assertNotNull(preview);
+        assertTrue(StringUtils.isNotBlank(preview.getId()));
+        assertNotNull(preview.getQuantity());
+        assertTrue(StringUtils.isNotBlank(preview.getStatus()));
+        assertNotNull(preview.getValid());
+        assertNotNull(preview.getCreatedAt());
+    }
+
+    @Test
+    void cancelBulkVerificationPreviewSuccessTest() {
+        Response result = mailgunEmailVerificationApi.deleteBulkVerificationPreview(TEST_LIST_NAME);
+
+        assertEquals(204, result.status());
     }
 
 }

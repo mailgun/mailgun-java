@@ -9,7 +9,7 @@ import lombok.ToString;
 
 /**
  * <p>
- * Bulk verification job status request.
+ * Bulk verification status request.
  * </p>
  *
  * @see <a href="https://documentation.mailgun.com/en/latest/api-email-validation.html#bulk-verification">Bulk Verification</a>
@@ -18,7 +18,7 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 @Builder
-public class BulkVerificationJobStatusRequest {
+public class BulkVerificationStatusRequest {
 
     /**
      * <p>

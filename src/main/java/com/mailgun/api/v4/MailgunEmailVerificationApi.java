@@ -3,10 +3,12 @@ package com.mailgun.api.v4;
 import com.mailgun.api.MailgunApi;
 import com.mailgun.enums.ApiVersion;
 import com.mailgun.model.verification.AddressValidationResponse;
-import com.mailgun.model.verification.BulkVerificationJobCreatingResponse;
+import com.mailgun.model.verification.BulkVerificationCreatingResponse;
 import com.mailgun.model.verification.BulkVerificationJobListResponse;
-import com.mailgun.model.verification.BulkVerificationJobStatusRequest;
 import com.mailgun.model.verification.BulkVerificationJobStatusResponse;
+import com.mailgun.model.verification.BulkVerificationPreviewListResponse;
+import com.mailgun.model.verification.BulkVerificationPreviewResponse;
+import com.mailgun.model.verification.BulkVerificationStatusRequest;
 import feign.Headers;
 import feign.Param;
 import feign.RequestLine;
@@ -220,13 +222,12 @@ public interface MailgunEmailVerificationApi extends MailgunApi {
      * </p>
      *
      * @param listName Bulk verification job list name
-     * @param request  {@link BulkVerificationJobStatusRequest}
-     * @return {@link BulkVerificationJobCreatingResponse}
+     * @param request  {@link BulkVerificationStatusRequest}
+     * @return {@link BulkVerificationCreatingResponse}
      */
     @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
-    @RequestLine("POST /address/validate/bulk/{listName}")
-    BulkVerificationJobCreatingResponse createBulkVerificationJob(@Param("listName") String listName,
-        BulkVerificationJobStatusRequest request);
+    @RequestLine("POST /address/validate/bulk/{listName}") BulkVerificationCreatingResponse createBulkVerificationJob(@Param("listName") String listName,
+        BulkVerificationStatusRequest request);
 
     /**
      * <p>
@@ -234,13 +235,13 @@ public interface MailgunEmailVerificationApi extends MailgunApi {
      * </p>
      *
      * @param listName Bulk verification job list name
-     * @param request  {@link BulkVerificationJobStatusRequest}
+     * @param request  {@link BulkVerificationStatusRequest}
      * @return {@link Response}
      */
     @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
     @RequestLine("POST /address/validate/bulk/{listName}")
     Response createBulkVerificationJobFeignResponse(@Param("listName") String listName,
-        BulkVerificationJobStatusRequest request);
+        BulkVerificationStatusRequest request);
 
     /**
      * <p>
@@ -266,4 +267,90 @@ public interface MailgunEmailVerificationApi extends MailgunApi {
     @RequestLine("DELETE /address/validate/bulk/{listName}")
     Response cancelBulkVerificationJobFeignResponse(@Param("listName") String listName);
 
+    /**
+     * <p>
+     * Get list of all bulk verification previews.
+     * </p>
+     *
+     * @return {@link BulkVerificationPreviewListResponse}
+     */
+    @Headers("Accept: application/json")
+    @RequestLine("GET /address/validate/preview")
+    BulkVerificationPreviewListResponse getBulkVerificationPreviewList();
+
+    /**
+     * <p>
+     * Get list of all bulk verification previews.
+     * </p>
+     *
+     * @return {@link Response}
+     */
+    @Headers("Accept: application/json")
+    @RequestLine("GET /address/validate/preview")
+    Response getBulkVerificationPreviewListFeignResponse();
+
+    /**
+     * <p>
+     * Check the current status of a bulk verification preview.
+     * </p>
+     *
+     * @param listName Bulk verification preview list name
+     * @return {@link
+     * BulkVerificationPreviewResponse}
+     */
+    @Headers("Accept: application/json")
+    @RequestLine("GET /address/validate/preview/{listName}")
+    BulkVerificationPreviewResponse getBulkVerificationPreviewStatus(@Param("listName") String listName);
+
+    /**
+     * <p>
+     * Check the current status of a bulk verification preview.
+     * </p>
+     *
+     * @param listName Bulk verification preview list name
+     * @return {@link Response}
+     */
+    @Headers("Accept: application/json")
+    @RequestLine("GET /address/validate/preview/{listName}")
+    Response getBulkVerificationPreviewStatusFeignResponse(@Param("listName") String listName);
+
+    /**
+     * <p>
+     * Create a bulk verification preview.
+     * </p>
+     *
+     * @param listName Bulk verification preview list name
+     * @param request  {@link BulkVerificationStatusRequest}
+     * @return {@link BulkVerificationCreatingResponse}
+     */
+    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @RequestLine("POST /address/validate/preview/{listName}")
+    BulkVerificationCreatingResponse createBulkVerificationPreview(@Param("listName") String listName,
+        BulkVerificationStatusRequest request);
+
+    /**
+     * <p>
+     * Create a bulk verification preview.
+     * </p>
+     *
+     * @param listName Bulk verification preview list name
+     * @param request  {@link BulkVerificationStatusRequest}
+     * @return {@link Response}
+     */
+    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @RequestLine("POST /address/validate/preview/{listName}")
+    Response createBulkVerificationPreviewFeignResponse(@Param("listName") String listName,
+        BulkVerificationStatusRequest request);
+
+    /**
+     * <p>
+     * Delete a bulk verification preview.
+     * </p>
+     *
+     * @param listName Bulk verification preview list name
+     * @return {@link Response}
+     */
+    @Headers({"Accept: application/json"})
+    @RequestLine("DELETE /address/validate/preview/{listName}")
+    Response deleteBulkVerificationPreview(@Param("listName") String listName);
 }

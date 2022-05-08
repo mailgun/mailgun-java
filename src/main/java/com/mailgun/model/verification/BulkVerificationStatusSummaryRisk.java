@@ -7,7 +7,7 @@ import lombok.extern.jackson.Jacksonized;
 
 /**
  * <p>
- * Bulk verification job status summary risk.
+ * Bulk verification status summary risk.
  * </p>
  *
  * @see <a href="https://documentation.mailgun.com/en/latest/api-email-validation.html#bulk-verification">Bulk Verification</a>
@@ -15,7 +15,7 @@ import lombok.extern.jackson.Jacksonized;
 @Value
 @Jacksonized
 @Builder
-public class BulkVerificationJobStatusSummaryRisk {
+public class BulkVerificationStatusSummaryRisk {
 
     @JsonProperty("high")
     Integer high;
