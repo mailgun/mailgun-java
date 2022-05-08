@@ -10,7 +10,7 @@ import lombok.extern.jackson.Jacksonized;
  * Bulk verification preview list Response.
  * </p>
  *
- * @see <a href="https://documentation.mailgun.com/en/latest/api-email-validation.html#bulk-verification">Bulk Verification</a>
+ * @see <a href="https://documentation.mailgun.com/en/latest/api-email-validation.html#bulk-verification-preview">Bulk Verification Preview</a>
  */
 @Value
 @Jacksonized
