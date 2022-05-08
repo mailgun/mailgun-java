@@ -172,6 +172,7 @@ public interface MailgunTagsApi extends MailgunApi {
      * @param tag    Name of the tag
      * @return {@link ResponseWithMessage}
      */
+    @Headers("Accept: application/json")
     @RequestLine("DELETE /{domain}/tags/{tag}")
     ResponseWithMessage deleteTag(@Param("domain") String domain, @Param("tag") String tag);
 
@@ -185,6 +186,7 @@ public interface MailgunTagsApi extends MailgunApi {
      * @param tag    Name of the tag
      * @return {@link Response}
      */
+    @Headers("Accept: application/json")
     @RequestLine("DELETE /{domain}/tags/{tag}")
     Response deleteTagFeignResponse(@Param("domain") String domain, @Param("tag") String tag);
 

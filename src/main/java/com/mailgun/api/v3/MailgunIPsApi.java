@@ -146,6 +146,7 @@ public interface MailgunIPsApi extends MailgunApi {
      * @param ip     IP address that should be unassign.
      * @return {@link ResponseWithMessage}
      */
+    @Headers("Accept: application/json")
     @RequestLine("DELETE /domains/{domain}/ips/{ip}")
     ResponseWithMessage unassignIPFromDomain(@Param("domain") String domain, @Param("ip") String ip);
 
@@ -158,6 +159,7 @@ public interface MailgunIPsApi extends MailgunApi {
      * @param ip     IP address that should be unassign.
      * @return {@link Response}
      */
+    @Headers("Accept: application/json")
     @RequestLine("DELETE /domains/{domain}/ips/{ip}")
     Response unassignIPFromDomainFeignResponse(@Param("domain") String domain, @Param("ip") String ip);
 
