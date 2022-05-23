@@ -226,7 +226,8 @@ public interface MailgunEmailVerificationApi extends MailgunApi {
      * @return {@link BulkVerificationCreatingResponse}
      */
     @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
-    @RequestLine("POST /address/validate/bulk/{listName}") BulkVerificationCreatingResponse createBulkVerificationJob(@Param("listName") String listName,
+    @RequestLine("POST /address/validate/bulk/{listName}")
+    BulkVerificationCreatingResponse createBulkVerificationJob(@Param("listName") String listName,
         BulkVerificationStatusRequest request);
 
     /**

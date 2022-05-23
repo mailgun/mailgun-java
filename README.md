@@ -368,6 +368,14 @@ More information:
   - [Email Validation/Verification](#Email-Validation/Verification)
     - [Set up MailgunEmailVerificationApi](#Set-up-MailgunEmailVerificationApi)
     - [Validate address](#Validate-address)
+    - [Get verification job list](#Get-verification-job-list)
+    - [Get verification job status](#Get-verification-job-status)
+    - [Create verification job](#Create-verification-job)
+    - [Cancel verification job](#Cancel-verification-job)
+    - [Get preview list](#Get-preview-list)
+    - [Check preview status](#Check-preview-status)
+    - [Create verification preview](#Create-verification-preview)
+    - [Delete verification preview](#Delete-verification-preview)
 
 
 
@@ -1601,6 +1609,70 @@ is an email address verification service.
 Given an arbitrary address, validates address based on defined checks.
 ```java
         AddressValidationResponse result = mailgunEmailVerificationApi.validateAddress(EMAIL);
+```
+
+#### Get verification job list
+
+Get list of all bulk verification jobs.
+```java
+        BulkVerificationJobListResponse result = mailgunEmailVerificationApi.getBulkVerificationJobList();
+```
+
+#### Get verification job status
+
+Check the current status of a bulk verification job.
+```java
+        BulkVerificationJobStatusResponse result = mailgunEmailVerificationApi.getBulkVerificationJobStatus(LIST_NAME);
+```
+
+#### Create verification job
+
+Create a bulk verification job.
+```java
+        BulkVerificationStatusRequest request = BulkVerificationStatusRequest.builder()
+            .file(new File("/path/to/file"))
+            .build();
+
+        BulkVerificationCreatingResponse result = mailgunEmailVerificationApi.createBulkVerificationJob(LIST_NAME, request);
+```
+
+#### Cancel verification job
+
+Cancel current running bulk verification job.
+```java
+        String result = mailgunEmailVerificationApi.cancelBulkVerificationJob(LIST_NAME);
+```
+
+#### Get preview list
+
+Get list of all bulk verification previews.
+```java
+        BulkVerificationPreviewListResponse result = mailgunEmailVerificationApi.getBulkVerificationPreviewList();
+```
+
+#### Check preview status
+
+Check the current status of a bulk verification preview.
+```java
+        BulkVerificationPreviewResponse result = mailgunEmailVerificationApi.getBulkVerificationPreviewStatus(LIST_NAME);
+```
+
+#### Create verification preview
+
+Create a bulk verification preview.
+```java
+        BulkVerificationStatusRequest request = BulkVerificationStatusRequest.builder()
+            .file(new File("/path/to/file"))
+            .build();
+
+        BulkVerificationCreatingResponse result = mailgunEmailVerificationApi.createBulkVerificationPreview(LIST_NAME, request);
+```
+
+#### Delete verification preview
+
+Delete a bulk verification preview.
+```java
+        Response result = mailgunEmailVerificationApi.deleteBulkVerificationPreview(LIST_NAME);
 ```
 
 More examples - [MailgunEmailVerificationIntegrationTest](https://github.com/mailgun/mailgun-java/blob/main/src/test/java/com/mailgun/integration/MailgunEmailVerificationIntegrationTest.java)

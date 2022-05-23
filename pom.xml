@@ -23,7 +23,7 @@
         <feign-version>11.8</feign-version>
         <feign-form-version>3.8.0</feign-form-version>
         <slf4j.version>1.7.36</slf4j.version>
-        <jackson.version>2.13.2</jackson.version>
+        <jackson.version>2.13.3</jackson.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <commons-collections4.version>4.4</commons-collections4.version>
         <lombok.version>1.18.24</lombok.version>
