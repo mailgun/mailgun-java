@@ -376,6 +376,22 @@ More information:
     - [Check preview status](#Check-preview-status)
     - [Create verification preview](#Create-verification-preview)
     - [Delete verification preview](#Delete-verification-preview)
+  - [Inbox Placement](#Inbox Placement)
+    - [Set up MailgunSeedListApi](#Set-up-MailgunSeedListApi)
+    - [Generate seed list](#Generate-seed-list)
+    - [Update seed list](#Update-seed-list)
+    - [Get seed lists](#Get-seed-lists)
+    - [Get seed list](#Get-seed-list)
+    - [Get seed list attributes](#Get-seed-list-attributes)
+    - [Get seed list attribute](#Get-seed-list-attribute)
+    - [Get seed list filters](#Get-seed-list-filters)
+    - [Delete seed list](#Delete-seed-list)
+    - [Get list results](#Get-list-results)
+    - [Get results filters](#Get-results-filters)
+    - [Get results attributes](#Get-results-attributes)
+    - [Get results attribute](#Get-results-attribute)
+    - [Get specific result](#Get-specific-result)
+    - [Delete result](#Delete-result)
 
 
 
@@ -1589,8 +1605,6 @@ More examples - [MailgunTemplatesIntegrationTest](https://github.com/mailgun/mai
 
 
 
-
-
 ### Email Validation/Verification
 
 [MailgunEmailVerificationApi](https://github.com/mailgun/mailgun-java/blob/main/src/main/java/com/mailgun/api/v4/MailgunEmailVerificationApi.java)
@@ -1676,6 +1690,140 @@ Delete a bulk verification preview.
 ```
 
 More examples - [MailgunEmailVerificationIntegrationTest](https://github.com/mailgun/mailgun-java/blob/main/src/test/java/com/mailgun/integration/MailgunEmailVerificationIntegrationTest.java)
+
+
+
+### Inbox Placement
+
+[MailgunSeedListApi](https://github.com/mailgun/mailgun-java/blob/main/src/main/java/com/mailgun/api/v4/MailgunSeedListApi.java)
+A seed list is an object that provides the mailing list for your inbox placement test.
+It also acts as a container for all the results of those tests and will aggregate the stats of all the tests..
+
+[Inbox Placement documentation](https://documentation.mailgun.com/en/latest/api-inbox-placement.html).
+
+#### Set up MailgunSeedListApi
+```java
+        MailgunSeedListApi mailgunSeedListApi = MailgunClient.config(PRIVATE_API_KEY)
+                .createApi(MailgunSeedListApi.class);
+```
+
+#### Generate seed list
+
+Generate a seed list
+```java
+        SeedListRequest request = SeedListRequest.builder()
+            .seedFilter(SEED_FILTER)
+            .name(SEED_LIST_NAME)
+            .sendingDomains(Arrays.asList(TEST_DOMAIN_1, TEST_DOMAIN_2))
+            .build();
+
+        SeedListItem result = mailgunSeedListApi.generateSeedList(request);
+```
+
+#### Update seed list
+
+You can update a seed list with this endpoint.
+```java
+        SeedListRequest request = SeedListRequest.builder()
+            .seedFilter(SEED_FILTER)
+            .name(SEED_LIST_NAME)
+            .sendingDomains(Arrays.asList(TEST_DOMAIN_1, TEST_DOMAIN_2))
+            .build();
+
+        SeedListItem result = mailgunSeedListApi.updateSeedList(TARGET_EMAIL, request);
+```
+
+#### Get seed lists
+
+Get a list of all of your seed lists. You can filter this using the available filters.
+```java
+        SeedListsPageRequest filter = SeedListsPageRequest.builder()
+            .limit(2)
+            .offset(1)
+            .ascending(false)
+            .build();
+
+        SeedListsResponse result = mailgunSeedListApi.getAllSeedLists(filter);
+```
+
+#### Get seed list
+
+You can select a single seed list with this endpoint.
+```java
+        SingleSeedListResponse result = mailgunSeedListApi.getSeedList(TARGET_EMAIL);
+```
+
+#### Get seed list attributes
+
+Get all iterable attributes of seed lists.
+```java
+        SeedListsAttributesResponse result = mailgunSeedListApi.getSeedListsAttributes();
+```
+
+#### Get seed list attribute
+
+Get all values of a specific attribute of your seed lists.
+```java
+        SeedListsAttributesResponse result = mailgunSeedListApi.getSeedListsAttribute(ATTRIBUTE_NAME);
+```
+
+#### Get seed list filters
+
+Get all available filters for seed lists.
+```java
+        SeedListsFiltersResponse result = mailgunSeedListApi.getSeedListFilters();
+```
+
+#### Delete seed list
+
+Delete a seed list.
+```java
+        Response result = mailgunSeedListApi.deleteSeedListFeignResponse(TARGET_EMAIL);
+```
+
+#### Get list results
+
+Test results are generated when a message has been received at the target_email.
+```java
+        Response result = mailgunSeedListApi.getResultsFeignResponse();
+```
+
+#### Get results filters
+
+Get Available Result Filters.
+```java
+        Response result = mailgunSeedListApi.getAvailableResultFiltersFeignResponse();
+```
+
+#### Get results attributes
+
+Get all iterable attributes of results.
+```java
+        SeedListsAttributesResponse result = mailgunSeedListApi.getResultsAttributes();
+```
+
+#### Get results attribute
+
+Get all values of a specific attribute of your results lists.
+```java
+        SeedListsAttributesResponse result = mailgunSeedListApi.getResultsAttribute(ATTRIBUTE);
+```
+
+#### Get specific result
+
+Get a specific result.
+```java
+        Response result = mailgunSeedListApi.getSpecificResultFeignResponse(RID);
+```
+
+#### Delete result
+
+Delete a result.
+```java
+        Response result = mailgunSeedListApi.deleteResultFeignResponse(RID);
+```
+
+More examples - [MailgunSeedListIntegrationTest](https://github.com/mailgun/mailgun-java/blob/main/src/test/java/com/mailgun/integration/MailgunSeedListIntegrationTest.java)
 
 
 

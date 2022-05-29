@@ -35,7 +35,9 @@ public interface MailgunSeedListApi extends MailgunApi {
     }
 
     /**
+     * <p>
      * Generate a seed list.
+     * </p>
      *
      * @param request {@link SeedListRequest}
      * @return {@link SeedListItem}
@@ -45,7 +47,9 @@ public interface MailgunSeedListApi extends MailgunApi {
     SeedListItem generateSeedList(SeedListRequest request);
 
     /**
+     * <p>
      * Generate a seed list.
+     * </p>
      *
      * @param request {@link SeedListRequest}
      * @return {@link Response}
@@ -55,7 +59,9 @@ public interface MailgunSeedListApi extends MailgunApi {
     Response generateSeedListFeignResponse(SeedListRequest request);
 
     /**
+     * <p>
      * Update a seed list.
+     * </p>
      *
      * @param request {@link SeedListRequest}
      * @return {@link SeedListItem}
@@ -65,7 +71,9 @@ public interface MailgunSeedListApi extends MailgunApi {
     SeedListItem updateSeedList(@Param("targetEmail") String targetEmail, SeedListRequest request);
 
     /**
+     * <p>
      * Update a seed list.
+     * </p>
      *
      * @param request {@link SeedListRequest}
      * @return {@link Response}
@@ -228,7 +236,7 @@ public interface MailgunSeedListApi extends MailgunApi {
 
     /**
      * <p>
-     * List Results.
+     * Get List results.
      * </p>
      *
      * @return {@link Response}

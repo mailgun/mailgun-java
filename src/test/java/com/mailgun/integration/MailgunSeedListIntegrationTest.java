@@ -51,8 +51,8 @@ class MailgunSeedListIntegrationTest {
     @Test
     void generateSeedListSuccessTest() {
         SeedListRequest request = SeedListRequest.builder()
-            .seedFilter(".*")
-            .name(SEED_FILTER)
+            .seedFilter(SEED_FILTER)
+            .name(SEED_LIST_NAME)
             .sendingDomains(Arrays.asList(TEST_DOMAIN_1, TEST_DOMAIN_2))
             .build();
 
@@ -170,8 +170,7 @@ class MailgunSeedListIntegrationTest {
 
     @Test
     void getSeedListsAttributeSuccessTest() {
-        SeedListsAttributesResponse result = mailgunSeedListApi.getSeedListsAttribute(
-            ATTRIBUTE_NAME);
+        SeedListsAttributesResponse result = mailgunSeedListApi.getSeedListsAttribute(ATTRIBUTE_NAME);
 
         SeedListsAttributes attributes = result.getItems();
         assertNotNull(attributes);
@@ -212,8 +211,7 @@ class MailgunSeedListIntegrationTest {
 
     @Test
     void getResultsAttributeSuccessTest() {
-        SeedListsAttributesResponse result = mailgunSeedListApi.getResultsAttribute(
-            ATTRIBUTE_SENDER);
+        SeedListsAttributesResponse result = mailgunSeedListApi.getResultsAttribute(ATTRIBUTE_SENDER);
 
         SeedListsAttributes attributes = result.getItems();
         assertNotNull(attributes);
