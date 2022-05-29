@@ -1,20 +1,30 @@
 package com.mailgun.integration;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+
 import com.mailgun.api.v3.suppression.MailgunSuppressionBouncesApi;
 import com.mailgun.client.MailgunClient;
 import com.mailgun.model.ResponseWithMessage;
 import com.mailgun.model.suppression.SuppressionResponse;
 import com.mailgun.model.suppression.bounces.BouncesItem;
+import com.mailgun.model.suppression.bounces.BouncesListImportRequest;
 import com.mailgun.model.suppression.bounces.BouncesRequest;
 import com.mailgun.model.suppression.bounces.BouncesResponse;
+import com.mailgun.utils.FileUtils;
 import feign.FeignException;
-import org.apache.commons.collections4.CollectionUtils;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
-import java.util.List;
 
 import static com.mailgun.constants.IntegrationTestConstants.MAIN_DOMAIN;
 import static com.mailgun.constants.IntegrationTestConstants.PRIVATE_API_KEY;
@@ -109,6 +119,33 @@ class MailgunSuppressionBouncesApiIntegrationTest {
         ResponseWithMessage result = suppressionBouncesApi.addBounces(MAIN_DOMAIN, Arrays.asList(bouncesRequest1, bouncesRequest2));
 
         assertEquals("2 addresses have been added to the bounces table", result.getMessage());
+    }
+
+    @Test
+    void importBounceListSuccessTest() throws IOException {
+        List<String[]> dataLines = Arrays.asList(
+            new String[] { "address", "code", "error", "created_at" },
+            new String[] { "fake-address-1@fake.com", "551", "Error message 1", StringUtils.EMPTY},
+            new String[] { "fake-address-2@fake.com", "552", "Error message 2", StringUtils.EMPTY }
+        );
+
+        File csvOutputFile = File.createTempFile("bounces_list", ".csv");
+        try (PrintWriter pw = new PrintWriter(csvOutputFile)) {
+            dataLines.stream()
+                .map(FileUtils::convertToCSV)
+                .forEach(pw::println);
+        }
+
+        assertTrue(csvOutputFile.exists());
+        csvOutputFile.deleteOnExit();
+
+        BouncesListImportRequest request = BouncesListImportRequest.builder()
+            .file(csvOutputFile)
+            .build();
+
+        ResponseWithMessage result = suppressionBouncesApi.importBounceList(MAIN_DOMAIN, request);
+
+        assertEquals("file uploaded successfully", result.getMessage());
     }
 
     @Test

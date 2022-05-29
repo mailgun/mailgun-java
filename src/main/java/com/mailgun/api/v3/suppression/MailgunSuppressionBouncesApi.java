@@ -4,6 +4,7 @@ import com.mailgun.api.MailgunApi;
 import com.mailgun.model.ResponseWithMessage;
 import com.mailgun.model.suppression.SuppressionResponse;
 import com.mailgun.model.suppression.bounces.BouncesItem;
+import com.mailgun.model.suppression.bounces.BouncesListImportRequest;
 import com.mailgun.model.suppression.bounces.BouncesRequest;
 import com.mailgun.model.suppression.bounces.BouncesResponse;
 import feign.Headers;
@@ -187,6 +188,32 @@ public interface MailgunSuppressionBouncesApi extends MailgunApi {
     @Headers({"Content-Type: application/json", "Accept: application/json"})
     @RequestLine("POST /{domain}/bounces")
     Response addSBounceFeignResponses(@Param("domain") String domain, List<BouncesRequest> request);
+
+    /**
+     * <p>
+     * Import a list of bounces.
+     * </p>
+     *
+     * @param domain  Name of the domain
+     * @param request {@link BouncesListImportRequest}
+     * @return {@link ResponseWithMessage}
+     */
+    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @RequestLine("POST /{domain}/bounces/import")
+    ResponseWithMessage importBounceList(@Param("domain") String domain, BouncesListImportRequest request);
+
+    /**
+     * <p>
+     * Import a list of bounces.
+     * </p>
+     *
+     * @param domain  Name of the domain
+     * @param request {@link BouncesListImportRequest}
+     * @return {@link Response}
+     */
+    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @RequestLine("POST /{domain}/bounces/import")
+    Response importBounceListFeignResponses(@Param("domain") String domain, BouncesListImportRequest request);
 
     /**
      * <p>

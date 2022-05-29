@@ -22,7 +22,7 @@ public class BulkVerificationStatusRequest {
 
     /**
      * <p>
-     * An uploaded file of email addresses.
+     * An uploaded CSV file of email addresses.
      * </p>
      */
     File file;

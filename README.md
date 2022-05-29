@@ -945,6 +945,17 @@ Add multiple bounce records to the bounce list in a single API call.
         ResponseWithMessage response = suppressionBouncesApi.addBounces(DOMAIN, Arrays.asList(bouncesRequest1, bouncesRequest2));
 ``` 
 
+#### Import Bounces
+
+Import a list of bounces.
+```java
+        BouncesListImportRequest request = BouncesListImportRequest.builder()
+            .file(new File("/path/to/file"))
+            .build();
+
+        ResponseWithMessage result = suppressionBouncesApi.importBounceList(MAIN_DOMAIN, request);
+``` 
+
 #### Delete Bounce
 
 Delete a single bounce.
