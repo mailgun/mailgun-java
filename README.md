@@ -314,6 +314,7 @@ More information:
       - [Get single Unsubscribe](#Get-single-Unsubscribe)
       - [Add address](#Add-address)
       - [Add addresses](#Add-addresses)
+      - [Import addresses](#Import-addresses)
       - [Remove address tag](#Remove-address-tag)
       - [Remove address](#Remove-address)
     - [Suppression Whitelists](#Suppression-Whitelists)
@@ -1114,6 +1115,17 @@ Add multiple unsubscribe records to the unsubscribe list in a single API call(up
         .build();
 
         ResponseWithMessage response = suppressionUnsubscribeApi.addAddressesToUnsubscribeTable(DOMAIN, Arrays.asList(unsubscribeItemAllFields, unsubscribeItemAddressOnly));
+``` 
+
+#### Import addresses
+
+Import a CSV file containing a list of addresses to add to the unsubscribe list.
+```java
+        UnsubscribesListImportRequest request = UnsubscribesListImportRequest.builder()
+        .file(new File("/path/to/file"))
+        .build();
+
+        ResponseWithMessage result = suppressionUnsubscribeApi.importAddressesToUnsubscribeTable(MAIN_DOMAIN, request);
 ``` 
 
 #### Remove address tag

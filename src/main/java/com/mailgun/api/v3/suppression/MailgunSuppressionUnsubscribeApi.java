@@ -6,6 +6,7 @@ import com.mailgun.model.suppression.SuppressionResponse;
 import com.mailgun.model.suppression.unsubscribe.UnsubscribeItem;
 import com.mailgun.model.suppression.unsubscribe.UnsubscribeItemResponse;
 import com.mailgun.model.suppression.unsubscribe.UnsubscribeSingleItemRequest;
+import com.mailgun.model.suppression.unsubscribe.UnsubscribesListImportRequest;
 import feign.Headers;
 import feign.Param;
 import feign.RequestLine;
@@ -190,6 +191,49 @@ public interface MailgunSuppressionUnsubscribeApi extends MailgunApi {
     @Headers({"Content-Type: application/json", "Accept: application/json"})
     @RequestLine("POST /{domain}/unsubscribes")
     Response addAddressesToUnsubscribeTableFeignResponse(@Param("domain") String domain, List<UnsubscribeItem> request);
+
+    /**
+     * <p>
+     * Import a CSV file containing a list of addresses to add to the unsubscribe list.
+     * </p>
+     * <p>
+     * CSV file must be 25MB or under and must contain the following column headers:
+     * </p>
+     * <pre>
+     * <code>address</code> Valid email address
+     * <code>tags</code> Tag to unsubscribe from, use * to unsubscribe an address from all domain’s correspondence (optional, default: *)
+     * <code>created_at</code> Timestamp of a bounce event in RFC2822 format (optional, default: current time)
+     * </pre>
+     *
+     * @param domain  Name of the domain
+     * @param request list of {@link UnsubscribesListImportRequest}
+     * @return {@link ResponseWithMessage}
+     */
+    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @RequestLine("POST /{domain}/unsubscribes/import")
+    ResponseWithMessage importAddressesToUnsubscribeTable(@Param("domain") String domain, UnsubscribesListImportRequest request);
+
+    /**
+     * <p>
+     * Import a CSV file containing a list of addresses to add to the unsubscribe list.
+     * </p>
+     * <p>
+     * CSV file must be 25MB or under and must contain the following column headers:
+     * </p>
+     * <pre>
+     * <code>address</code> Valid email address
+     * <code>tags</code> Tag to unsubscribe from, use * to unsubscribe an address from all domain’s correspondence (optional, default: *)
+     * <code>created_at</code> Timestamp of a bounce event in RFC2822 format (optional, default: current time)
+     * </pre>
+     *
+     * @param domain  Name of the domain
+     * @param request list of {@link UnsubscribesListImportRequest}
+     * @return {@link Response}
+     */
+    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @RequestLine("POST /{domain}/unsubscribes/import")
+    Response importAddressesToUnsubscribeTableFeignResponse(@Param("domain") String domain, UnsubscribesListImportRequest request);
+
 
     /**
      * <p>
