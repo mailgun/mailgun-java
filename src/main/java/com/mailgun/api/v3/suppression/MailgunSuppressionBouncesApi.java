@@ -193,6 +193,15 @@ public interface MailgunSuppressionBouncesApi extends MailgunApi {
      * <p>
      * Import a list of bounces.
      * </p>
+     * <p>
+     * CSV file must be 25MB or under and must contain the following column headers:
+     * </p>
+     * <pre>
+     * <code>address</code> Valid email address
+     * <code>code</code> Error code (optional, default: 550)
+     * <code>error</code> Error description (optional, default: empty string)
+     * <code>created_at</code> Timestamp of a bounce event in RFC2822 format (optional, default: current time)
+     * </pre>
      *
      * @param domain  Name of the domain
      * @param request {@link BouncesListImportRequest}
@@ -206,6 +215,15 @@ public interface MailgunSuppressionBouncesApi extends MailgunApi {
      * <p>
      * Import a list of bounces.
      * </p>
+     * <p>
+     * CSV file must be 25MB or under and must contain the following column headers:
+     * </p>
+     * <pre>
+     * <code>address</code> Valid email address
+     * <code>code</code> Error code (optional, default: 550)
+     * <code>error</code> Error description (optional, default: empty string)
+     * <code>created_at</code> Timestamp of a bounce event in RFC2822 format (optional, default: current time)
+     * </pre>
      *
      * @param domain  Name of the domain
      * @param request {@link BouncesListImportRequest}

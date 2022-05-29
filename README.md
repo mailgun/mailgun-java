@@ -297,6 +297,7 @@ More information:
       - [Get Bounce](#Get-Bounce)
       - [Add Bounce](#Add-Bounce)
       - [Add Bounces](#Add-Bounces)
+      - [Import Bounces](#Import-Bounce)
       - [Delete Bounce](#Delete-Bounce)
       - [Delete all Bounces](#Delete-all-Bounces)
     - [Suppression Complaints](#Suppression-Complaints)
@@ -305,6 +306,7 @@ More information:
       - [Get single Complaint](#Get-single-Complaint)
       - [Add Address](#Add-Address)
       - [Add Addresses](#Add-Addresses)
+      - [Import Addresses](#Import-Addresses)
       - [Remove Address](#Remove-Address)
     - [Suppression Unsubscribe](#Suppression-Unsubscribe)
       - [Set up MailgunSuppressionUnsubscribeApi](#Set-up-MailgunSuppressionUnsubscribeApi)
@@ -1029,7 +1031,18 @@ Add multiple complaint records to the complaint list in a single API call(up to 
                 .address(EMAIL_2)
                 .build();
 
-        ResponseWithMessage response = suppressionComplaintsApi.addAddressesToComplaintsList(TEST_MAIN_DOMAIN, Arrays.asList(complaintsItem1, complaintsItem2));
+        ResponseWithMessage response = suppressionComplaintsApi.addAddressesToComplaintsList(MAIN_DOMAIN, Arrays.asList(complaintsItem1, complaintsItem2));
+``` 
+
+#### Import Addresses
+
+Import a list of complaints.
+```java
+        ComplaintsListImportRequest request = ComplaintsListImportRequest.builder()
+            .file(new File("/path/to/file"))
+            .build();
+
+        ResponseWithMessage result = suppressionComplaintsApi.importComplaintsList(MAIN_DOMAIN, request);
 ``` 
 
 #### Remove Address
@@ -1294,7 +1307,7 @@ Updates an existing webhook.
                 .urls(Arrays.asList(WEBHOOK_URL_2, WEBHOOK_URL_3))
                 .build();
 
-        WebhookResult result = mailgunWebhooksApi.updateWebhook(TEST_MAIN_DOMAIN, WebhookName.CLICKED, request);
+        WebhookResult result = mailgunWebhooksApi.updateWebhook(MAIN_DOMAIN, WebhookName.CLICKED, request);
 ``` 
 
 #### Delete Webhook
@@ -1505,7 +1518,7 @@ Returns a list of stored templates for the domain with paging.
                 .pivot(TEMPLATE_NAME)
                 .build();
 
-        TemplatesResult result = mailgunTemplatesApi.getAllTemplates(TEST_MAIN_DOMAIN, pagingWithPivot);
+        TemplatesResult result = mailgunTemplatesApi.getAllTemplates(MAIN_DOMAIN, pagingWithPivot);
 ``` 
 
 #### Get Template

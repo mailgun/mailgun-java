@@ -3,6 +3,7 @@ package com.mailgun.api.v3.suppression;
 import com.mailgun.api.MailgunApi;
 import com.mailgun.model.ResponseWithMessage;
 import com.mailgun.model.suppression.SuppressionResponse;
+import com.mailgun.model.suppression.bounces.ComplaintsListImportRequest;
 import com.mailgun.model.suppression.complaints.ComplaintsItem;
 import com.mailgun.model.suppression.complaints.ComplaintsItemResponse;
 import com.mailgun.model.suppression.complaints.ComplaintsSingleItemRequest;
@@ -185,6 +186,53 @@ public interface MailgunSuppressionComplaintsApi extends MailgunApi {
     @Headers({"Content-Type: application/json", "Accept: application/json"})
     @RequestLine("POST /{domain}/complaints")
     Response addAddressesToComplaintsListFeignResponse(@Param("domain") String domain, List<ComplaintsItem> request);
+
+    /**
+     * <p>
+     * Import a list of complaints.
+     * </p>
+     * <p>
+     * Import a CSV file containing a list of addresses to add to the complaint list.
+     * </p>
+     * <p>
+     * CSV file must be 25MB or under and must contain the following column headers:
+     * </p>
+     * <pre>
+     * <code>address</code> Valid email address
+     * <code>created_at</code> Timestamp of a bounce event in RFC2822 format (optional, default: current time)
+     * </pre>
+     *
+     * @param domain  Name of the domain
+     * @param request {@link ComplaintsItem}
+     * @return list of {@link ResponseWithMessage}
+     */
+    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @RequestLine("POST /{domain}/complaints/import")
+    ResponseWithMessage importComplaintsList(@Param("domain") String domain, ComplaintsListImportRequest request);
+
+    /**
+     * <p>
+     * Add multiple complaints.
+     * </p>
+     * <p>
+     * Import a CSV file containing a list of addresses to add to the complaint list.
+     * </p>
+     * <p>
+     * CSV file must be 25MB or under and must contain the following column headers:
+     * </p>
+     * <pre>
+     * <code>address</code> Valid email address
+     * <code>created_at</code> Timestamp of a bounce event in RFC2822 format (optional, default: current time)
+     * </pre>
+     *
+     * @param domain  Name of the domain
+     * @param request {@link ComplaintsItem}
+     * @return list of {@link Response}
+     */
+    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @RequestLine("POST /{domain}/complaints/import")
+    Response importComplaintsListFeignResponse(@Param("domain") String domain, ComplaintsListImportRequest request);
+
 
     /**
      * <p>
