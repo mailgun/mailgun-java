@@ -322,6 +322,7 @@ More information:
       - [Get all Whitelists](#Get-all-Whitelists)
       - [Get single Whitelist](#Get-single-Whitelist)
       - [Add address/domain](#Add-address/domain)
+      - [Import address/domain](#Import-address/domain)
       - [Delete address/domain](#Delete-address/domain)
   - [Routes](#Routes)
     - [Set up MailgunRoutesApi](#Set-up-MailgunRoutesApi)
@@ -1187,6 +1188,17 @@ Add an address or domain to the whitelist table.
                 .build();
 
         ResponseWithMessage response = suppressionWhitelistsApi.addSingleWhitelistRecord(DOMAIN, request);
+``` 
+
+#### Import address/domain
+
+Import a CSV file containing a list of addresses and/or domains to add to the whitelist.
+```java
+        WhitelistsListImportRequest request = WhitelistsListImportRequest.builder()
+        .file(new File("/path/to/file"))
+            .build();
+
+        ResponseWithMessage result = suppressionWhitelistsApi.importWhitelistRecords(MAIN_DOMAIN, request);
 ``` 
 
 #### Delete address/domain

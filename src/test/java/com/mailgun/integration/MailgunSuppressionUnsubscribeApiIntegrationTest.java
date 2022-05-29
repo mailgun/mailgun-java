@@ -125,7 +125,7 @@ class MailgunSuppressionUnsubscribeApiIntegrationTest {
     void importAddressesToUnsubscribeTableTest() throws IOException {
         List<String[]> dataLines = Arrays.asList(
             new String[] { "address", "tags", "created_at" },
-            new String[] { "fake-address-1@fake.com", "*", StringUtils.EMPTY},
+            new String[] { "fake-address-1@fake.com", "*", StringUtils.EMPTY },
             new String[] { "fake-address-2@fake.com", "*", StringUtils.EMPTY }
         );
 

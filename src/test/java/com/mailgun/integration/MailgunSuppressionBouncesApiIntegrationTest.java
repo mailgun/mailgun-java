@@ -125,7 +125,7 @@ class MailgunSuppressionBouncesApiIntegrationTest {
     void importBounceListSuccessTest() throws IOException {
         List<String[]> dataLines = Arrays.asList(
             new String[] { "address", "code", "error", "created_at" },
-            new String[] { "fake-address-1@fake.com", "551", "Error message 1", StringUtils.EMPTY},
+            new String[] { "fake-address-1@fake.com", "551", "Error message 1", StringUtils.EMPTY },
             new String[] { "fake-address-2@fake.com", "552", "Error message 2", StringUtils.EMPTY }
         );
 

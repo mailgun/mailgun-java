@@ -4,6 +4,7 @@ import com.mailgun.api.MailgunApi;
 import com.mailgun.model.ResponseWithMessage;
 import com.mailgun.model.suppression.whitelists.WhitelistsItem;
 import com.mailgun.model.suppression.whitelists.WhitelistsItemResponse;
+import com.mailgun.model.suppression.whitelists.WhitelistsListImportRequest;
 import com.mailgun.model.suppression.whitelists.WhitelistsRemoveRecordResponse;
 import com.mailgun.model.suppression.whitelists.WhitelistsRequest;
 import feign.Headers;
@@ -147,6 +148,46 @@ public interface MailgunSuppressionWhitelistsApi extends MailgunApi {
     @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
     @RequestLine("POST /{domain}/whitelists")
     Response addSingleWhitelistRecordFeignResponse(@Param("domain") String domain, WhitelistsRequest request);
+
+    /**
+     * <p>
+     * Import a CSV file containing a list of addresses and/or domains to add to the whitelist.
+     * </p>
+     * <p>
+     * CSV file must be 25MB or under and must contain the following column headers:
+     * </p>
+     * <pre>
+     * <code>address</code> Valid email address if you would like to whitelist email address
+     * <code>domain</code> Valid domain name if you would like whitelist entire domain name
+     * </pre>
+     *
+     * @param domain  Name of the domain
+     * @param request {@link WhitelistsListImportRequest}
+     * @return {@link ResponseWithMessage}
+     */
+    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @RequestLine("POST /{domain}/whitelists/import")
+    ResponseWithMessage importWhitelistRecords(@Param("domain") String domain, WhitelistsListImportRequest request);
+
+    /**
+     * <p>
+     * Import a CSV file containing a list of addresses and/or domains to add to the whitelist.
+     * </p>
+     * <p>
+     * CSV file must be 25MB or under and must contain the following column headers:
+     * </p>
+     * <pre>
+     * <code>address</code> Valid email address if you would like to whitelist email address
+     * <code>domain</code> Valid domain name if you would like whitelist entire domain name
+     * </pre>
+     *
+     * @param domain  Name of the domain
+     * @param request {@link WhitelistsListImportRequest}
+     * @return {@link Response}
+     */
+    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @RequestLine("POST /{domain}/whitelists/import")
+    Response importWhitelistRecordsFeignResponse(@Param("domain") String domain, WhitelistsListImportRequest request);
 
     /**
      * <p>

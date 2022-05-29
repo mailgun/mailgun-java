@@ -1,19 +1,26 @@
 package com.mailgun.integration;
 
-import com.mailgun.api.v3.suppression.MailgunSuppressionWhitelistsApi;
-import com.mailgun.client.MailgunClient;
-import com.mailgun.model.ResponseWithMessage;
-import com.mailgun.model.suppression.whitelists.WhitelistsItem;
-import com.mailgun.model.suppression.whitelists.WhitelistsItemResponse;
-import com.mailgun.model.suppression.whitelists.WhitelistsRemoveRecordResponse;
-import com.mailgun.model.suppression.whitelists.WhitelistsRequest;
-import feign.FeignException;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.List;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
+import com.mailgun.api.v3.suppression.MailgunSuppressionWhitelistsApi;
+import com.mailgun.client.MailgunClient;
+import com.mailgun.model.ResponseWithMessage;
+import com.mailgun.model.suppression.whitelists.WhitelistsItem;
+import com.mailgun.model.suppression.whitelists.WhitelistsItemResponse;
+import com.mailgun.model.suppression.whitelists.WhitelistsListImportRequest;
+import com.mailgun.model.suppression.whitelists.WhitelistsRemoveRecordResponse;
+import com.mailgun.model.suppression.whitelists.WhitelistsRequest;
+import com.mailgun.utils.FileUtils;
+import feign.FeignException;
 
 import static com.mailgun.constants.IntegrationTestConstants.MAIN_DOMAIN;
 import static com.mailgun.constants.IntegrationTestConstants.PRIVATE_API_KEY;
@@ -99,6 +106,33 @@ class MailgunSuppressionWhitelistsApiIntegrationTest {
 
         String expected = "Address/Domain has been added to the whitelists table";
         assertEquals(expected, result.getMessage());
+    }
+
+    @Test
+    void importWhitelistRecordsSuccessTest() throws IOException {
+        List<String[]> dataLines = Arrays.asList(
+            new String[] { "address", "domain" },
+            new String[] { "fake-address-1@fake.com", "some.1.test.com" },
+            new String[] { "fake-address-2@fake.com", "some.2.test.com" }
+        );
+
+        File csvOutputFile = File.createTempFile("whitelist_list", ".csv");
+        try (PrintWriter pw = new PrintWriter(csvOutputFile)) {
+            dataLines.stream()
+                .map(FileUtils::convertToCSV)
+                .forEach(pw::println);
+        }
+
+        assertTrue(csvOutputFile.exists());
+        csvOutputFile.deleteOnExit();
+
+        WhitelistsListImportRequest request = WhitelistsListImportRequest.builder()
+            .file(csvOutputFile)
+            .build();
+
+        ResponseWithMessage result = suppressionWhitelistsApi.importWhitelistRecords(MAIN_DOMAIN, request);
+
+        assertEquals("file uploaded successfully", result.getMessage());
     }
 
     @Test

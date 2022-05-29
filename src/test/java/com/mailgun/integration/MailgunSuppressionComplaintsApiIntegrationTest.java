@@ -112,7 +112,7 @@ class MailgunSuppressionComplaintsApiIntegrationTest {
     void importComplaintsListSuccessTest() throws IOException {
         List<String[]> dataLines = Arrays.asList(
             new String[] { "address", "created_at" },
-            new String[] { "fake-address-1@fake.com", StringUtils.EMPTY},
+            new String[] { "fake-address-1@fake.com", StringUtils.EMPTY },
             new String[] { "fake-address-2@fake.com", StringUtils.EMPTY }
         );
 
