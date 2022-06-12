@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import com.mailgun.api.v3.MailgunMessagesApi;
 import com.mailgun.client.MailgunClient;
+import com.mailgun.model.message.MailgunMimeMessage;
 import com.mailgun.model.message.Message;
 import com.mailgun.model.message.MessageResponse;
 import com.mailgun.util.ObjectMapperUtil;
@@ -259,6 +260,21 @@ class MailgunMessagesIntegrationTest {
                 .build();
 
         MessageResponse result = mailgunMessagesApi.sendMessage(MAIN_DOMAIN, message);
+
+        assertNotNull(result.getId());
+        assertEquals(EMAIL_RESPONSE_MESSAGE, result.getMessage());
+    }
+
+    @Test
+    void sendMIMEMessage_Test() {
+        File mimeMessage = new File("src/test/resources/mime-message.txt");
+
+        MailgunMimeMessage mailgunMimeMessage = MailgunMimeMessage.builder()
+            .to(EMAIL_TO)
+            .message(mimeMessage)
+            .build();
+
+        MessageResponse result = mailgunMessagesApi.sendMIMEMessage(MAIN_DOMAIN, mailgunMimeMessage);
 
         assertNotNull(result.getId());
         assertEquals(EMAIL_RESPONSE_MESSAGE, result.getMessage());

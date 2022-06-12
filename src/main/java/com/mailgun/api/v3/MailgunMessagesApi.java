@@ -1,6 +1,7 @@
 package com.mailgun.api.v3;
 
 import com.mailgun.api.MailgunApi;
+import com.mailgun.model.message.MailgunMimeMessage;
 import com.mailgun.model.message.Message;
 import com.mailgun.model.message.MessageResponse;
 import feign.Headers;
@@ -41,5 +42,27 @@ public interface MailgunMessagesApi extends MailgunApi {
     @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
     @RequestLine("POST /{domain}/messages")
     Response sendMessageFeignResponse(@Param("domain") String domain, Message message);
+
+    /**
+     * Send email(s) in MIME format
+     *
+     * @param domain  Name of the domain
+     * @param message {@link MailgunMimeMessage}
+     * @return {@link MessageResponse}
+     */
+    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @RequestLine("POST /{domain}/messages.mime")
+    MessageResponse sendMIMEMessage(@Param("domain") String domain, MailgunMimeMessage message);
+
+    /**
+     * Send email(s) in MIME format
+     *
+     * @param domain  Name of the domain
+     * @param message {@link MailgunMimeMessage}
+     * @return {@link Response}
+     */
+    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @RequestLine("POST /{domain}/messages.mime")
+    Response sendMIMEMessageFeignResponse(@Param("domain") String domain, MailgunMimeMessage message);
 
 }
