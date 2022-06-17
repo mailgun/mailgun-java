@@ -34,10 +34,10 @@ class MailgunAsyncIntegrationTest {
     void sendMessageAsyncTest() throws ExecutionException, InterruptedException {
         Message message = getMessage("Async message example");
 
-        MailgunMessagesApi mailgunMessagesApi = MailgunClient.config(PRIVATE_API_KEY)
+        MailgunMessagesApi mailgunAsyncMessagesApi = MailgunClient.config(PRIVATE_API_KEY)
             .createAsyncApi(MailgunMessagesApi.class);
 
-        CompletableFuture<MessageResponse> result = mailgunMessagesApi.sendMessageAsync(MAIN_DOMAIN, message);
+        CompletableFuture<MessageResponse> result = mailgunAsyncMessagesApi.sendMessageAsync(MAIN_DOMAIN, message);
 
         MessageResponse messageResponse = result.get();
         assertNotNull(messageResponse.getId());
