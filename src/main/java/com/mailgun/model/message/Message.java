@@ -262,7 +262,7 @@ public class Message {
      * Use this field to provide values for a substitution to render them in the template.
      * </p>
      */
-    @FormProperty("h:X-Mailgun-Variables")
+    @FormProperty("t:variables")
     String mailgunVariables;
 
     public static MessageBuilder builder() {

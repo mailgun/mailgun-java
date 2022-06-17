@@ -128,6 +128,7 @@ class MailgunMessagesIntegrationTest {
             .build();
 
         MessageResponse result = mailgunMessagesApi.sendMessage(MAIN_DOMAIN, message);
+
         assertEquals(EMAIL_RESPONSE_MESSAGE, result.getMessage());
         //        EMAIL_TO recipient result:
         //        subject: Hey Alice

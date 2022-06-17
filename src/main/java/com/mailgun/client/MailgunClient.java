@@ -5,6 +5,8 @@ import com.mailgun.api.MailgunApi;
 import com.mailgun.util.ConsoleLogger;
 import com.mailgun.util.MailgunApiUtil;
 import com.mailgun.util.ObjectMapperUtil;
+import feign.AsyncClient;
+import feign.AsyncFeign;
 import feign.Feign;
 import feign.Logger;
 import feign.Request;
@@ -42,6 +44,7 @@ public class MailgunClient {
         private Logger logger = new ConsoleLogger();
         private ErrorDecoder errorDecoder = new ErrorDecoder.Default();
         private Request.Options options = new Request.Options();
+        private AsyncClient<Object> client = null;
 
         private String baseUrl = DEFAULT_BASE_URL;
         private final String apiKey;
@@ -53,6 +56,19 @@ public class MailgunClient {
 
         private MailgunClientBuilder(String apiKey) {
             this.apiKey = apiKey;
+        }
+
+        /**
+         * <p>
+         * You can override default feign async client {@link AsyncClient.Default}
+         * </p>
+         *
+         * @param client implementation of {@link AsyncClient}
+         * @return Returns a reference to this object so that method calls can be chained together.
+         */
+        public MailgunClientBuilder client(AsyncClient<Object> client) {
+            this.client = client;
+            return this;
         }
 
         public MailgunClientBuilder logLevel(Logger.Level logLevel) {
@@ -87,6 +103,19 @@ public class MailgunClient {
                     .target((Class<T>) apiType, url);
         }
 
+        @SuppressWarnings("unchecked")
+        public <T> T createAsyncApi(Class<? extends MailgunApi> apiType) {
+            String url = MailgunApiUtil.getFullUrl(apiType, baseUrl);
+            return getAsyncFeignBuilder()
+                .target((Class<T>) apiType, url);
+        }
+
+        @SuppressWarnings("unchecked")
+        public <T> T createApiWithAbsoluteUrl(Class<? extends MailgunApi> apiType) {
+            return getFeignBuilder()
+                .target((Class<T>) apiType, baseUrl);
+        }
+
         private Feign.Builder getFeignBuilder() {
             return Feign.builder()
                     .logLevel(logLevel)
@@ -98,6 +127,19 @@ public class MailgunClient {
                     .errorDecoder(errorDecoder)
                     .options(options)
                     .requestInterceptor(new BasicAuthRequestInterceptor("api", apiKey));
+        }
+
+        private AsyncFeign.AsyncBuilder<?> getAsyncFeignBuilder() {
+            return AsyncFeign.asyncBuilder()
+                .logLevel(logLevel)
+                .logger(logger)
+                .encoder(ENCODER)
+                .decoder(DECODER)
+                .queryMapEncoder(QUERY_MAP_ENCODER)
+                .errorDecoder(errorDecoder)
+                .options(options)
+                .client(client)
+                .requestInterceptor(new BasicAuthRequestInterceptor("api", apiKey));
         }
     }
 
