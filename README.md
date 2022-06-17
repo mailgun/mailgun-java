@@ -132,7 +132,7 @@ mailgunMessagesApi.sendMessage(YOUR_DOMAIN, message);
 
 [Configuration examples](https://github.com/mailgun/mailgun-java/blob/49355cb9867963bbb847361801918aed48ead71a/src/test/java/com/mailgun/client/MailgunClientTest.java)
 
-#### Default configuration:
+#### Default Mailgun Client configuration:
 
 ```java
 //        For US servers
@@ -142,7 +142,7 @@ mailgunMessagesApi.sendMessage(YOUR_DOMAIN, message);
         MailgunClient.config(EU_BASE_URL, PRIVATE_API_KEY)
 ```
 
-#### Custom configuration.
+#### Custom Mailgun client configuration.
 
 You can specify your own logLevel, retryer, logger, errorDecoder, options.
 ```java
@@ -154,15 +154,22 @@ You can specify your own logLevel, retryer, logger, errorDecoder, options.
                 .options(new Request.Options(10, TimeUnit.SECONDS, 60, TimeUnit.SECONDS, true))
 ```
 
-
-#### Configuration example for the [Mailgun sending emails API](https://documentation.mailgun.com/en/latest/api-sending.html)
+#### Mailgun client configuration example for the [Mailgun sending emails API](https://documentation.mailgun.com/en/latest/api-sending.html)
 
 ```java
         MailgunMessagesApi mailgunMessagesApi = MailgunClient.config(PRIVATE_API_KEY)
-                .createApi(MailgunMessagesApi.class);
+            .createApi(MailgunMessagesApi.class);
 ```
 
-#### Spring Bean Configuration example:
+
+#### Async Mailgun client configuration example for the [Mailgun sending emails API](https://documentation.mailgun.com/en/latest/api-sending.html)
+
+```java
+        MailgunMessagesApi mailgunAsyncMessagesApi = MailgunClient.config(PRIVATE_API_KEY)
+            .createAsyncApi(MailgunMessagesApi.class);
+```
+
+#### Spring Bean Mailgun client configuration example:
 ```java
         @Bean
         public MailgunMessagesApi mailgunMessagesApi() {
@@ -243,12 +250,18 @@ More information:
   - [Messages](#messages)
     - [Set up MailgunMessagesApi](#Set-up-MailgunMessagesApi)
     - [Send email(s)](#send-emails)
+    - [Async send email(s)](#async-send-emails)
     - [Send email (html example)](#send-email-html-example)
     - [Send email (attachments example)](#send-email-attachments-example)
     - [Send email (inline multiple files example)](#send-email-inline-multiple-files-example)
     - [Send email (delay example)](#send-email-delay-example)
     - [Send email (reply-to example)](#send-email-reply-to-example)
     - [Send email (mailing list example)](#send-email-mailing-list-example)
+    - [Send email(s) in MIME format](#send-mime-emails)
+  - [Store Messages](#store-messages)
+    - [Set up MailgunStoreMessagesApi](#Set-up-MailgunStoreMessagesApi)
+    - [Resend email(s)](#resend-emails)
+    - [Retrieve email](#retrieve-email)
   - [Domains](#domains)
     - [Set up MailgunDomainsApi](#Set-up-MailgunDomainsApi)
     - [Get Domains list](#Get-Domains-list)
@@ -428,6 +441,22 @@ When you submit messages for delivery, Mailgun places them in a message queue.
         MessageResponse messageResponse = mailgunMessagesApi.sendMessage(DOMAIN, message);
 ```
 
+#### Async send email(s)
+Asynchronously send email(s).
+```java
+        MailgunMessagesApi mailgunAsyncMessagesApi = MailgunClient.config(PRIVATE_API_KEY)
+            .createAsyncApi(MailgunMessagesApi.class);
+
+        Message message = Message.builder()
+                .from(EMAIL_FROM)
+                .to(EmailUtil.emailWithName(USER_NAME, USER_EMAIL)
+                .subject(SUBJECT)
+                .text(TEXT)
+                .build();
+
+        CompletableFuture<MessageResponse> result = mailgunAsyncMessagesApi.sendMessageAsync(MAIN_DOMAIN, message);
+```
+
 #### Send email (html example)
 ```java
         Message message = Message.builder()
@@ -517,7 +546,45 @@ When you submit messages for delivery, Mailgun places them in a message queue.
         MessageResponse messageResponse = mailgunMessagesApi.sendMessage(DOMAIN, message);
 ```
 
+#### Send MIME email(s)
+Send email(s) in MIME format
+```java
+        MailgunMimeMessage mailgunMimeMessage = MailgunMimeMessage.builder()
+            .to(EMAIL_TO)
+            .message(new File("/path/to/file.mime"))
+            .build();
+
+        MessageResponse result = mailgunMessagesApi.sendMIMEMessage(MAIN_DOMAIN, mailgunMimeMessage);
+```
+
 More examples - [MailgunMessagesIntegrationTest](https://github.com/mailgun/mailgun-java/blob/main/src/test/java/com/mailgun/integration/MailgunMessagesIntegrationTest.java)
+
+
+### Store Messages
+
+[MailgunStoreMessagesApi](https://github.com/mailgun/mailgun-java/blob/main/src/main/java/com/mailgun/api/v3/MailgunStoreMessagesApi.java)
+allows you to work with stored messages.
+
+[Mailgun Store Messages documentation](https://documentation.mailgun.com/en/latest/api-sending.html).
+
+#### Set up MailgunStoreMessagesApi
+```java
+        MailgunStoreMessagesApi mailgunStoreMessagesApi = MailgunClient.config(storedMessageUrl, PRIVATE_API_KEY)
+            .createApiWithAbsoluteUrl(MailgunStoreMessagesApi.class);
+```
+
+#### Resend email(s)
+```java
+        MessageResponse result = mailgunStoreMessagesApi.resendMessage(EMAIL_TO);
+```
+
+#### Retrieve email(s)
+```java
+        StoreMessageResponse result = mailgunStoreMessagesApi.retrieveMessage();
+```
+
+More examples - [MailgunStoreMessagesIntegrationTest](https://github.com/mailgun/mailgun-java/blob/main/src/test/java/com/mailgun/integration/MailgunStoreMessagesIntegrationTest.java)
+
 
 
 ### Domains
