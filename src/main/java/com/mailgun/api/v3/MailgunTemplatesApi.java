@@ -37,6 +37,7 @@ import feign.Response;
  *
  * @see <a href="https://documentation.mailgun.com/en/latest/api-templates.html">Templates</a>
  */
+@Headers("Accept: application/json")
 public interface MailgunTemplatesApi extends MailgunApi {
 
     /**
@@ -47,7 +48,6 @@ public interface MailgunTemplatesApi extends MailgunApi {
      * @param domain Name of the domain
      * @return {@link TemplatesResult}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /{domain}/templates")
     TemplatesResult getAllTemplates(@Param("domain") String domain);
 
@@ -59,7 +59,6 @@ public interface MailgunTemplatesApi extends MailgunApi {
      * @param domain Name of the domain
      * @return {@link Response}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /{domain}/templates")
     Response getAllTemplatesFeignResponse(@Param("domain") String domain);
 
@@ -72,7 +71,6 @@ public interface MailgunTemplatesApi extends MailgunApi {
      * @param queryOptions {@link PagingWithPivot}
      * @return {@link TemplatesResult}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /{domain}/templates")
     TemplatesResult getAllTemplates(@Param("domain") String domain, @QueryMap PagingWithPivot queryOptions);
 
@@ -85,7 +83,6 @@ public interface MailgunTemplatesApi extends MailgunApi {
      * @param queryOptions {@link PagingWithPivot}
      * @return {@link Response}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /{domain}/templates")
     Response getAllTemplatesFeignResponse(@Param("domain") String domain, @QueryMap PagingWithPivot queryOptions);
 
@@ -98,7 +95,6 @@ public interface MailgunTemplatesApi extends MailgunApi {
      * @param name   Name of the template
      * @return {@link TemplateResponse}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /{domain}/templates/{name}")
     TemplateResponse getTemplate(@Param("domain") String domain, @Param("name") String name);
 
@@ -111,7 +107,6 @@ public interface MailgunTemplatesApi extends MailgunApi {
      * @param name   Name of the template
      * @return {@link Response}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /{domain}/templates/{name}")
     Response getTemplateFeignResponse(@Param("domain") String domain, @Param("name") String name);
 
@@ -124,7 +119,6 @@ public interface MailgunTemplatesApi extends MailgunApi {
      * @param name   Name of the template
      * @return {@link TemplateWithVersionResponse}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /{domain}/templates/{name}?active=yes")
     TemplateWithVersionResponse getActiveTemplateVersionContent(@Param("domain") String domain, @Param("name") String name);
 
@@ -137,7 +131,6 @@ public interface MailgunTemplatesApi extends MailgunApi {
      * @param name   Name of the template
      * @return {@link Response}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /{domain}/templates/{name}?active=yes")
     Response getActiveTemplateVersionContentFeignResponse(@Param("domain") String domain, @Param("name") String name);
 
@@ -153,7 +146,7 @@ public interface MailgunTemplatesApi extends MailgunApi {
      * @param request {@link TemplateRequest}
      * @return {@link TemplateWithMessageResponse}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /{domain}/templates")
     TemplateWithMessageResponse storeNewTemplate(@Param("domain") String domain, TemplateRequest request);
 
@@ -169,7 +162,7 @@ public interface MailgunTemplatesApi extends MailgunApi {
      * @param request {@link TemplateRequest}
      * @return {@link Response}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /{domain}/templates")
     Response storeNewTemplateFeignResponse(@Param("domain") String domain, TemplateRequest request);
 
@@ -183,7 +176,7 @@ public interface MailgunTemplatesApi extends MailgunApi {
      * @param description Updated description of the template
      * @return {@link TemplateStatusResponse}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("PUT /{domain}/templates/{name}")
     TemplateStatusResponse updateTemplate(@Param("domain") String domain, @Param("name") String name, @Param("description") String description);
 
@@ -197,7 +190,7 @@ public interface MailgunTemplatesApi extends MailgunApi {
      * @param description Updated description of the template
      * @return {@link Response}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("PUT /{domain}/templates/{name}")
     Response updateTemplateFeignResponse(@Param("domain") String domain, @Param("name") String name, @Param("description") String description);
 
@@ -211,7 +204,6 @@ public interface MailgunTemplatesApi extends MailgunApi {
      * @param name   Name of the template
      * @return {@link TemplateStatusResponse}
      */
-    @Headers({"Accept: application/json"})
     @RequestLine("DELETE /{domain}/templates/{name}")
     TemplateStatusResponse deleteTemplate(@Param("domain") String domain, @Param("name") String name);
 
@@ -225,7 +217,6 @@ public interface MailgunTemplatesApi extends MailgunApi {
      * @param name   Name of the template
      * @return {@link Response}
      */
-    @Headers({"Accept: application/json"})
     @RequestLine("DELETE /{domain}/templates/{name}")
     Response deleteTemplateFeignResponse(@Param("domain") String domain, @Param("name") String name);
 
@@ -237,7 +228,6 @@ public interface MailgunTemplatesApi extends MailgunApi {
      * @param domain Name of the domain
      * @return {@link ResponseWithMessage}
      */
-    @Headers({"Accept: application/json"})
     @RequestLine("DELETE /{domain}/templates")
     ResponseWithMessage deleteAllTemplatesInDomain(@Param("domain") String domain);
 
@@ -249,7 +239,6 @@ public interface MailgunTemplatesApi extends MailgunApi {
      * @param domain Name of the domain
      * @return {@link Response}
      */
-    @Headers({"Accept: application/json"})
     @RequestLine("DELETE /{domain}/templates")
     Response deleteAllTemplatesInDomainFeignResponse(@Param("domain") String domain);
 
@@ -262,7 +251,6 @@ public interface MailgunTemplatesApi extends MailgunApi {
      * @param templateName Name of the template
      * @return {@link TemplateAllVersionsResponse}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /{domain}/templates/{templateName}/versions")
     TemplateAllVersionsResponse getAllTemplateVersions(@Param("domain") String domain, @Param("templateName") String templateName);
 
@@ -275,7 +263,6 @@ public interface MailgunTemplatesApi extends MailgunApi {
      * @param templateName Name of the template
      * @return {@link Response}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /{domain}/templates/{templateName}/versions")
     Response getAllTemplateVersionsFeignResponse(@Param("domain") String domain, @Param("templateName") String templateName);
 
@@ -289,7 +276,6 @@ public interface MailgunTemplatesApi extends MailgunApi {
      * @param queryOptions {@link PagingWithPivot}
      * @return {@link TemplateAllVersionsResponse}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /{domain}/templates/{templateName}/versions")
     TemplateAllVersionsResponse getAllTemplateVersions(@Param("domain") String domain, @Param("templateName") String templateName, @QueryMap PagingWithPivot queryOptions);
 
@@ -303,7 +289,6 @@ public interface MailgunTemplatesApi extends MailgunApi {
      * @param queryOptions {@link PagingWithPivot}
      * @return {@link Response}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /{domain}/templates/{templateName}/versions")
     Response getAllTemplateVersionsFeignResponse(@Param("domain") String domain, @Param("templateName") String templateName, @QueryMap PagingWithPivot queryOptions);
 
@@ -317,7 +302,6 @@ public interface MailgunTemplatesApi extends MailgunApi {
      * @param tag          Tag of the template version
      * @return {@link TemplateWithVersionResponse}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /{domain}/templates/{templateName}/versions/{tag}")
     TemplateWithVersionResponse getSpecifiedVersionTemplateContent(@Param("domain") String domain, @Param("templateName") String templateName, @Param("tag") String tag);
 
@@ -331,7 +315,6 @@ public interface MailgunTemplatesApi extends MailgunApi {
      * @param tag          Tag of the template version
      * @return {@link Response}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /{domain}/templates/{templateName}/versions/{tag}")
     Response getSpecifiedVersionTemplateContentFeignResponse(@Param("domain") String domain, @Param("templateName") String templateName, @Param("tag") String tag);
 
@@ -345,7 +328,7 @@ public interface MailgunTemplatesApi extends MailgunApi {
      * @param request      {@link TemplateVersionRequest}
      * @return {@link TemplateWithMessageResponse}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /{domain}/templates/{templateName}/versions")
     TemplateWithMessageResponse createNewTemplateVersion(@Param("domain") String domain, @Param("templateName") String templateName, TemplateVersionRequest request);
 
@@ -359,7 +342,7 @@ public interface MailgunTemplatesApi extends MailgunApi {
      * @param request      {@link TemplateVersionRequest}
      * @return {@link Response}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /{domain}/templates/{templateName}/versions")
     Response createNewTemplateVersionFeignResponse(@Param("domain") String domain, @Param("templateName") String templateName, TemplateVersionRequest request);
 
@@ -374,7 +357,7 @@ public interface MailgunTemplatesApi extends MailgunApi {
      * @param request      {@link UpdateTemplateVersionRequest}
      * @return {@link TemplateVersionResponse}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("PUT /{domain}/templates/{templateName}/versions/{tag}")
     TemplateVersionResponse updateSpecificTemplateVersion(@Param("domain") String domain, @Param("templateName") String templateName,
                                                           @Param("tag") String tag, UpdateTemplateVersionRequest request);
@@ -390,7 +373,7 @@ public interface MailgunTemplatesApi extends MailgunApi {
      * @param request      {@link UpdateTemplateVersionRequest}
      * @return {@link Response}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("PUT /{domain}/templates/{templateName}/versions/{tag}")
     Response updateSpecificTemplateVersionFeignResponse(@Param("domain") String domain, @Param("templateName") String templateName,
                                                         @Param("tag") String tag, UpdateTemplateVersionRequest request);
@@ -403,7 +386,6 @@ public interface MailgunTemplatesApi extends MailgunApi {
      * @param templateVersion Template version tag
      * @return {@link TemplateVersionResponse}
      */
-    @Headers({"Accept: application/json"})
     @RequestLine("DELETE /{domain}/templates/{templateName}/versions/{templateVersion}")
     TemplateVersionResponse deleteSpecificTemplateVersion(@Param("domain") String domain, @Param("templateName") String templateName, @Param("templateVersion") String templateVersion);
 
@@ -415,7 +397,6 @@ public interface MailgunTemplatesApi extends MailgunApi {
      * @param templateVersion Template version tag
      * @return {@link Response}
      */
-    @Headers({"Accept: application/json"})
     @RequestLine("DELETE /{domain}/templates/{templateName}/versions/{templateVersion}")
     Response deleteSpecificTemplateVersionFeignResponse(@Param("domain") String domain, @Param("templateName") String templateName, @Param("templateVersion") String templateVersion);
 
