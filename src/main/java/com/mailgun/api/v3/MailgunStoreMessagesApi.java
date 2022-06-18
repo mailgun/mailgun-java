@@ -1,5 +1,7 @@
 package com.mailgun.api.v3;
 
+import java.util.concurrent.CompletableFuture;
+
 import com.mailgun.api.MailgunApi;
 import com.mailgun.enums.ApiVersion;
 import com.mailgun.model.message.MessageResponse;
@@ -21,7 +23,8 @@ public interface MailgunStoreMessagesApi extends MailgunApi {
 
     @Override
     default ApiVersion getApiVersion() {
-        throw new UnsupportedOperationException("TODO");
+        throw new UnsupportedOperationException("Please use 'MailgunClient.config(storedMessageUrl, PRIVATE_API_KEY)"
+            + ".createApiWithAbsoluteUrl(MailgunStoreMessagesApi.class)' configuration for this method");
     }
 
     /**
@@ -29,24 +32,60 @@ public interface MailgunStoreMessagesApi extends MailgunApi {
      * Resend email.
      * </p>
      *
-     * @param to Email address of the recipient
+     * @param recipientEmail Email address of the recipient
      * @return {@link MessageResponse}
      */
     @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST")
-    MessageResponse resendMessage(@Param("to") String to);
+    MessageResponse resendMessage(@Param("to") String recipientEmail);
 
     /**
      * <p>
      * Resend message.
      * </p>
      *
-     * @param to Email address of the recipient
+     * @param recipientEmail Email address of the recipient
      * @return {@link Response}
      */
     @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST")
-    Response resendMessageFeignResponse(@Param("to") String to);
+    Response resendMessageFeignResponse(@Param("to") String recipientEmail);
+
+    /**
+     * <p>
+     * Resend email.
+     * </p>
+     * <p>
+     * Note: Use the asynchronous Mailgun client for this method.
+     * <pre>
+     * <code>MailgunClient.config(PRIVATE_API_KEY)
+     *             .createAsyncApi(MailgunStoreMessagesApi.class);</code>
+     * </pre>
+     *
+     * @param recipientEmail Email address of the recipient
+     * @return {@link MessageResponse}
+     */
+    @Headers("Content-Type: multipart/form-data")
+    @RequestLine("POST")
+    CompletableFuture<MessageResponse> resendMessageAsync(@Param("to") String recipientEmail);
+
+    /**
+     * <p>
+     * Resend message.
+     * </p>
+     * <p>
+     * Note: Use the asynchronous Mailgun client for this method.
+     * <pre>
+     * <code>MailgunClient.config(PRIVATE_API_KEY)
+     *             .createAsyncApi(MailgunStoreMessagesApi.class);</code>
+     * </pre>
+     *
+     * @param recipientEmail Email address of the recipient
+     * @return {@link Response}
+     */
+    @Headers("Content-Type: multipart/form-data")
+    @RequestLine("POST")
+    CompletableFuture<Response> resendMessageFeignResponseAsync(@Param("to") String recipientEmail);
 
     /**
      * <p>

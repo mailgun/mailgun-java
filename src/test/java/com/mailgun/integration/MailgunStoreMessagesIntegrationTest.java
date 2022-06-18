@@ -25,6 +25,7 @@ import static com.mailgun.constants.IntegrationTestConstants.PRIVATE_API_KEY;
 import static com.mailgun.constants.TestConstants.EMAIL_RESPONSE_MESSAGE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Disabled("Use these tests as examples for a real implementation.")
@@ -44,6 +45,14 @@ class MailgunStoreMessagesIntegrationTest {
         EventsResponse events = mailgunEventsApi.getEvents(MAIN_DOMAIN, eventsQueryOptions);
 
         storedMessageUrl = events.getItems().get(0).getStorage().getUrl();
+    }
+
+    @Test
+    void resendMessage_UnsupportedOperationException_Test() {
+        assertThrows(UnsupportedOperationException.class, () ->
+            MailgunClient.config(storedMessageUrl, PRIVATE_API_KEY)
+                .createApi(MailgunStoreMessagesApi.class)
+        );
     }
 
     @Test
