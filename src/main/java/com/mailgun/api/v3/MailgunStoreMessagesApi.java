@@ -33,7 +33,7 @@ public interface MailgunStoreMessagesApi extends MailgunApi {
      * @return {@link MessageResponse}
      */
     @Headers("Content-Type: multipart/form-data")
-    @RequestLine("POST ")
+    @RequestLine("POST")
     MessageResponse resendMessage(@Param("to") String to);
 
     /**
@@ -45,7 +45,7 @@ public interface MailgunStoreMessagesApi extends MailgunApi {
      * @return {@link Response}
      */
     @Headers("Content-Type: multipart/form-data")
-    @RequestLine("POST ")
+    @RequestLine("POST")
     Response resendMessageFeignResponse(@Param("to") String to);
 
     /**
@@ -55,7 +55,7 @@ public interface MailgunStoreMessagesApi extends MailgunApi {
      *
      * @return {@link StoreMessageResponse}
      */
-    @RequestLine("GET ")
+    @RequestLine("GET")
     StoreMessageResponse retrieveMessage();
 
     /**
@@ -65,7 +65,7 @@ public interface MailgunStoreMessagesApi extends MailgunApi {
      *
      * @return {@link Response}
      */
-    @RequestLine("GET ")
+    @RequestLine("GET")
     Response retrieveMessageFeignResponse();
 
 }

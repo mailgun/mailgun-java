@@ -34,6 +34,7 @@ import feign.Response;
  *
  * @see <a href="https://documentation.mailgun.com/en/latest/api-tags.html">Tags</a>
  */
+@Headers("Accept: application/json")
 public interface MailgunTagsApi extends MailgunApi {
 
     /**
@@ -118,8 +119,8 @@ public interface MailgunTagsApi extends MailgunApi {
      * @param tagUpdateRequest {@link TagUpdateRequest}
      * @return {@link ResponseWithMessage}
      */
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("PUT /{domain}/tags/{tag}")
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
     ResponseWithMessage updateTag(@Param("domain") String domain, @Param("tag") String tag, TagUpdateRequest tagUpdateRequest);
 
     /**
@@ -132,8 +133,8 @@ public interface MailgunTagsApi extends MailgunApi {
      * @param tagUpdateRequest {@link TagUpdateRequest}
      * @return {@link Response}
      */
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("PUT /{domain}/tags/{tag}")
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
     Response updateTagFeignResponse(@Param("domain") String domain, @Param("tag") String tag, TagUpdateRequest tagUpdateRequest);
 
     /**
@@ -172,7 +173,6 @@ public interface MailgunTagsApi extends MailgunApi {
      * @param tag    Name of the tag
      * @return {@link ResponseWithMessage}
      */
-    @Headers("Accept: application/json")
     @RequestLine("DELETE /{domain}/tags/{tag}")
     ResponseWithMessage deleteTag(@Param("domain") String domain, @Param("tag") String tag);
 
@@ -186,7 +186,6 @@ public interface MailgunTagsApi extends MailgunApi {
      * @param tag    Name of the tag
      * @return {@link Response}
      */
-    @Headers("Accept: application/json")
     @RequestLine("DELETE /{domain}/tags/{tag}")
     Response deleteTagFeignResponse(@Param("domain") String domain, @Param("tag") String tag);
 
