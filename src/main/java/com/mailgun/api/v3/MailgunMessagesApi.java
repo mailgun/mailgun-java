@@ -52,6 +52,12 @@ public interface MailgunMessagesApi extends MailgunApi {
      * <p>
      * Asynchronously send email(s).
      * </p>
+     * <p>
+     * Note: Use the asynchronous Mailgun client for this method.
+     * <pre>
+     * <code>MailgunClient.config(PRIVATE_API_KEY)
+     *             .createAsyncApi(MailgunMessagesApi.class);</code>
+     * </pre>
      *
      * @param domain  Name of the domain
      * @param message {@link Message}
@@ -64,6 +70,12 @@ public interface MailgunMessagesApi extends MailgunApi {
      * <p>
      * Asynchronously send email(s).
      * </p>
+     * <p>
+     * Note: Use the asynchronous Mailgun client for this method.
+     * <pre>
+     * <code>MailgunClient.config(PRIVATE_API_KEY)
+     *             .createAsyncApi(MailgunMessagesApi.class);</code>
+     * </pre>
      *
      * @param domain  Name of the domain
      * @param message {@link Message}
@@ -100,6 +112,12 @@ public interface MailgunMessagesApi extends MailgunApi {
      * <p>
      * Asynchronously send email(s) in MIME format.
      * </p>
+     * <p>
+     * Note: Use the asynchronous Mailgun client for this method.
+     * <pre>
+     * <code>MailgunClient.config(PRIVATE_API_KEY)
+     *             .createAsyncApi(MailgunMessagesApi.class);</code>
+     * </pre>
      *
      * @param domain  Name of the domain
      * @param message {@link MailgunMimeMessage}
@@ -112,6 +130,12 @@ public interface MailgunMessagesApi extends MailgunApi {
      * <p>
      * Asynchronously send email(s) in MIME format.
      * </p>
+     * <p>
+     * Note: Use the asynchronous Mailgun client for this method.
+     * <pre>
+     * <code>MailgunClient.config(PRIVATE_API_KEY)
+     *             .createAsyncApi(MailgunMessagesApi.class);</code>
+     * </pre>
      *
      * @param domain  Name of the domain
      * @param message {@link MailgunMimeMessage}

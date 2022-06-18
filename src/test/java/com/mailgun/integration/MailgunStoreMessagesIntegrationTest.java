@@ -26,8 +26,6 @@ class MailgunStoreMessagesIntegrationTest {
 
     private static String storedMessageUrl;
 
-    private static MailgunStoreMessagesApi mailgunStoreMessagesApi;
-
     @BeforeAll
     static void beforeAll() {
         MailgunEventsApi mailgunEventsApi = MailgunClient.config(PRIVATE_API_KEY)
@@ -44,7 +42,7 @@ class MailgunStoreMessagesIntegrationTest {
 
     @Test
     void resendMessageTest() {
-        mailgunStoreMessagesApi = MailgunClient.config(storedMessageUrl, PRIVATE_API_KEY)
+        MailgunStoreMessagesApi mailgunStoreMessagesApi = MailgunClient.config(storedMessageUrl, PRIVATE_API_KEY)
             .createApiWithAbsoluteUrl(MailgunStoreMessagesApi.class);
 
         MessageResponse result = mailgunStoreMessagesApi.resendMessage(EMAIL_TO);
@@ -55,7 +53,7 @@ class MailgunStoreMessagesIntegrationTest {
 
     @Test
     void retrieveMessageTest() {
-        mailgunStoreMessagesApi = MailgunClient.config(storedMessageUrl, PRIVATE_API_KEY)
+        MailgunStoreMessagesApi mailgunStoreMessagesApi = MailgunClient.config(storedMessageUrl, PRIVATE_API_KEY)
             .createApiWithAbsoluteUrl(MailgunStoreMessagesApi.class);
 
         StoreMessageResponse result = mailgunStoreMessagesApi.retrieveMessage();
