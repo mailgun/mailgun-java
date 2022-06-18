@@ -11,6 +11,7 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.mailgun.api.v3.MailgunMessagesApi;
 import com.mailgun.client.MailgunClient;
 import com.mailgun.model.message.MailgunMimeMessage;
@@ -79,6 +80,28 @@ class MailgunMessagesIntegrationTest {
         MessageResponse messageResponse = ObjectMapperUtil.decode(feignResponse, MessageResponse.class);
         assertNotNull(messageResponse.getId());
         assertEquals(EMAIL_RESPONSE_MESSAGE, messageResponse.getMessage());
+    }
+
+    @Test
+    void message_MinimumFields_FeignResponse_JsonNode_Test() throws IOException {
+        Message message = Message.builder()
+            .from(EMAIL_FROM)
+            .to(EMAIL_TO)
+            .subject(TEST_EMAIL_SUBJECT)
+            .text(TEST_EMAIL_TEXT)
+            .build();
+
+        Response feignResponse = mailgunMessagesApi.sendMessageFeignResponse(MAIN_DOMAIN, message);
+
+        assertEquals(200, feignResponse.status());
+        assertEquals("OK", feignResponse.reason());
+        Request request = feignResponse.request();
+        assertEquals(Request.HttpMethod.POST, request.httpMethod());
+        assertNotNull(feignResponse.body());
+        JsonNode jsonNode = ObjectMapperUtil.decode(feignResponse, JsonNode.class);
+        assertEquals(2, jsonNode.size());
+        assertNotNull(jsonNode.get("id"));
+        assertEquals(EMAIL_RESPONSE_MESSAGE, jsonNode.get("message").asText());
     }
 
     @Test

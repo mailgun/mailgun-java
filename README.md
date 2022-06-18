@@ -219,6 +219,10 @@ To retrieves a JavaBean class from the `FeignResponse` you can use [decode](http
 ```java
         MessageResponse messageResponse = ObjectMapperUtil.decode(feignResponse, MessageResponse.class);
 ```
+Or
+```java
+        JsonNode jsonNode = ObjectMapperUtil.decode(feignResponse, JsonNode.class);
+```
 
 ## Exception handling
 
