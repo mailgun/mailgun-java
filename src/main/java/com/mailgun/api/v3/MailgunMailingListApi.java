@@ -39,6 +39,7 @@ import feign.Response;
  *
  * @see <a href="https://documentation.mailgun.com/en/latest/api-mailinglists.html">Mailing Lists</a>
  */
+@Headers("Accept: application/json")
 public interface MailgunMailingListApi extends MailgunApi {
 
     /**
@@ -48,7 +49,6 @@ public interface MailgunMailingListApi extends MailgunApi {
      *
      * @return {@link MailingListDataResponse}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /lists/pages")
     MailingListDataResponse getMailingList();
 
@@ -59,7 +59,6 @@ public interface MailgunMailingListApi extends MailgunApi {
      *
      * @return {@link Response}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /lists/pages")
     Response getMailingListFeignResponse();
 
@@ -71,7 +70,6 @@ public interface MailgunMailingListApi extends MailgunApi {
      * @param limit Maximum number of records to return
      * @return {@link MailingListDataResponse}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /lists/pages?limit={limit}")
     MailingListDataResponse getMailingList(@Param("limit") Integer limit);
 
@@ -83,7 +81,6 @@ public interface MailgunMailingListApi extends MailgunApi {
      * @param limit Maximum number of records to return
      * @return {@link Response}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /lists/pages?limit={limit}")
     Response getMailingListFeignResponse(@Param("limit") Integer limit);
 
@@ -95,7 +92,6 @@ public interface MailgunMailingListApi extends MailgunApi {
      * @param mailingListAddress an email address, the ID for the mailing list.
      * @return {@link SingleMailingListResponse}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /lists/{mailingListAddress}")
     SingleMailingListResponse getMailingListByAddress(@Param("mailingListAddress") String mailingListAddress);
 
@@ -107,7 +103,6 @@ public interface MailgunMailingListApi extends MailgunApi {
      * @param mailingListAddress an email address, the ID for the mailing list.
      * @return {@link Response}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /lists/{mailingListAddress}")
     Response getMailingListByAddressFeignResponse(@Param("mailingListAddress") String mailingListAddress);
 
@@ -119,7 +114,7 @@ public interface MailgunMailingListApi extends MailgunApi {
      * @param request {@link MailingListRequest}
      * @return {@link MailingListResponse}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /lists")
     MailingListResponse createMailingList(MailingListRequest request);
 
@@ -131,7 +126,7 @@ public interface MailgunMailingListApi extends MailgunApi {
      * @param request {@link MailingListRequest}
      * @return {@link Response}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /lists")
     Response createMailingListFeignResponse(MailingListRequest request);
 
@@ -144,7 +139,7 @@ public interface MailgunMailingListApi extends MailgunApi {
      * @param request            {@link MailingListRequest}
      * @return {@link MailingListResponse}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("PUT /lists/{mailingListAddress}")
     MailingListResponse updateMailingList(@Param("mailingListAddress") String mailingListAddress, UpdateMailingListRequest request);
 
@@ -157,7 +152,7 @@ public interface MailgunMailingListApi extends MailgunApi {
      * @param request            {@link MailingListRequest}
      * @return {@link Response}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("PUT /lists/{mailingListAddress}")
     Response updateMailingListFeignResponse(@Param("mailingListAddress") String mailingListAddress, UpdateMailingListRequest request);
 
@@ -169,7 +164,6 @@ public interface MailgunMailingListApi extends MailgunApi {
      * @param mailingListAddress an email address, the ID for the mailing list.
      * @return {@link DeleteMailingListResponse}
      */
-    @Headers({"Accept: application/json"})
     @RequestLine("DELETE /lists/{mailingListAddress}")
     DeleteMailingListResponse deleteMailingList(@Param("mailingListAddress") String mailingListAddress);
 
@@ -181,7 +175,6 @@ public interface MailgunMailingListApi extends MailgunApi {
      * @param mailingListAddress an email address, the ID for the mailing list.
      * @return {@link Response}
      */
-    @Headers({"Accept: application/json"})
     @RequestLine("DELETE /lists/{mailingListAddress}")
     Response deleteMailingListFeignResponse(@Param("mailingListAddress") String mailingListAddress);
 
@@ -191,7 +184,6 @@ public interface MailgunMailingListApi extends MailgunApi {
      * @param mailingListAddress an email address, the ID for the mailing list.
      * @return {@link MailingListVerificationResponse}
      */
-    @Headers({"Accept: application/json"})
     @RequestLine("POST /lists/{mailingListAddress}/validate")
     MailingListVerificationResponse verifyMailingListMembers(@Param("mailingListAddress") String mailingListAddress);
 
@@ -201,7 +193,6 @@ public interface MailgunMailingListApi extends MailgunApi {
      * @param mailingListAddress an email address, the ID for the mailing list.
      * @return {@link Response}
      */
-    @Headers({"Accept: application/json"})
     @RequestLine("POST /lists/{mailingListAddress}/validate")
     Response verifyMailingListMembersFeignResponse(@Param("mailingListAddress") String mailingListAddress);
 
@@ -211,7 +202,6 @@ public interface MailgunMailingListApi extends MailgunApi {
      * @param mailingListAddress an email address, the ID for the mailing list.
      * @return {@link MailingListVerificationStatusResponse}
      */
-    @Headers({"Accept: application/json"})
     @RequestLine("GET /lists/{mailingListAddress}/validate")
     MailingListVerificationStatusResponse getMailingListVerificationJobStatus(@Param("mailingListAddress") String mailingListAddress);
 
@@ -221,7 +211,6 @@ public interface MailgunMailingListApi extends MailgunApi {
      * @param mailingListAddress an email address, the ID for the mailing list.
      * @return {@link Response}
      */
-    @Headers({"Accept: application/json"})
     @RequestLine("GET /lists/{mailingListAddress}/validate")
     Response getMailingListVerificationJobStatusFeignResponse(@Param("mailingListAddress") String mailingListAddress);
 
@@ -231,7 +220,6 @@ public interface MailgunMailingListApi extends MailgunApi {
      * @param mailingListAddress an email address, the ID for the mailing list.
      * @return Result status message
      */
-    @Headers({"Accept: application/json"})
     @RequestLine("DELETE /lists/{mailingListAddress}/validate")
     String cancelActiveMailingListVerificationJob(@Param("mailingListAddress") String mailingListAddress);
 
@@ -241,7 +229,6 @@ public interface MailgunMailingListApi extends MailgunApi {
      * @param mailingListAddress an email address, the ID for the mailing list.
      * @return {@link Response}
      */
-    @Headers({"Accept: application/json"})
     @RequestLine("DELETE /lists/{mailingListAddress}/validate")
     Response cancelActiveMailingListVerificationJobFeignResponse(@Param("mailingListAddress") String mailingListAddress);
 
@@ -253,7 +240,6 @@ public interface MailgunMailingListApi extends MailgunApi {
      * @param mailingListAddress an email address, the ID for the mailing list.
      * @return {@link MailingListMembersResponse}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /lists/{mailingListAddress}/members/pages")
     MailingListMembersResponse getMailingListMembers(@Param("mailingListAddress") String mailingListAddress);
 
@@ -265,7 +251,6 @@ public interface MailgunMailingListApi extends MailgunApi {
      * @param mailingListAddress an email address, the ID for the mailing list.
      * @return {@link Response}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /lists/{mailingListAddress}/members/pages")
     Response getMailingListMembersFeignResponse(@Param("mailingListAddress") String mailingListAddress);
 
@@ -278,7 +263,6 @@ public interface MailgunMailingListApi extends MailgunApi {
      * @param parameters         {@link MailingListMembersRequest}
      * @return {@link MailingListMembersResponse}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /lists/{mailingListAddress}/members/pages")
     MailingListMembersResponse getMailingListMembers(@Param("mailingListAddress") String mailingListAddress, @QueryMap MailingListMembersRequest parameters);
 
@@ -291,7 +275,6 @@ public interface MailgunMailingListApi extends MailgunApi {
      * @param parameters         {@link MailingListMembersRequest}
      * @return {@link Response}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /lists/{mailingListAddress}/members/pages")
     Response getMailingListMembersFeignResponse(@Param("mailingListAddress") String mailingListAddress, @QueryMap MailingListMembersRequest parameters);
 
@@ -304,7 +287,6 @@ public interface MailgunMailingListApi extends MailgunApi {
      * @param memberAddress      mailing list member email address
      * @return {@link MailingListMemberResponse}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /lists/{mailingListAddress}/members/{memberAddress}")
     MailingListMemberResponse getMailingListMember(@Param("mailingListAddress") String mailingListAddress, @Param("memberAddress") String memberAddress);
 
@@ -317,7 +299,6 @@ public interface MailgunMailingListApi extends MailgunApi {
      * @param memberAddress      mailing list member email address
      * @return {@link Response}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /lists/{mailingListAddress}/members/{memberAddress}")
     Response getMailingListMemberFeignResponse(@Param("mailingListAddress") String mailingListAddress, @Param("memberAddress") String memberAddress);
 
@@ -330,7 +311,7 @@ public interface MailgunMailingListApi extends MailgunApi {
      * @param request            {@link MailingListNewMemberRequest}
      * @return {@link MailingListMemberResponse}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /lists/{mailingListAddress}/members")
     MailingListMemberResponse addMemberToMailingList(@Param("mailingListAddress") String mailingListAddress, MailingListNewMemberRequest request);
 
@@ -343,7 +324,7 @@ public interface MailgunMailingListApi extends MailgunApi {
      * @param request            {@link MailingListNewMemberRequest}
      * @return {@link Response}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /lists/{mailingListAddress}/members")
     Response addMemberToMailingListFeignResponse(@Param("mailingListAddress") String mailingListAddress, MailingListNewMemberRequest request);
 
@@ -357,7 +338,7 @@ public interface MailgunMailingListApi extends MailgunApi {
      * @param request            {@link MailingListMemberUpdateRequest}
      * @return {@link MailingListMemberResponse}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("PUT /lists/{mailingListAddress}/members/{memberAddress}")
     MailingListMemberResponse updateMailingListMember(@Param("mailingListAddress") String mailingListAddress, @Param("memberAddress") String memberAddress, MailingListMemberUpdateRequest request);
 
@@ -371,7 +352,7 @@ public interface MailgunMailingListApi extends MailgunApi {
      * @param request            {@link MailingListMemberUpdateRequest}
      * @return {@link Response}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("PUT /lists/{mailingListAddress}/members/{memberAddress}")
     Response updateMailingListMemberFeignResponse(@Param("mailingListAddress") String mailingListAddress, @Param("memberAddress") String memberAddress, MailingListMemberUpdateRequest request);
 
@@ -384,7 +365,7 @@ public interface MailgunMailingListApi extends MailgunApi {
      * @param request            {@link AddMailingListMembersRequest}
      * @return {@link MailingListResponse}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /lists/{mailingListAddress}/members.json")
     MailingListResponse addMembersToMailingList(@Param("mailingListAddress") String mailingListAddress, AddMailingListMembersRequest request);
 
@@ -397,7 +378,7 @@ public interface MailgunMailingListApi extends MailgunApi {
      * @param request            {@link AddMailingListMembersRequest}
      * @return {@link Response}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /lists/{mailingListAddress}/members.json")
     Response addMembersToMailingListFeignResponse(@Param("mailingListAddress") String mailingListAddress, AddMailingListMembersRequest request);
 
@@ -410,7 +391,6 @@ public interface MailgunMailingListApi extends MailgunApi {
      * @param memberAddress      mailing list member email address
      * @return {@link MailingListMemberResponse }
      */
-    @Headers("Accept: application/json")
     @RequestLine("DELETE /lists/{mailingListAddress}/members/{memberAddress}")
     MailingListMemberResponse deleteMemberFromMailingList(@Param("mailingListAddress") String mailingListAddress, @Param("memberAddress") String memberAddress);
 
@@ -423,7 +403,6 @@ public interface MailgunMailingListApi extends MailgunApi {
      * @param memberAddress      mailing list member email address
      * @return {@link Response }
      */
-    @Headers("Accept: application/json")
     @RequestLine("DELETE /lists/{mailingListAddress}/members/{memberAddress}")
     Response deleteMemberFromMailingListFeignResponse(@Param("mailingListAddress") String mailingListAddress, @Param("memberAddress") String memberAddress);
 

@@ -39,6 +39,7 @@ import feign.Response;
  *
  * @see <a href="https://documentation.mailgun.com/en/latest/api-routes.html">Routes</a>
  */
+@Headers("Accept: application/json")
 public interface MailgunRoutesApi extends MailgunApi {
 
     /**
@@ -49,7 +50,6 @@ public interface MailgunRoutesApi extends MailgunApi {
      *
      * @return {@link RoutesListResponse}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /routes")
     RoutesListResponse getRoutesList();
 
@@ -61,7 +61,6 @@ public interface MailgunRoutesApi extends MailgunApi {
      *
      * @return {@link Response}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /routes")
     Response getRoutesListFeignResponse();
 
@@ -74,7 +73,6 @@ public interface MailgunRoutesApi extends MailgunApi {
      * @param pageRequest {@link RoutesPageRequest}
      * @return {@link RoutesListResponse}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /routes")
     RoutesListResponse getRoutesList(@QueryMap RoutesPageRequest pageRequest);
 
@@ -87,7 +85,6 @@ public interface MailgunRoutesApi extends MailgunApi {
      * @param pageRequest {@link RoutesPageRequest}
      * @return {@link Response}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /routes")
     Response getRoutesListFeignResponse(@QueryMap RoutesPageRequest pageRequest);
 
@@ -99,7 +96,6 @@ public interface MailgunRoutesApi extends MailgunApi {
      * @param id ID of the route
      * @return {@link SingleRouteResponse}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /routes/{id}")
     SingleRouteResponse getSingleRoute(@Param("id") String id);
 
@@ -111,7 +107,6 @@ public interface MailgunRoutesApi extends MailgunApi {
      * @param id ID of the route
      * @return {@link Response}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /routes/{id}")
     Response getSingleRouteFeignResponse(@Param("id") String id);
 
@@ -123,7 +118,7 @@ public interface MailgunRoutesApi extends MailgunApi {
      * @param request {@link RoutesRequest}
      * @return {@link RoutesResponse}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /routes")
     RoutesResponse createRoute(RoutesRequest request);
 
@@ -135,7 +130,7 @@ public interface MailgunRoutesApi extends MailgunApi {
      * @param request {@link RoutesRequest}
      * @return {@link Response}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /routes")
     Response createRouteFeignResponse(RoutesRequest request);
 
@@ -149,7 +144,7 @@ public interface MailgunRoutesApi extends MailgunApi {
      * @param request {@link RoutesRequest}
      * @return {@link Route}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("PUT /routes/{id}")
     Route updateRoute(@Param("id") String id, RoutesRequest request);
 
@@ -163,7 +158,7 @@ public interface MailgunRoutesApi extends MailgunApi {
      * @param request {@link RoutesRequest}
      * @return {@link Response}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("PUT /routes/{id}")
     Response updateRouteFeignResponse(@Param("id") String id, RoutesRequest request);
 
@@ -175,7 +170,6 @@ public interface MailgunRoutesApi extends MailgunApi {
      * @param id ID of the route
      * @return {@link ResponseWithMessage}
      */
-    @Headers({"Accept: application/json"})
     @RequestLine("DELETE /routes/{id}")
     ResponseWithMessage deleteRoute(@Param("id") String id);
 
@@ -187,7 +181,6 @@ public interface MailgunRoutesApi extends MailgunApi {
      * @param id ID of the route
      * @return {@link Response}
      */
-    @Headers({"Accept: application/json"})
     @RequestLine("DELETE /routes/{id}")
     Response deleteRouteFeignResponse(@Param("id") String id);
 
