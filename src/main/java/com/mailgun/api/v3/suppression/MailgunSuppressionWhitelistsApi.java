@@ -37,6 +37,7 @@ import feign.Response;
  *
  * @see <a href="https://documentation.mailgun.com/en/latest/api-suppressions.html#whitelists">Suppressions/Whitelists</a>
  */
+@Headers("Accept: application/json")
 public interface MailgunSuppressionWhitelistsApi extends MailgunApi {
 
     /**
@@ -47,7 +48,6 @@ public interface MailgunSuppressionWhitelistsApi extends MailgunApi {
      * @param domain Name of the domain
      * @return {@link WhitelistsItemResponse}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /{domain}/whitelists")
     WhitelistsItemResponse getAllWhitelists(@Param("domain") String domain);
 
@@ -59,7 +59,6 @@ public interface MailgunSuppressionWhitelistsApi extends MailgunApi {
      * @param domain Name of the domain
      * @return {@link Response}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /{domain}/whitelists")
     Response getAllWhitelistsFeignResponse(@Param("domain") String domain);
 
@@ -72,7 +71,6 @@ public interface MailgunSuppressionWhitelistsApi extends MailgunApi {
      * @param limit  Number of entries to return, max: 10000.
      * @return {@link WhitelistsItemResponse}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /{domain}/whitelists?limit={limit}")
     WhitelistsItemResponse getAllWhitelists(@Param("domain") String domain, @Param("limit") Integer limit);
 
@@ -85,7 +83,6 @@ public interface MailgunSuppressionWhitelistsApi extends MailgunApi {
      * @param limit  Number of entries to return, max: 10000.
      * @return {@link Response}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /{domain}/whitelists?limit={limit}")
     Response getAllWhitelistsFeignResponse(@Param("domain") String domain, @Param("limit") Integer limit);
 
@@ -99,7 +96,6 @@ public interface MailgunSuppressionWhitelistsApi extends MailgunApi {
      * @param addressOrDomain address or domain
      * @return {@link WhitelistsItem}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /{domain}/whitelists/{addressOrDomain}")
     WhitelistsItem getSingleWhitelistRecord(@Param("domain") String domain, @Param("addressOrDomain") String addressOrDomain);
 
@@ -113,7 +109,6 @@ public interface MailgunSuppressionWhitelistsApi extends MailgunApi {
      * @param addressOrDomain address or domain
      * @return {@link Response}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /{domain}/whitelists/{addressOrDomain}")
     Response getSingleWhitelistRecordFeignResponse(@Param("domain") String domain, @Param("addressOrDomain") String addressOrDomain);
 
@@ -129,7 +124,7 @@ public interface MailgunSuppressionWhitelistsApi extends MailgunApi {
      * @param request {@link WhitelistsRequest}
      * @return {@link ResponseWithMessage}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /{domain}/whitelists")
     ResponseWithMessage addSingleWhitelistRecord(@Param("domain") String domain, WhitelistsRequest request);
 
@@ -145,7 +140,7 @@ public interface MailgunSuppressionWhitelistsApi extends MailgunApi {
      * @param request {@link WhitelistsRequest}
      * @return {@link Response}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /{domain}/whitelists")
     Response addSingleWhitelistRecordFeignResponse(@Param("domain") String domain, WhitelistsRequest request);
 
@@ -165,7 +160,7 @@ public interface MailgunSuppressionWhitelistsApi extends MailgunApi {
      * @param request {@link WhitelistsListImportRequest}
      * @return {@link ResponseWithMessage}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /{domain}/whitelists/import")
     ResponseWithMessage importWhitelistRecords(@Param("domain") String domain, WhitelistsListImportRequest request);
 
@@ -185,7 +180,7 @@ public interface MailgunSuppressionWhitelistsApi extends MailgunApi {
      * @param request {@link WhitelistsListImportRequest}
      * @return {@link Response}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /{domain}/whitelists/import")
     Response importWhitelistRecordsFeignResponse(@Param("domain") String domain, WhitelistsListImportRequest request);
 
@@ -198,7 +193,6 @@ public interface MailgunSuppressionWhitelistsApi extends MailgunApi {
      * @param addressOrDomain address or domain
      * @return {@link WhitelistsRemoveRecordResponse}
      */
-    @Headers({"Accept: application/json"})
     @RequestLine("DELETE /{domain}/whitelists/{addressOrDomain}")
     WhitelistsRemoveRecordResponse removeRecordFromWhitelists(@Param("domain") String domain, @Param("addressOrDomain") String addressOrDomain);
 
@@ -211,7 +205,6 @@ public interface MailgunSuppressionWhitelistsApi extends MailgunApi {
      * @param addressOrDomain address or domain
      * @return {@link WhitelistsRemoveRecordResponse}
      */
-    @Headers({"Accept: application/json"})
     @RequestLine("DELETE /{domain}/whitelists/{addressOrDomain}")
     Response removeRecordFromWhitelistsFeignResponse(@Param("domain") String domain, @Param("addressOrDomain") String addressOrDomain);
 

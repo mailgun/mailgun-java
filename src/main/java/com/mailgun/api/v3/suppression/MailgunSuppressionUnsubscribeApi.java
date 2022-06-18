@@ -46,6 +46,7 @@ import java.util.List;
  *
  * @see <a href="https://documentation.mailgun.com/en/latest/api-suppressions.html#unsubscribes">Suppressions/Unsubscribe</a>
  */
+@Headers("Accept: application/json")
 public interface MailgunSuppressionUnsubscribeApi extends MailgunApi {
 
     /**
@@ -60,7 +61,6 @@ public interface MailgunSuppressionUnsubscribeApi extends MailgunApi {
      * @param domain Name of the domain
      * @return {@link UnsubscribeItemResponse}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /{domain}/unsubscribes")
     UnsubscribeItemResponse getAllUnsubscribe(@Param("domain") String domain);
 
@@ -76,7 +76,6 @@ public interface MailgunSuppressionUnsubscribeApi extends MailgunApi {
      * @param domain Name of the domain
      * @return {@link Response}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /{domain}/unsubscribes")
     Response getAllUnsubscribeFeignResponse(@Param("domain") String domain);
 
@@ -93,7 +92,6 @@ public interface MailgunSuppressionUnsubscribeApi extends MailgunApi {
      * @param limit  Number of entries to return, max: 10000.
      * @return {@link UnsubscribeItemResponse}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /{domain}/unsubscribes?limit={limit}")
     UnsubscribeItemResponse getAllUnsubscribe(@Param("domain") String domain, @Param("limit") Integer limit);
 
@@ -110,7 +108,6 @@ public interface MailgunSuppressionUnsubscribeApi extends MailgunApi {
      * @param limit  Number of entries to return, max: 10000.
      * @return {@link Response}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /{domain}/unsubscribes?limit={limit}")
     Response getAllUnsubscribeFeignResponse(@Param("domain") String domain, @Param("limit") Integer limit);
 
@@ -123,7 +120,6 @@ public interface MailgunSuppressionUnsubscribeApi extends MailgunApi {
      * @param address An email address
      * @return {@link UnsubscribeItem}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /{domain}/unsubscribes/{address}")
     UnsubscribeItem getSingleUnsubscribe(@Param("domain") String domain, @Param("address") String address);
 
@@ -136,7 +132,6 @@ public interface MailgunSuppressionUnsubscribeApi extends MailgunApi {
      * @param address An email address
      * @return {@link Response  }
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /{domain}/unsubscribes/{address}")
     Response getSingleUnsubscribeFeignResponse(@Param("domain") String domain, @Param("address") String address);
 
@@ -149,7 +144,7 @@ public interface MailgunSuppressionUnsubscribeApi extends MailgunApi {
      * @param request {@link UnsubscribeSingleItemRequest}
      * @return {@link SuppressionResponse}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /{domain}/unsubscribes")
     SuppressionResponse addAddressToUnsubscribeTable(@Param("domain") String domain, UnsubscribeSingleItemRequest request);
 
@@ -162,7 +157,7 @@ public interface MailgunSuppressionUnsubscribeApi extends MailgunApi {
      * @param request {@link UnsubscribeSingleItemRequest}
      * @return {@link Response}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /{domain}/unsubscribes")
     Response addAddressToUnsubscribeTableFeignResponse(@Param("domain") String domain, UnsubscribeSingleItemRequest request);
 
@@ -175,7 +170,7 @@ public interface MailgunSuppressionUnsubscribeApi extends MailgunApi {
      * @param request list of {@link UnsubscribeItem}
      * @return {@link ResponseWithMessage}
      */
-    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    @Headers("Content-Type: application/json")
     @RequestLine("POST /{domain}/unsubscribes")
     ResponseWithMessage addAddressesToUnsubscribeTable(@Param("domain") String domain, List<UnsubscribeItem> request);
 
@@ -188,7 +183,7 @@ public interface MailgunSuppressionUnsubscribeApi extends MailgunApi {
      * @param request list of {@link UnsubscribeItem}
      * @return {@link Response}
      */
-    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    @Headers("Content-Type: application/json")
     @RequestLine("POST /{domain}/unsubscribes")
     Response addAddressesToUnsubscribeTableFeignResponse(@Param("domain") String domain, List<UnsubscribeItem> request);
 
@@ -209,7 +204,7 @@ public interface MailgunSuppressionUnsubscribeApi extends MailgunApi {
      * @param request list of {@link UnsubscribesListImportRequest}
      * @return {@link ResponseWithMessage}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /{domain}/unsubscribes/import")
     ResponseWithMessage importAddressesToUnsubscribeTable(@Param("domain") String domain, UnsubscribesListImportRequest request);
 
@@ -230,7 +225,7 @@ public interface MailgunSuppressionUnsubscribeApi extends MailgunApi {
      * @param request list of {@link UnsubscribesListImportRequest}
      * @return {@link Response}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /{domain}/unsubscribes/import")
     Response importAddressesToUnsubscribeTableFeignResponse(@Param("domain") String domain, UnsubscribesListImportRequest request);
 
@@ -245,7 +240,7 @@ public interface MailgunSuppressionUnsubscribeApi extends MailgunApi {
      * @param tag     Specific tag to remove (optional)
      * @return {@link SuppressionResponse}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("DELETE /{domain}/unsubscribes/{address}")
     SuppressionResponse removeAddressFromUnsubscribeTag(@Param("domain") String domain, @Param("address") String address, @Param("tag") String tag);
 
@@ -259,7 +254,7 @@ public interface MailgunSuppressionUnsubscribeApi extends MailgunApi {
      * @param tag     Specific tag to remove
      * @return {@link Response}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("DELETE /{domain}/unsubscribes/{address}")
     Response removeAddressFromUnsubscribeTagFeignResponse(@Param("domain") String domain, @Param("address") String address, @Param("tag") String tag);
 
@@ -272,7 +267,6 @@ public interface MailgunSuppressionUnsubscribeApi extends MailgunApi {
      * @param address An email address
      * @return {@link SuppressionResponse}
      */
-    @Headers({"Accept: application/json"})
     @RequestLine("DELETE /{domain}/unsubscribes/{address}")
     SuppressionResponse removeAddressFromUnsubscribeList(@Param("domain") String domain, @Param("address") String address);
 
@@ -285,7 +279,6 @@ public interface MailgunSuppressionUnsubscribeApi extends MailgunApi {
      * @param address An email address
      * @return {@link Response}
      */
-    @Headers({"Accept: application/json"})
     @RequestLine("DELETE /{domain}/unsubscribes/{address}")
     Response removeAddressFromUnsubscribeListFeignResponse(@Param("domain") String domain, @Param("address") String address);
 

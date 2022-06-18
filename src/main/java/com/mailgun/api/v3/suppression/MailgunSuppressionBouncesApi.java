@@ -47,6 +47,7 @@ import java.util.List;
  *
  * @see <a href="https://documentation.mailgun.com/en/latest/api-suppressions.html#bounces">Suppressions/Bounces</a>
  */
+@Headers("Accept: application/json")
 public interface MailgunSuppressionBouncesApi extends MailgunApi {
 
     /**
@@ -57,7 +58,6 @@ public interface MailgunSuppressionBouncesApi extends MailgunApi {
      * @param domain Name of the domain
      * @return {@link BouncesResponse}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /{domain}/bounces")
     BouncesResponse getBounces(@Param("domain") String domain);
 
@@ -69,7 +69,6 @@ public interface MailgunSuppressionBouncesApi extends MailgunApi {
      * @param domain Name of the domain
      * @return {@link Response}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /{domain}/bounces")
     Response getBouncesFeignResponse(@Param("domain") String domain);
 
@@ -82,7 +81,6 @@ public interface MailgunSuppressionBouncesApi extends MailgunApi {
      * @param limit  Number of entries to return, max: 10000.
      * @return {@link BouncesResponse}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /{domain}/bounces?limit={limit}")
     BouncesResponse getBounces(@Param("domain") String domain, @Param("limit") Integer limit);
 
@@ -95,7 +93,6 @@ public interface MailgunSuppressionBouncesApi extends MailgunApi {
      * @param limit  Number of entries to return, max: 10000.
      * @return {@link Response}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /{domain}/bounces?limit={limit}")
     Response getBouncesFeignResponse(@Param("domain") String domain, @Param("limit") Integer limit);
 
@@ -111,7 +108,6 @@ public interface MailgunSuppressionBouncesApi extends MailgunApi {
      * @param address An email address
      * @return {@link BouncesItem}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /{domain}/bounces/{address}")
     BouncesItem getBounce(@Param("domain") String domain, @Param("address") String address);
 
@@ -127,7 +123,6 @@ public interface MailgunSuppressionBouncesApi extends MailgunApi {
      * @param address An email address
      * @return {@link Response}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /{domain}/bounces/{address}")
     Response getBounceFeignResponse(@Param("domain") String domain, @Param("address") String address);
 
@@ -143,7 +138,7 @@ public interface MailgunSuppressionBouncesApi extends MailgunApi {
      * @param request {@link BouncesRequest}
      * @return {@link SuppressionResponse}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /{domain}/bounces")
     SuppressionResponse addBounce(@Param("domain") String domain, BouncesRequest request);
 
@@ -159,7 +154,7 @@ public interface MailgunSuppressionBouncesApi extends MailgunApi {
      * @param request {@link BouncesRequest}
      * @return {@link Response}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /{domain}/bounces")
     Response addSBounceFeignResponse(@Param("domain") String domain, BouncesRequest request);
 
@@ -172,7 +167,7 @@ public interface MailgunSuppressionBouncesApi extends MailgunApi {
      * @param request list of {@link BouncesRequest}
      * @return {@link ResponseWithMessage}
      */
-    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    @Headers("Content-Type: application/json")
     @RequestLine("POST /{domain}/bounces")
     ResponseWithMessage addBounces(@Param("domain") String domain, List<BouncesRequest> request);
 
@@ -185,7 +180,7 @@ public interface MailgunSuppressionBouncesApi extends MailgunApi {
      * @param request list of {@link BouncesRequest}
      * @return {@link Response}
      */
-    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    @Headers("Content-Type: application/json")
     @RequestLine("POST /{domain}/bounces")
     Response addSBounceFeignResponses(@Param("domain") String domain, List<BouncesRequest> request);
 
@@ -207,7 +202,7 @@ public interface MailgunSuppressionBouncesApi extends MailgunApi {
      * @param request {@link BouncesListImportRequest}
      * @return {@link ResponseWithMessage}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /{domain}/bounces/import")
     ResponseWithMessage importBounceList(@Param("domain") String domain, BouncesListImportRequest request);
 
@@ -229,7 +224,7 @@ public interface MailgunSuppressionBouncesApi extends MailgunApi {
      * @param request {@link BouncesListImportRequest}
      * @return {@link Response}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /{domain}/bounces/import")
     Response importBounceListFeignResponses(@Param("domain") String domain, BouncesListImportRequest request);
 
@@ -246,7 +241,6 @@ public interface MailgunSuppressionBouncesApi extends MailgunApi {
      * @param address An email address
      * @return {@link ResponseWithMessage}
      */
-    @Headers("Accept: application/json")
     @RequestLine("DELETE /{domain}/bounces/{address}")
     ResponseWithMessage deleteBounce(@Param("domain") String domain, @Param("address") String address);
 
@@ -263,7 +257,6 @@ public interface MailgunSuppressionBouncesApi extends MailgunApi {
      * @param address An email address
      * @return {@link Response}
      */
-    @Headers("Accept: application/json")
     @RequestLine("DELETE /{domain}/bounces/{address}")
     Response deleteBounceFeignResponse(@Param("domain") String domain, @Param("address") String address);
 
@@ -276,7 +269,6 @@ public interface MailgunSuppressionBouncesApi extends MailgunApi {
      * @param domain Name of the domain
      * @return {@link ResponseWithMessage}
      */
-    @Headers("Accept: application/json")
     @RequestLine("DELETE /{domain}/bounces")
     ResponseWithMessage deleteAllBounces(@Param("domain") String domain);
 
@@ -289,7 +281,6 @@ public interface MailgunSuppressionBouncesApi extends MailgunApi {
      * @param domain Name of the domain
      * @return {@link Response}
      */
-    @Headers("Accept: application/json")
     @RequestLine("DELETE /{domain}/bounces")
     Response deleteAllBouncesFeignResponse(@Param("domain") String domain);
 
