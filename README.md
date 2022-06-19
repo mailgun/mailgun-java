@@ -8,7 +8,7 @@
 
 <img width="300" src="https://images.ctfassets.net/y6oq7udscnj8/6ZBhy3wCQx3WhSaoejr2fs/d5ff47541079b886877a80ab5ca0a471/01_1121_SinchMailgunLogo_Mailgun-Colour.png" >
 
-# Mailgun SDK for Java
+# Mailgun Java SDK 
 
 [![Build Status](https://app.travis-ci.com/mailgun/mailgun-java.svg?branch=main)](https://app.travis-ci.com/github/mailgun/mailgun-java)
 [![maven central](https://img.shields.io/maven-central/v/com.mailgun/mailgun-java.svg?label=maven%20central)](https://search.maven.org/search?q=g:%22com.mailgun%22%20AND%20a:%22mailgun-java%22)
@@ -20,7 +20,7 @@
 [//]: # (* [Getting Help]&#40;#getting-help&#41;)
 
 
-The **Mailgun SDK for Java** enables Java developers to work with [Mailgun API][api_reference] efficiently.
+The **Mailgun Java SDK** enables Java developers to work with [Mailgun API][api_reference] efficiently.
 
 
 * [Mailgun Home][mailgun_home]
@@ -51,7 +51,7 @@ The **Mailgun SDK for Java** enables Java developers to work with [Mailgun API][
 
 ## Release notes
 
-Changes to the SDK beginning with version 1.0.1 (April 2022) are tracked in [CHANGELOG.md][changes-file].
+Changes to the SDK beginning with version 1.0.1 (June 2022) are tracked in [CHANGELOG.md][changes-file].
 
 ## Getting Started
 

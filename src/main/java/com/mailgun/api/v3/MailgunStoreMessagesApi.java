@@ -53,7 +53,7 @@ public interface MailgunStoreMessagesApi extends MailgunApi {
 
     /**
      * <p>
-     * Resend email.
+     * Asynchronously resend email.
      * </p>
      * <p>
      * Note: Use the asynchronous Mailgun client for this method.
@@ -71,7 +71,7 @@ public interface MailgunStoreMessagesApi extends MailgunApi {
 
     /**
      * <p>
-     * Resend message.
+     * Asynchronously resend message.
      * </p>
      * <p>
      * Note: Use the asynchronous Mailgun client for this method.
