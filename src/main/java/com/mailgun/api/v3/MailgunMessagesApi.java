@@ -61,7 +61,7 @@ public interface MailgunMessagesApi extends MailgunApi {
      *
      * @param domain  Name of the domain
      * @param message {@link Message}
-     * @return {@link CompletableFuture<MessageResponse>}
+     * @return {@link CompletableFuture} wrapped {@link MessageResponse}
      */
     @RequestLine("POST /{domain}/messages")
     CompletableFuture<MessageResponse> sendMessageAsync(@Param("domain") String domain, Message message);
@@ -79,7 +79,7 @@ public interface MailgunMessagesApi extends MailgunApi {
      *
      * @param domain  Name of the domain
      * @param message {@link Message}
-     * @return {@link CompletableFuture<Response>}
+     * @return {@link CompletableFuture} wrapped {@link Response}
      */
     @RequestLine("POST /{domain}/messages")
     CompletableFuture<Response> sendMessageFeignResponseAsync(@Param("domain") String domain, Message message);
@@ -121,7 +121,7 @@ public interface MailgunMessagesApi extends MailgunApi {
      *
      * @param domain  Name of the domain
      * @param message {@link MailgunMimeMessage}
-     * @return {@link CompletableFuture<MessageResponse>}
+     * @return {@link CompletableFuture} wrapped {@link MessageResponse}
      */
     @RequestLine("POST /{domain}/messages.mime")
     CompletableFuture<MessageResponse> sendMIMEMessageAsync(@Param("domain") String domain, MailgunMimeMessage message);
@@ -139,7 +139,7 @@ public interface MailgunMessagesApi extends MailgunApi {
      *
      * @param domain  Name of the domain
      * @param message {@link MailgunMimeMessage}
-     * @return {@link CompletableFuture<Response>}
+     * @return {@link CompletableFuture} wrapped {@link Response}
      */
     @RequestLine("POST /{domain}/messages.mime")
     CompletableFuture<Response> sendMIMEMessageFeignResponseAsync(@Param("domain") String domain, MailgunMimeMessage message);

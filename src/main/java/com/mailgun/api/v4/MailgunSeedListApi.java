@@ -63,6 +63,7 @@ public interface MailgunSeedListApi extends MailgunApi {
      * Update a seed list.
      * </p>
      *
+     * @param targetEmail target email
      * @param request {@link SeedListRequest}
      * @return {@link SeedListItem}
      */
@@ -75,6 +76,7 @@ public interface MailgunSeedListApi extends MailgunApi {
      * Update a seed list.
      * </p>
      *
+     * @param targetEmail target email
      * @param request {@link SeedListRequest}
      * @return {@link Response}
      */

@@ -62,7 +62,7 @@ To run the SDK, you will need **Java 1.8+**.
 
 ### Install the SDK
 
-The recommended way to use the AWS SDK for Java in your project: 
+The recommended way to use the **Mailgun Java SDK** in your project: 
 
 [Choose version you need](https://search.maven.org/search?q=g:%22com.mailgun%22%20AND%20a:%22mailgun-java%22)
 

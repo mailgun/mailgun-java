@@ -19,8 +19,8 @@ import org.junit.jupiter.api.Test;
 import java.util.concurrent.TimeUnit;
 
 import static com.mailgun.constants.TestConstants.TEST_API_KEY;
-import static com.mailgun.util.Constants.DEFAULT_BASE_URL;
-import static com.mailgun.util.Constants.EU_BASE_URL;
+import static com.mailgun.util.Constants.DEFAULT_BASE_URL_US_REGION;
+import static com.mailgun.util.Constants.EU_REGION_BASE_URL;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class MailgunClientTest {
@@ -35,7 +35,7 @@ class MailgunClientTest {
         assertNotNull(mailgunMessagesApiUS);
 
 //        For EU servers
-        MailgunMessagesApi mailgunMessagesApiEU = MailgunClient.config(EU_BASE_URL, TEST_API_KEY)
+        MailgunMessagesApi mailgunMessagesApiEU = MailgunClient.config(EU_REGION_BASE_URL, TEST_API_KEY)
                 .createApi(MailgunMessagesApi.class);
 
         assertNotNull(mailgunMessagesApiEU);
@@ -70,7 +70,7 @@ class MailgunClientTest {
                 .errorDecoder(new ErrorDecoder.Default())
                 .options(new Request.Options(10, TimeUnit.SECONDS, 60, TimeUnit.SECONDS, true))
                 .requestInterceptor(new BasicAuthRequestInterceptor("api", TEST_API_KEY))
-                .target(MailgunMessagesApi.class, DEFAULT_BASE_URL);
+                .target(MailgunMessagesApi.class, DEFAULT_BASE_URL_US_REGION);
 
         assertNotNull(mailgunMessagesApi);
     }
