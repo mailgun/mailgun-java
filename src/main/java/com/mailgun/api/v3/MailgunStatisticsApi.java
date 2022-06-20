@@ -22,6 +22,7 @@ import feign.Response;
  *
  * @see <a href="https://documentation.mailgun.com/en/latest/api-stats.html">Stats</a>
  */
+@Headers({"Accept: application/json"})
 public interface MailgunStatisticsApi extends MailgunApi {
 
     /**
@@ -33,7 +34,6 @@ public interface MailgunStatisticsApi extends MailgunApi {
      * @param statisticsOptions {@link StatisticsOptions}
      * @return {@link StatsResult}
      */
-    @Headers({"Accept: application/json"})
     @RequestLine("GET /{domain}/stats/total")
     StatsResult getDomainStats(@Param("domain") String domain, @QueryMap StatisticsOptions statisticsOptions);
 
@@ -46,7 +46,6 @@ public interface MailgunStatisticsApi extends MailgunApi {
      * @param statisticsOptions {@link StatisticsOptions}
      * @return {@link Response}
      */
-    @Headers({"Accept: application/json"})
     @RequestLine("GET /{domain}/stats/total")
     Response getDomainStatsFeignResponse(@Param("domain") String domain, @QueryMap StatisticsOptions statisticsOptions);
 

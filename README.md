@@ -8,7 +8,7 @@
 
 <img width="300" src="https://images.ctfassets.net/y6oq7udscnj8/6ZBhy3wCQx3WhSaoejr2fs/d5ff47541079b886877a80ab5ca0a471/01_1121_SinchMailgunLogo_Mailgun-Colour.png" >
 
-# Mailgun SDK for Java
+# Mailgun Java SDK 
 
 [![Build Status](https://app.travis-ci.com/mailgun/mailgun-java.svg?branch=main)](https://app.travis-ci.com/github/mailgun/mailgun-java)
 [![maven central](https://img.shields.io/maven-central/v/com.mailgun/mailgun-java.svg?label=maven%20central)](https://search.maven.org/search?q=g:%22com.mailgun%22%20AND%20a:%22mailgun-java%22)
@@ -20,7 +20,7 @@
 [//]: # (* [Getting Help]&#40;#getting-help&#41;)
 
 
-The **Mailgun SDK for Java** enables Java developers to work with [Mailgun API][api_reference] efficiently.
+The **Mailgun Java SDK** enables Java developers to work with [Mailgun API][api_reference] efficiently.
 
 
 * [Mailgun Home][mailgun_home]
@@ -51,7 +51,7 @@ The **Mailgun SDK for Java** enables Java developers to work with [Mailgun API][
 
 ## Release notes
 
-Changes to the SDK beginning with version 1.0.1 (April 2022) are tracked in [CHANGELOG.md][changes-file].
+Changes to the SDK beginning with version 1.0.1 (June 2022) are tracked in [CHANGELOG.md][changes-file].
 
 ## Getting Started
 
@@ -62,7 +62,7 @@ To run the SDK, you will need **Java 1.8+**.
 
 ### Install the SDK
 
-The recommended way to use the AWS SDK for Java in your project: 
+The recommended way to use the **Mailgun Java SDK** in your project: 
 
 [Choose version you need](https://search.maven.org/search?q=g:%22com.mailgun%22%20AND%20a:%22mailgun-java%22)
 
@@ -132,7 +132,7 @@ mailgunMessagesApi.sendMessage(YOUR_DOMAIN, message);
 
 [Configuration examples](https://github.com/mailgun/mailgun-java/blob/49355cb9867963bbb847361801918aed48ead71a/src/test/java/com/mailgun/client/MailgunClientTest.java)
 
-#### Default configuration:
+#### Default Mailgun Client configuration:
 
 ```java
 //        For US servers
@@ -142,7 +142,7 @@ mailgunMessagesApi.sendMessage(YOUR_DOMAIN, message);
         MailgunClient.config(EU_BASE_URL, PRIVATE_API_KEY)
 ```
 
-#### Custom configuration.
+#### Custom Mailgun client configuration.
 
 You can specify your own logLevel, retryer, logger, errorDecoder, options.
 ```java
@@ -154,15 +154,22 @@ You can specify your own logLevel, retryer, logger, errorDecoder, options.
                 .options(new Request.Options(10, TimeUnit.SECONDS, 60, TimeUnit.SECONDS, true))
 ```
 
-
-#### Configuration example for the [Mailgun sending emails API](https://documentation.mailgun.com/en/latest/api-sending.html)
+#### Mailgun client configuration example for the [Mailgun sending emails API](https://documentation.mailgun.com/en/latest/api-sending.html)
 
 ```java
         MailgunMessagesApi mailgunMessagesApi = MailgunClient.config(PRIVATE_API_KEY)
-                .createApi(MailgunMessagesApi.class);
+            .createApi(MailgunMessagesApi.class);
 ```
 
-#### Spring Bean Configuration example:
+
+#### Async Mailgun client configuration example for the [Mailgun sending emails API](https://documentation.mailgun.com/en/latest/api-sending.html)
+
+```java
+        MailgunMessagesApi mailgunAsyncMessagesApi = MailgunClient.config(PRIVATE_API_KEY)
+            .createAsyncApi(MailgunMessagesApi.class);
+```
+
+#### Spring Bean Mailgun client configuration example:
 ```java
         @Bean
         public MailgunMessagesApi mailgunMessagesApi() {
@@ -212,6 +219,10 @@ To retrieves a JavaBean class from the `FeignResponse` you can use [decode](http
 ```java
         MessageResponse messageResponse = ObjectMapperUtil.decode(feignResponse, MessageResponse.class);
 ```
+Or
+```java
+        JsonNode jsonNode = ObjectMapperUtil.decode(feignResponse, JsonNode.class);
+```
 
 ## Exception handling
 
@@ -243,12 +254,18 @@ More information:
   - [Messages](#messages)
     - [Set up MailgunMessagesApi](#Set-up-MailgunMessagesApi)
     - [Send email(s)](#send-emails)
+    - [Async send email(s)](#async-send-emails)
     - [Send email (html example)](#send-email-html-example)
     - [Send email (attachments example)](#send-email-attachments-example)
     - [Send email (inline multiple files example)](#send-email-inline-multiple-files-example)
     - [Send email (delay example)](#send-email-delay-example)
     - [Send email (reply-to example)](#send-email-reply-to-example)
     - [Send email (mailing list example)](#send-email-mailing-list-example)
+    - [Send email(s) in MIME format](#send-mime-emails)
+  - [Store Messages](#store-messages)
+    - [Set up MailgunStoreMessagesApi](#Set-up-MailgunStoreMessagesApi)
+    - [Resend email(s)](#resend-emails)
+    - [Retrieve email](#retrieve-email)
   - [Domains](#domains)
     - [Set up MailgunDomainsApi](#Set-up-MailgunDomainsApi)
     - [Get Domains list](#Get-Domains-list)
@@ -297,6 +314,7 @@ More information:
       - [Get Bounce](#Get-Bounce)
       - [Add Bounce](#Add-Bounce)
       - [Add Bounces](#Add-Bounces)
+      - [Import Bounces](#Import-Bounce)
       - [Delete Bounce](#Delete-Bounce)
       - [Delete all Bounces](#Delete-all-Bounces)
     - [Suppression Complaints](#Suppression-Complaints)
@@ -305,6 +323,7 @@ More information:
       - [Get single Complaint](#Get-single-Complaint)
       - [Add Address](#Add-Address)
       - [Add Addresses](#Add-Addresses)
+      - [Import Addresses](#Import-Addresses)
       - [Remove Address](#Remove-Address)
     - [Suppression Unsubscribe](#Suppression-Unsubscribe)
       - [Set up MailgunSuppressionUnsubscribeApi](#Set-up-MailgunSuppressionUnsubscribeApi)
@@ -312,6 +331,7 @@ More information:
       - [Get single Unsubscribe](#Get-single-Unsubscribe)
       - [Add address](#Add-address)
       - [Add addresses](#Add-addresses)
+      - [Import addresses](#Import-addresses)
       - [Remove address tag](#Remove-address-tag)
       - [Remove address](#Remove-address)
     - [Suppression Whitelists](#Suppression-Whitelists)
@@ -319,6 +339,7 @@ More information:
       - [Get all Whitelists](#Get-all-Whitelists)
       - [Get single Whitelist](#Get-single-Whitelist)
       - [Add address/domain](#Add-address/domain)
+      - [Import address/domain](#Import-address/domain)
       - [Delete address/domain](#Delete-address/domain)
   - [Routes](#Routes)
     - [Set up MailgunRoutesApi](#Set-up-MailgunRoutesApi)
@@ -368,6 +389,30 @@ More information:
   - [Email Validation/Verification](#Email-Validation/Verification)
     - [Set up MailgunEmailVerificationApi](#Set-up-MailgunEmailVerificationApi)
     - [Validate address](#Validate-address)
+    - [Get verification job list](#Get-verification-job-list)
+    - [Get verification job status](#Get-verification-job-status)
+    - [Create verification job](#Create-verification-job)
+    - [Cancel verification job](#Cancel-verification-job)
+    - [Get preview list](#Get-preview-list)
+    - [Check preview status](#Check-preview-status)
+    - [Create verification preview](#Create-verification-preview)
+    - [Delete verification preview](#Delete-verification-preview)
+  - [Inbox Placement](#Inbox Placement)
+    - [Set up MailgunSeedListApi](#Set-up-MailgunSeedListApi)
+    - [Generate seed list](#Generate-seed-list)
+    - [Update seed list](#Update-seed-list)
+    - [Get seed lists](#Get-seed-lists)
+    - [Get seed list](#Get-seed-list)
+    - [Get seed list attributes](#Get-seed-list-attributes)
+    - [Get seed list attribute](#Get-seed-list-attribute)
+    - [Get seed list filters](#Get-seed-list-filters)
+    - [Delete seed list](#Delete-seed-list)
+    - [Get list results](#Get-list-results)
+    - [Get results filters](#Get-results-filters)
+    - [Get results attributes](#Get-results-attributes)
+    - [Get results attribute](#Get-results-attribute)
+    - [Get specific result](#Get-specific-result)
+    - [Delete result](#Delete-result)
 
 
 
@@ -398,6 +443,22 @@ When you submit messages for delivery, Mailgun places them in a message queue.
                 .build();
 
         MessageResponse messageResponse = mailgunMessagesApi.sendMessage(DOMAIN, message);
+```
+
+#### Async send email(s)
+Asynchronously send email(s).
+```java
+        MailgunMessagesApi mailgunAsyncMessagesApi = MailgunClient.config(PRIVATE_API_KEY)
+            .createAsyncApi(MailgunMessagesApi.class);
+
+        Message message = Message.builder()
+                .from(EMAIL_FROM)
+                .to(EmailUtil.emailWithName(USER_NAME, USER_EMAIL)
+                .subject(SUBJECT)
+                .text(TEXT)
+                .build();
+
+        CompletableFuture<MessageResponse> result = mailgunAsyncMessagesApi.sendMessageAsync(MAIN_DOMAIN, message);
 ```
 
 #### Send email (html example)
@@ -489,7 +550,45 @@ When you submit messages for delivery, Mailgun places them in a message queue.
         MessageResponse messageResponse = mailgunMessagesApi.sendMessage(DOMAIN, message);
 ```
 
+#### Send MIME email(s)
+Send email(s) in MIME format
+```java
+        MailgunMimeMessage mailgunMimeMessage = MailgunMimeMessage.builder()
+            .to(EMAIL_TO)
+            .message(new File("/path/to/file.mime"))
+            .build();
+
+        MessageResponse result = mailgunMessagesApi.sendMIMEMessage(MAIN_DOMAIN, mailgunMimeMessage);
+```
+
 More examples - [MailgunMessagesIntegrationTest](https://github.com/mailgun/mailgun-java/blob/main/src/test/java/com/mailgun/integration/MailgunMessagesIntegrationTest.java)
+
+
+### Store Messages
+
+[MailgunStoreMessagesApi](https://github.com/mailgun/mailgun-java/blob/main/src/main/java/com/mailgun/api/v3/MailgunStoreMessagesApi.java)
+allows you to work with stored messages.
+
+[Mailgun Store Messages documentation](https://documentation.mailgun.com/en/latest/api-sending.html).
+
+#### Set up MailgunStoreMessagesApi
+```java
+        MailgunStoreMessagesApi mailgunStoreMessagesApi = MailgunClient.config(storedMessageUrl, PRIVATE_API_KEY)
+            .createApiWithAbsoluteUrl(MailgunStoreMessagesApi.class);
+```
+
+#### Resend email(s)
+```java
+        MessageResponse result = mailgunStoreMessagesApi.resendMessage(EMAIL_TO);
+```
+
+#### Retrieve email(s)
+```java
+        StoreMessageResponse result = mailgunStoreMessagesApi.retrieveMessage();
+```
+
+More examples - [MailgunStoreMessagesIntegrationTest](https://github.com/mailgun/mailgun-java/blob/main/src/test/java/com/mailgun/integration/MailgunStoreMessagesIntegrationTest.java)
+
 
 
 ### Domains
@@ -921,6 +1020,17 @@ Add multiple bounce records to the bounce list in a single API call.
         ResponseWithMessage response = suppressionBouncesApi.addBounces(DOMAIN, Arrays.asList(bouncesRequest1, bouncesRequest2));
 ``` 
 
+#### Import Bounces
+
+Import a list of bounces.
+```java
+        BouncesListImportRequest request = BouncesListImportRequest.builder()
+            .file(new File("/path/to/file"))
+            .build();
+
+        ResponseWithMessage result = suppressionBouncesApi.importBounceList(MAIN_DOMAIN, request);
+``` 
+
 #### Delete Bounce
 
 Delete a single bounce.
@@ -994,7 +1104,18 @@ Add multiple complaint records to the complaint list in a single API call(up to 
                 .address(EMAIL_2)
                 .build();
 
-        ResponseWithMessage response = suppressionComplaintsApi.addAddressesToComplaintsList(TEST_MAIN_DOMAIN, Arrays.asList(complaintsItem1, complaintsItem2));
+        ResponseWithMessage response = suppressionComplaintsApi.addAddressesToComplaintsList(MAIN_DOMAIN, Arrays.asList(complaintsItem1, complaintsItem2));
+``` 
+
+#### Import Addresses
+
+Import a list of complaints.
+```java
+        ComplaintsListImportRequest request = ComplaintsListImportRequest.builder()
+            .file(new File("/path/to/file"))
+            .build();
+
+        ResponseWithMessage result = suppressionComplaintsApi.importComplaintsList(MAIN_DOMAIN, request);
 ``` 
 
 #### Remove Address
@@ -1068,6 +1189,17 @@ Add multiple unsubscribe records to the unsubscribe list in a single API call(up
         ResponseWithMessage response = suppressionUnsubscribeApi.addAddressesToUnsubscribeTable(DOMAIN, Arrays.asList(unsubscribeItemAllFields, unsubscribeItemAddressOnly));
 ``` 
 
+#### Import addresses
+
+Import a CSV file containing a list of addresses to add to the unsubscribe list.
+```java
+        UnsubscribesListImportRequest request = UnsubscribesListImportRequest.builder()
+        .file(new File("/path/to/file"))
+        .build();
+
+        ResponseWithMessage result = suppressionUnsubscribeApi.importAddressesToUnsubscribeTable(MAIN_DOMAIN, request);
+``` 
+
 #### Remove address tag
 
 Remove an address from the unsubscribes list.
@@ -1127,6 +1259,17 @@ Add an address or domain to the whitelist table.
                 .build();
 
         ResponseWithMessage response = suppressionWhitelistsApi.addSingleWhitelistRecord(DOMAIN, request);
+``` 
+
+#### Import address/domain
+
+Import a CSV file containing a list of addresses and/or domains to add to the whitelist.
+```java
+        WhitelistsListImportRequest request = WhitelistsListImportRequest.builder()
+        .file(new File("/path/to/file"))
+            .build();
+
+        ResponseWithMessage result = suppressionWhitelistsApi.importWhitelistRecords(MAIN_DOMAIN, request);
 ``` 
 
 #### Delete address/domain
@@ -1259,7 +1402,7 @@ Updates an existing webhook.
                 .urls(Arrays.asList(WEBHOOK_URL_2, WEBHOOK_URL_3))
                 .build();
 
-        WebhookResult result = mailgunWebhooksApi.updateWebhook(TEST_MAIN_DOMAIN, WebhookName.CLICKED, request);
+        WebhookResult result = mailgunWebhooksApi.updateWebhook(MAIN_DOMAIN, WebhookName.CLICKED, request);
 ``` 
 
 #### Delete Webhook
@@ -1470,7 +1613,7 @@ Returns a list of stored templates for the domain with paging.
                 .pivot(TEMPLATE_NAME)
                 .build();
 
-        TemplatesResult result = mailgunTemplatesApi.getAllTemplates(TEST_MAIN_DOMAIN, pagingWithPivot);
+        TemplatesResult result = mailgunTemplatesApi.getAllTemplates(MAIN_DOMAIN, pagingWithPivot);
 ``` 
 
 #### Get Template
@@ -1581,8 +1724,6 @@ More examples - [MailgunTemplatesIntegrationTest](https://github.com/mailgun/mai
 
 
 
-
-
 ### Email Validation/Verification
 
 [MailgunEmailVerificationApi](https://github.com/mailgun/mailgun-java/blob/main/src/main/java/com/mailgun/api/v4/MailgunEmailVerificationApi.java)
@@ -1603,7 +1744,205 @@ Given an arbitrary address, validates address based on defined checks.
         AddressValidationResponse result = mailgunEmailVerificationApi.validateAddress(EMAIL);
 ```
 
+#### Get verification job list
+
+Get list of all bulk verification jobs.
+```java
+        BulkVerificationJobListResponse result = mailgunEmailVerificationApi.getBulkVerificationJobList();
+```
+
+#### Get verification job status
+
+Check the current status of a bulk verification job.
+```java
+        BulkVerificationJobStatusResponse result = mailgunEmailVerificationApi.getBulkVerificationJobStatus(LIST_NAME);
+```
+
+#### Create verification job
+
+Create a bulk verification job.
+```java
+        BulkVerificationStatusRequest request = BulkVerificationStatusRequest.builder()
+            .file(new File("/path/to/file"))
+            .build();
+
+        BulkVerificationCreatingResponse result = mailgunEmailVerificationApi.createBulkVerificationJob(LIST_NAME, request);
+```
+
+#### Cancel verification job
+
+Cancel current running bulk verification job.
+```java
+        String result = mailgunEmailVerificationApi.cancelBulkVerificationJob(LIST_NAME);
+```
+
+#### Get preview list
+
+Get list of all bulk verification previews.
+```java
+        BulkVerificationPreviewListResponse result = mailgunEmailVerificationApi.getBulkVerificationPreviewList();
+```
+
+#### Check preview status
+
+Check the current status of a bulk verification preview.
+```java
+        BulkVerificationPreviewResponse result = mailgunEmailVerificationApi.getBulkVerificationPreviewStatus(LIST_NAME);
+```
+
+#### Create verification preview
+
+Create a bulk verification preview.
+```java
+        BulkVerificationStatusRequest request = BulkVerificationStatusRequest.builder()
+            .file(new File("/path/to/file"))
+            .build();
+
+        BulkVerificationCreatingResponse result = mailgunEmailVerificationApi.createBulkVerificationPreview(LIST_NAME, request);
+```
+
+#### Delete verification preview
+
+Delete a bulk verification preview.
+```java
+        Response result = mailgunEmailVerificationApi.deleteBulkVerificationPreview(LIST_NAME);
+```
+
 More examples - [MailgunEmailVerificationIntegrationTest](https://github.com/mailgun/mailgun-java/blob/main/src/test/java/com/mailgun/integration/MailgunEmailVerificationIntegrationTest.java)
+
+
+
+### Inbox Placement
+
+[MailgunSeedListApi](https://github.com/mailgun/mailgun-java/blob/main/src/main/java/com/mailgun/api/v4/MailgunSeedListApi.java)
+A seed list is an object that provides the mailing list for your inbox placement test.
+It also acts as a container for all the results of those tests and will aggregate the stats of all the tests..
+
+[Inbox Placement documentation](https://documentation.mailgun.com/en/latest/api-inbox-placement.html).
+
+#### Set up MailgunSeedListApi
+```java
+        MailgunSeedListApi mailgunSeedListApi = MailgunClient.config(PRIVATE_API_KEY)
+                .createApi(MailgunSeedListApi.class);
+```
+
+#### Generate seed list
+
+Generate a seed list
+```java
+        SeedListRequest request = SeedListRequest.builder()
+            .seedFilter(SEED_FILTER)
+            .name(SEED_LIST_NAME)
+            .sendingDomains(Arrays.asList(TEST_DOMAIN_1, TEST_DOMAIN_2))
+            .build();
+
+        SeedListItem result = mailgunSeedListApi.generateSeedList(request);
+```
+
+#### Update seed list
+
+You can update a seed list with this endpoint.
+```java
+        SeedListRequest request = SeedListRequest.builder()
+            .seedFilter(SEED_FILTER)
+            .name(SEED_LIST_NAME)
+            .sendingDomains(Arrays.asList(TEST_DOMAIN_1, TEST_DOMAIN_2))
+            .build();
+
+        SeedListItem result = mailgunSeedListApi.updateSeedList(TARGET_EMAIL, request);
+```
+
+#### Get seed lists
+
+Get a list of all of your seed lists. You can filter this using the available filters.
+```java
+        SeedListsPageRequest filter = SeedListsPageRequest.builder()
+            .limit(2)
+            .offset(1)
+            .ascending(false)
+            .build();
+
+        SeedListsResponse result = mailgunSeedListApi.getAllSeedLists(filter);
+```
+
+#### Get seed list
+
+You can select a single seed list with this endpoint.
+```java
+        SingleSeedListResponse result = mailgunSeedListApi.getSeedList(TARGET_EMAIL);
+```
+
+#### Get seed list attributes
+
+Get all iterable attributes of seed lists.
+```java
+        SeedListsAttributesResponse result = mailgunSeedListApi.getSeedListsAttributes();
+```
+
+#### Get seed list attribute
+
+Get all values of a specific attribute of your seed lists.
+```java
+        SeedListsAttributesResponse result = mailgunSeedListApi.getSeedListsAttribute(ATTRIBUTE_NAME);
+```
+
+#### Get seed list filters
+
+Get all available filters for seed lists.
+```java
+        SeedListsFiltersResponse result = mailgunSeedListApi.getSeedListFilters();
+```
+
+#### Delete seed list
+
+Delete a seed list.
+```java
+        Response result = mailgunSeedListApi.deleteSeedListFeignResponse(TARGET_EMAIL);
+```
+
+#### Get list results
+
+Test results are generated when a message has been received at the target_email.
+```java
+        Response result = mailgunSeedListApi.getResultsFeignResponse();
+```
+
+#### Get results filters
+
+Get Available Result Filters.
+```java
+        Response result = mailgunSeedListApi.getAvailableResultFiltersFeignResponse();
+```
+
+#### Get results attributes
+
+Get all iterable attributes of results.
+```java
+        SeedListsAttributesResponse result = mailgunSeedListApi.getResultsAttributes();
+```
+
+#### Get results attribute
+
+Get all values of a specific attribute of your results lists.
+```java
+        SeedListsAttributesResponse result = mailgunSeedListApi.getResultsAttribute(ATTRIBUTE);
+```
+
+#### Get specific result
+
+Get a specific result.
+```java
+        Response result = mailgunSeedListApi.getSpecificResultFeignResponse(RID);
+```
+
+#### Delete result
+
+Delete a result.
+```java
+        Response result = mailgunSeedListApi.deleteResultFeignResponse(RID);
+```
+
+More examples - [MailgunSeedListIntegrationTest](https://github.com/mailgun/mailgun-java/blob/main/src/test/java/com/mailgun/integration/MailgunSeedListIntegrationTest.java)
 
 
 

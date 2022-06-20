@@ -32,6 +32,7 @@ import feign.Response;
  *
  * @see <a href="https://documentation.mailgun.com/en/latest/api-domains.html">Domains</a>
  */
+@Headers("Accept: application/json")
 public interface MailgunDomainsApi extends MailgunApi {
 
     /**
@@ -41,7 +42,6 @@ public interface MailgunDomainsApi extends MailgunApi {
      *
      * @return {@link DomainListResponse}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /domains")
     DomainListResponse getDomainsList();
 
@@ -52,7 +52,6 @@ public interface MailgunDomainsApi extends MailgunApi {
      *
      * @return {@link Response}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /domains")
     Response getDomainsListFeignResponse();
 
@@ -64,7 +63,6 @@ public interface MailgunDomainsApi extends MailgunApi {
      * @param filter {@link DomainsParametersFilter}
      * @return {@link DomainListResponse}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /domains")
     DomainListResponse getDomainsList(@QueryMap DomainsParametersFilter filter);
 
@@ -76,7 +74,6 @@ public interface MailgunDomainsApi extends MailgunApi {
      * @param filter {@link DomainsParametersFilter}
      * @return {@link Response}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /domains")
     Response getDomainsListFeignResponse(@QueryMap DomainsParametersFilter filter);
 
@@ -88,7 +85,6 @@ public interface MailgunDomainsApi extends MailgunApi {
      * @param domain Name of the domain
      * @return {@link SingleDomainResponse}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /domains/{domain}")
     SingleDomainResponse getSingleDomain(@Param("domain") String domain);
 
@@ -100,7 +96,6 @@ public interface MailgunDomainsApi extends MailgunApi {
      * @param domain Name of the domain
      * @return {@link Response}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /domains/{domain}")
     Response getSingleDomainFeignResponse(@Param("domain") String domain);
 
@@ -114,7 +109,6 @@ public interface MailgunDomainsApi extends MailgunApi {
      * @param domain Name of the domain
      * @return {@link DomainResponse}
      */
-    @Headers("Accept: application/json")
     @RequestLine("PUT /domains/{domain}/verify")
     DomainResponse verifyDomain(@Param("domain") String domain);
 
@@ -128,7 +122,6 @@ public interface MailgunDomainsApi extends MailgunApi {
      * @param domain Name of the domain
      * @return {@link Response}
      */
-    @Headers("Accept: application/json")
     @RequestLine("PUT /domains/{domain}/verify")
     Response verifyDomainFeignResponse(@Param("domain") String domain);
 
@@ -140,7 +133,7 @@ public interface MailgunDomainsApi extends MailgunApi {
      * @param request {@link DomainRequest}
      * @return {@link DomainResponse}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /domains")
     DomainResponse createNewDomain(DomainRequest request);
 
@@ -152,7 +145,7 @@ public interface MailgunDomainsApi extends MailgunApi {
      * @param request {@link DomainRequest}
      * @return {@link Response}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /domains")
     Response createNewDomainFeignResponse(DomainRequest request);
 
@@ -164,7 +157,6 @@ public interface MailgunDomainsApi extends MailgunApi {
      * @param domain Name of the domain
      * @return {@link ResponseWithMessage}
      */
-    @Headers({"Accept: application/json"})
     @RequestLine("DELETE /domains/{domain}")
     ResponseWithMessage deleteDomain(@Param("domain") String domain);
 
@@ -176,7 +168,6 @@ public interface MailgunDomainsApi extends MailgunApi {
      * @param domain Name of the domain
      * @return {@link Response}
      */
-    @Headers({"Accept: application/json"})
     @RequestLine("DELETE /domains/{domain}")
     Response deleteDomainFeignResponse(@Param("domain") String domain);
 
@@ -189,7 +180,7 @@ public interface MailgunDomainsApi extends MailgunApi {
      * @param request {@link DomainCredentials}
      * @return {@link ResponseWithMessage}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /domains/{domain}/credentials")
     ResponseWithMessage createNewCredentials(@Param("domain") String domain, DomainCredentials request);
 
@@ -202,7 +193,7 @@ public interface MailgunDomainsApi extends MailgunApi {
      * @param request {@link DomainCredentials}
      * @return {@link Response}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /domains/{domain}/credentials")
     Response createNewCredentialsFeignResponse(@Param("domain") String domain, DomainCredentials request);
 
@@ -217,7 +208,7 @@ public interface MailgunDomainsApi extends MailgunApi {
      * @param password A password for the SMTP credentials. (Length Min 5, Max 32)
      * @return {@link ResponseWithMessage}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("PUT /domains/{domain}/credentials/{login}")
     ResponseWithMessage updateCredentials(@Param("domain") String domain, @Param("login") String login, @Param("password") String password);
 
@@ -232,7 +223,7 @@ public interface MailgunDomainsApi extends MailgunApi {
      * @param password A password for the SMTP credentials. (Length Min 5, Max 32)
      * @return {@link Response}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("PUT /domains/{domain}/credentials/{login}")
     Response updateCredentialsFeignResponse(@Param("domain") String domain, @Param("login") String login, @Param("password") String password);
 
@@ -245,7 +236,6 @@ public interface MailgunDomainsApi extends MailgunApi {
      * @param login  Login
      * @return {@link ResponseWithMessage}
      */
-    @Headers({"Accept: application/json"})
     @RequestLine("DELETE /domains/{domain}/credentials/{login}")
     ResponseWithMessage deleteCredentials(@Param("domain") String domain, @Param("login") String login);
 
@@ -258,7 +248,6 @@ public interface MailgunDomainsApi extends MailgunApi {
      * @param login  Login
      * @return {@link Response}
      */
-    @Headers({"Accept: application/json"})
     @RequestLine("DELETE /domains/{domain}/credentials/{login}")
     Response deleteCredentialsFeignResponse(@Param("domain") String domain, @Param("login") String login);
 
@@ -270,7 +259,6 @@ public interface MailgunDomainsApi extends MailgunApi {
      * @param domain Name of the domain
      * @return {@link DomainConnectionResponse}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /domains/{domain}/connection")
     DomainConnectionResponse getDomainConnectionSettings(@Param("domain") String domain);
 
@@ -282,7 +270,6 @@ public interface MailgunDomainsApi extends MailgunApi {
      * @param domain Name of the domain
      * @return {@link Response}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /domains/{domain}/connection")
     Response getDomainConnectionSettingsFeignResponse(@Param("domain") String domain);
 
@@ -295,7 +282,7 @@ public interface MailgunDomainsApi extends MailgunApi {
      * @param request {@link DomainConnectionRequest}
      * @return {@link UpdateDomainConnectionResponse}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("PUT /domains/{domain}/connection")
     UpdateDomainConnectionResponse updateDomainConnectionSettings(@Param("domain") String domain, DomainConnectionRequest request);
 
@@ -308,7 +295,7 @@ public interface MailgunDomainsApi extends MailgunApi {
      * @param request {@link DomainConnectionRequest}
      * @return {@link Response}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("PUT /domains/{domain}/connection")
     Response updateDomainConnectionSettingsFeignResponse(@Param("domain") String domain, DomainConnectionRequest request);
 
@@ -320,7 +307,6 @@ public interface MailgunDomainsApi extends MailgunApi {
      * @param domain Name of the domain
      * @return {@link DomainTrackingResponse}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /domains/{domain}/tracking")
     DomainTrackingResponse getDomainTrackingSettings(@Param("domain") String domain);
 
@@ -332,7 +318,6 @@ public interface MailgunDomainsApi extends MailgunApi {
      * @param domain Name of the domain
      * @return {@link Response}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /domains/{domain}/tracking")
     Response getDomainTrackingSettingsFeignResponse(@Param("domain") String domain);
 
@@ -345,7 +330,7 @@ public interface MailgunDomainsApi extends MailgunApi {
      * @param active {@link YesNo}
      * @return {@link UpdateDomainOpenTrackingSettingsResponse}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("PUT /domains/{domain}/tracking/open")
     UpdateDomainOpenTrackingSettingsResponse updateDomainOpenTrackingSettings(@Param("domain") String domain,
                                                                               @Param(value = "active", expander = EnumExpander.class) YesNo active);
@@ -359,7 +344,7 @@ public interface MailgunDomainsApi extends MailgunApi {
      * @param active {@link YesNo}
      * @return {@link Response}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("PUT /domains/{domain}/tracking/open")
     Response updateDomainOpenTrackingSettingsFeignResponse(@Param("domain") String domain,
                                                            @Param(value = "active", expander = EnumExpander.class) YesNo active);
@@ -379,7 +364,7 @@ public interface MailgunDomainsApi extends MailgunApi {
      *               </p>
      * @return {@link UpdateDomainClickTrackingSettingsResponse}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("PUT /domains/{domain}/tracking/click")
     UpdateDomainClickTrackingSettingsResponse updateDomainClickTrackingSettings(@Param("domain") String domain,
                                                                                 @Param(value = "active", expander = EnumExpander.class) YesNoHtml active);
@@ -399,7 +384,7 @@ public interface MailgunDomainsApi extends MailgunApi {
      *               </p>
      * @return {@link Response}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("PUT /domains/{domain}/tracking/click")
     Response updateDomainClickTrackingSettingsFeignResponse(@Param("domain") String domain,
                                                             @Param(value = "active", expander = EnumExpander.class) YesNoHtml active);
@@ -413,7 +398,7 @@ public interface MailgunDomainsApi extends MailgunApi {
      * @param request {@link DomainUnsubscribeConnectionSettingsRequest}
      * @return {@link UpdateDomainUnsubscribeTrackingSettingsResponse}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("PUT /domains/{domain}/tracking/unsubscribe")
     UpdateDomainUnsubscribeTrackingSettingsResponse updateDomainUnsubscribeConnectionSettings(@Param("domain") String domain, DomainUnsubscribeConnectionSettingsRequest request);
 
@@ -426,7 +411,7 @@ public interface MailgunDomainsApi extends MailgunApi {
      * @param request {@link DomainUnsubscribeConnectionSettingsRequest}
      * @return {@link Response}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("PUT /domains/{domain}/tracking/unsubscribe")
     Response updateDomainUnsubscribeConnectionSettingsFeignResponse(@Param("domain") String domain, DomainUnsubscribeConnectionSettingsRequest request);
 

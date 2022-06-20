@@ -4,14 +4,17 @@ import java.io.File;
 import java.io.IOException;
 import java.time.ZonedDateTime;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.mailgun.api.v3.MailgunMessagesApi;
 import com.mailgun.client.MailgunClient;
+import com.mailgun.model.message.MailgunMimeMessage;
 import com.mailgun.model.message.Message;
 import com.mailgun.model.message.MessageResponse;
 import com.mailgun.util.ObjectMapperUtil;
@@ -80,6 +83,28 @@ class MailgunMessagesIntegrationTest {
     }
 
     @Test
+    void message_MinimumFields_FeignResponse_JsonNode_Test() throws IOException {
+        Message message = Message.builder()
+            .from(EMAIL_FROM)
+            .to(EMAIL_TO)
+            .subject(TEST_EMAIL_SUBJECT)
+            .text(TEST_EMAIL_TEXT)
+            .build();
+
+        Response feignResponse = mailgunMessagesApi.sendMessageFeignResponse(MAIN_DOMAIN, message);
+
+        assertEquals(200, feignResponse.status());
+        assertEquals("OK", feignResponse.reason());
+        Request request = feignResponse.request();
+        assertEquals(Request.HttpMethod.POST, request.httpMethod());
+        assertNotNull(feignResponse.body());
+        JsonNode jsonNode = ObjectMapperUtil.decode(feignResponse, JsonNode.class);
+        assertEquals(2, jsonNode.size());
+        assertNotNull(jsonNode.get("id"));
+        assertEquals(EMAIL_RESPONSE_MESSAGE, jsonNode.get("message").asText());
+    }
+
+    @Test
     void message_Template_Test() {
         Map<String, Object> mailgunVariables = new LinkedHashMap<>();
         mailgunVariables.put("name", TEST_USER_NAME);
@@ -101,6 +126,40 @@ class MailgunMessagesIntegrationTest {
 //        "Hey, {{name}}!"
 //        Result:
 //        Hey, Zarathustra!
+    }
+
+    @Test
+    void message_Batch_Sending_Template_Test() {
+        Map<String, Object> recipientVariables = new HashMap<>();
+
+        Map<String, Object> mVars = new HashMap<>();
+        mVars.put("name", "Alice");
+        mVars.put("id", 1);
+        recipientVariables.put(EMAIL_TO, mVars);
+
+        Map<String, Object> bobVars = new HashMap<>();
+        bobVars.put("name", "Bob");
+        bobVars.put("id", 2);
+        recipientVariables.put(EMAIL_FROM, bobVars);
+
+        Message message = Message.builder()
+            .from(EMAIL_FROM)
+            .to(Arrays.asList(EMAIL_TO, EMAIL_FROM))
+            .subject("Hey %recipient.name%")
+            .text("If you wish to unsubscribe, click <https://mailgun.com/unsubscribe/%recipient.id%>")
+            .recipientVariables(recipientVariables)
+            .build();
+
+        MessageResponse result = mailgunMessagesApi.sendMessage(MAIN_DOMAIN, message);
+
+        assertEquals(EMAIL_RESPONSE_MESSAGE, result.getMessage());
+        //        EMAIL_TO recipient result:
+        //        subject: Hey Alice
+        //        text: If you wish to unsubscribe, click <https://mailgun.com/unsubscribe/1>
+
+        //        EMAIL_FROM recipient result:
+        //        subject: Hey Bob
+        //        text: If you wish to unsubscribe, click <https://mailgun.com/unsubscribe/2>
     }
 
     @Test
@@ -225,6 +284,21 @@ class MailgunMessagesIntegrationTest {
                 .build();
 
         MessageResponse result = mailgunMessagesApi.sendMessage(MAIN_DOMAIN, message);
+
+        assertNotNull(result.getId());
+        assertEquals(EMAIL_RESPONSE_MESSAGE, result.getMessage());
+    }
+
+    @Test
+    void sendMIMEMessage_Test() {
+        File mimeMessage = new File("src/test/resources/mime-message.txt");
+
+        MailgunMimeMessage mailgunMimeMessage = MailgunMimeMessage.builder()
+            .to(EMAIL_TO)
+            .message(mimeMessage)
+            .build();
+
+        MessageResponse result = mailgunMessagesApi.sendMIMEMessage(MAIN_DOMAIN, mailgunMimeMessage);
 
         assertNotNull(result.getId());
         assertEquals(EMAIL_RESPONSE_MESSAGE, result.getMessage());

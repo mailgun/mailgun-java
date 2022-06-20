@@ -3,6 +3,7 @@ package com.mailgun.api.v3.suppression;
 import com.mailgun.api.MailgunApi;
 import com.mailgun.model.ResponseWithMessage;
 import com.mailgun.model.suppression.SuppressionResponse;
+import com.mailgun.model.suppression.bounces.ComplaintsListImportRequest;
 import com.mailgun.model.suppression.complaints.ComplaintsItem;
 import com.mailgun.model.suppression.complaints.ComplaintsItemResponse;
 import com.mailgun.model.suppression.complaints.ComplaintsSingleItemRequest;
@@ -40,6 +41,7 @@ import java.util.List;
  *
  * @see <a href="https://documentation.mailgun.com/en/latest/api-suppressions.html#complaints">Suppressions/Complaints</a>
  */
+@Headers("Accept: application/json")
 public interface MailgunSuppressionComplaintsApi extends MailgunApi {
 
     /**
@@ -54,7 +56,6 @@ public interface MailgunSuppressionComplaintsApi extends MailgunApi {
      * @param domain Name of the domain
      * @return {@link ComplaintsItemResponse}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /{domain}/complaints")
     ComplaintsItemResponse getAllComplaints(@Param("domain") String domain);
 
@@ -70,7 +71,6 @@ public interface MailgunSuppressionComplaintsApi extends MailgunApi {
      * @param domain Name of the domain
      * @return {@link Response}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /{domain}/complaints")
     Response getAllComplaintsFeignResponse(@Param("domain") String domain);
 
@@ -87,7 +87,6 @@ public interface MailgunSuppressionComplaintsApi extends MailgunApi {
      * @param limit  Number of entries to return, max: 10000.
      * @return {@link ComplaintsItemResponse}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /{domain}/complaints?limit={limit}")
     ComplaintsItemResponse getAllComplaints(@Param("domain") String domain, @Param("limit") Integer limit);
 
@@ -104,7 +103,6 @@ public interface MailgunSuppressionComplaintsApi extends MailgunApi {
      * @param limit  Number of entries to return, max: 10000.
      * @return {@link Response}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /{domain}/complaints?limit={limit}")
     Response getAllComplaintsFeignResponse(@Param("domain") String domain, @Param("limit") Integer limit);
 
@@ -117,7 +115,6 @@ public interface MailgunSuppressionComplaintsApi extends MailgunApi {
      * @param address An email address
      * @return {@link ComplaintsItem}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /{domain}/complaints/{address}")
     ComplaintsItem getSingleComplaint(@Param("domain") String domain, @Param("address") String address);
 
@@ -130,7 +127,6 @@ public interface MailgunSuppressionComplaintsApi extends MailgunApi {
      * @param address An email address
      * @return {@link Response}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /{domain}/complaints/{address}")
     Response getSingleComplaintFeignResponse(@Param("domain") String domain, @Param("address") String address);
 
@@ -143,7 +139,7 @@ public interface MailgunSuppressionComplaintsApi extends MailgunApi {
      * @param request {@link ComplaintsSingleItemRequest}
      * @return {@link SuppressionResponse}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /{domain}/complaints")
     SuppressionResponse addAddressToComplaintsList(@Param("domain") String domain, ComplaintsSingleItemRequest request);
 
@@ -156,7 +152,7 @@ public interface MailgunSuppressionComplaintsApi extends MailgunApi {
      * @param request {@link ComplaintsSingleItemRequest}
      * @return {@link Response}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /{domain}/complaints")
     Response addAddressToComplaintsListFeignResponse(@Param("domain") String domain, ComplaintsSingleItemRequest request);
 
@@ -169,7 +165,7 @@ public interface MailgunSuppressionComplaintsApi extends MailgunApi {
      * @param request {@link ComplaintsItem}
      * @return list of {@link ResponseWithMessage}
      */
-    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    @Headers("Content-Type: application/json")
     @RequestLine("POST /{domain}/complaints")
     ResponseWithMessage addAddressesToComplaintsList(@Param("domain") String domain, List<ComplaintsItem> request);
 
@@ -182,9 +178,56 @@ public interface MailgunSuppressionComplaintsApi extends MailgunApi {
      * @param request {@link ComplaintsItem}
      * @return list of {@link Response}
      */
-    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    @Headers("Content-Type: application/json")
     @RequestLine("POST /{domain}/complaints")
     Response addAddressesToComplaintsListFeignResponse(@Param("domain") String domain, List<ComplaintsItem> request);
+
+    /**
+     * <p>
+     * Import a list of complaints.
+     * </p>
+     * <p>
+     * Import a CSV file containing a list of addresses to add to the complaint list.
+     * </p>
+     * <p>
+     * CSV file must be 25MB or under and must contain the following column headers:
+     * </p>
+     * <pre>
+     * <code>address</code> Valid email address
+     * <code>created_at</code> Timestamp of a bounce event in RFC2822 format (optional, default: current time)
+     * </pre>
+     *
+     * @param domain  Name of the domain
+     * @param request {@link ComplaintsItem}
+     * @return list of {@link ResponseWithMessage}
+     */
+    @Headers("Content-Type: multipart/form-data")
+    @RequestLine("POST /{domain}/complaints/import")
+    ResponseWithMessage importComplaintsList(@Param("domain") String domain, ComplaintsListImportRequest request);
+
+    /**
+     * <p>
+     * Add multiple complaints.
+     * </p>
+     * <p>
+     * Import a CSV file containing a list of addresses to add to the complaint list.
+     * </p>
+     * <p>
+     * CSV file must be 25MB or under and must contain the following column headers:
+     * </p>
+     * <pre>
+     * <code>address</code> Valid email address
+     * <code>created_at</code> Timestamp of a bounce event in RFC2822 format (optional, default: current time)
+     * </pre>
+     *
+     * @param domain  Name of the domain
+     * @param request {@link ComplaintsItem}
+     * @return list of {@link Response}
+     */
+    @Headers("Content-Type: multipart/form-data")
+    @RequestLine("POST /{domain}/complaints/import")
+    Response importComplaintsListFeignResponse(@Param("domain") String domain, ComplaintsListImportRequest request);
+
 
     /**
      * <p>
@@ -195,7 +238,6 @@ public interface MailgunSuppressionComplaintsApi extends MailgunApi {
      * @param address An email address
      * @return {@link SuppressionResponse}
      */
-    @Headers({"Accept: application/json"})
     @RequestLine("DELETE /{domain}/complaints/{address}")
     SuppressionResponse removeAddressFromComplaints(@Param("domain") String domain, @Param("address") String address);
 
@@ -208,7 +250,6 @@ public interface MailgunSuppressionComplaintsApi extends MailgunApi {
      * @param address An email address
      * @return {@link Response}
      */
-    @Headers({"Accept: application/json"})
     @RequestLine("DELETE /{domain}/complaints/{address}")
     Response removeAddressFromComplaintsFeignResponse(@Param("domain") String domain, @Param("address") String address);
 

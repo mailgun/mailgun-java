@@ -1,0 +1,10 @@
+MIME-Version: 1.0
+Subject: This is the subject of a sample message
+Content-Type: multipart/form-data; boundary="XXXXboundary text"
+
+This is a message in MIME format.
+
+--XXXXboundary text
+
+Hello!
+This is a test message with 2 lines in the message body.

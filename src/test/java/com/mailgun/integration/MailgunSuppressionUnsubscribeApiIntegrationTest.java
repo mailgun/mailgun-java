@@ -1,5 +1,17 @@
 package com.mailgun.integration;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.List;
+
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+
 import com.mailgun.api.v3.suppression.MailgunSuppressionUnsubscribeApi;
 import com.mailgun.client.MailgunClient;
 import com.mailgun.model.ResponseWithMessage;
@@ -7,13 +19,8 @@ import com.mailgun.model.suppression.SuppressionResponse;
 import com.mailgun.model.suppression.unsubscribe.UnsubscribeItem;
 import com.mailgun.model.suppression.unsubscribe.UnsubscribeItemResponse;
 import com.mailgun.model.suppression.unsubscribe.UnsubscribeSingleItemRequest;
-import org.apache.commons.collections4.CollectionUtils;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
-import java.util.List;
+import com.mailgun.model.suppression.unsubscribe.UnsubscribesListImportRequest;
+import com.mailgun.utils.FileUtils;
 
 import static com.mailgun.constants.IntegrationTestConstants.MAIN_DOMAIN;
 import static com.mailgun.constants.IntegrationTestConstants.PRIVATE_API_KEY;
@@ -112,6 +119,33 @@ class MailgunSuppressionUnsubscribeApiIntegrationTest {
                 Arrays.asList(unsubscribeItemAllFields, unsubscribeItemAddressOnly));
 
         assertEquals("2 addresses have been added to the unsubscribes table", result.getMessage());
+    }
+
+    @Test
+    void importAddressesToUnsubscribeTableTest() throws IOException {
+        List<String[]> dataLines = Arrays.asList(
+            new String[] { "address", "tags", "created_at" },
+            new String[] { "fake-address-1@fake.com", "*", StringUtils.EMPTY },
+            new String[] { "fake-address-2@fake.com", "*", StringUtils.EMPTY }
+        );
+
+        File csvOutputFile = File.createTempFile("unsubscribe_list", ".csv");
+        try (PrintWriter pw = new PrintWriter(csvOutputFile)) {
+            dataLines.stream()
+                .map(FileUtils::convertToCSV)
+                .forEach(pw::println);
+        }
+
+        assertTrue(csvOutputFile.exists());
+        csvOutputFile.deleteOnExit();
+
+        UnsubscribesListImportRequest request = UnsubscribesListImportRequest.builder()
+            .file(csvOutputFile)
+            .build();
+
+        ResponseWithMessage result = suppressionUnsubscribeApi.importAddressesToUnsubscribeTable(MAIN_DOMAIN, request);
+
+        assertEquals("file uploaded successfully", result.getMessage());
     }
 
     @Test

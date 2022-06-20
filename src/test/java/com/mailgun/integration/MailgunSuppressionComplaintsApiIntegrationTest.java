@@ -4,15 +4,21 @@ import com.mailgun.api.v3.suppression.MailgunSuppressionComplaintsApi;
 import com.mailgun.client.MailgunClient;
 import com.mailgun.model.ResponseWithMessage;
 import com.mailgun.model.suppression.SuppressionResponse;
+import com.mailgun.model.suppression.bounces.ComplaintsListImportRequest;
 import com.mailgun.model.suppression.complaints.ComplaintsItem;
 import com.mailgun.model.suppression.complaints.ComplaintsItemResponse;
 import com.mailgun.model.suppression.complaints.ComplaintsSingleItemRequest;
+import com.mailgun.utils.FileUtils;
 import feign.FeignException;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.List;
 
@@ -100,6 +106,33 @@ class MailgunSuppressionComplaintsApiIntegrationTest {
                 Arrays.asList(complaintsItem1, complaintsItem2));
 
         assertEquals("2 complaint addresses have been added to the complaints table", result.getMessage());
+    }
+
+    @Test
+    void importComplaintsListSuccessTest() throws IOException {
+        List<String[]> dataLines = Arrays.asList(
+            new String[] { "address", "created_at" },
+            new String[] { "fake-address-1@fake.com", StringUtils.EMPTY },
+            new String[] { "fake-address-2@fake.com", StringUtils.EMPTY }
+        );
+
+        File csvOutputFile = File.createTempFile("complaints_list", ".csv");
+        try (PrintWriter pw = new PrintWriter(csvOutputFile)) {
+            dataLines.stream()
+                .map(FileUtils::convertToCSV)
+                .forEach(pw::println);
+        }
+
+        assertTrue(csvOutputFile.exists());
+        csvOutputFile.deleteOnExit();
+
+        ComplaintsListImportRequest request = ComplaintsListImportRequest.builder()
+            .file(csvOutputFile)
+            .build();
+
+        ResponseWithMessage result = suppressionComplaintsApi.importComplaintsList(MAIN_DOMAIN, request);
+
+        assertEquals("file uploaded successfully", result.getMessage());
     }
 
     @Test

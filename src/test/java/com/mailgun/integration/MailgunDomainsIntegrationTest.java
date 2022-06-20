@@ -50,7 +50,7 @@ import static com.mailgun.constants.IntegrationTestConstants.IP_2;
 import static com.mailgun.constants.IntegrationTestConstants.TEST_LOGIN;
 import static com.mailgun.constants.IntegrationTestConstants.MAIN_DOMAIN;
 import static com.mailgun.constants.IntegrationTestConstants.PRIVATE_API_KEY;
-import static com.mailgun.util.Constants.DEFAULT_BASE_URL;
+import static com.mailgun.util.Constants.DEFAULT_BASE_URL_US_REGION;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -114,7 +114,7 @@ class MailgunDomainsIntegrationTest {
         assertEquals("OK", feignResponse.reason());
         Request request = feignResponse.request();
         assertEquals(Request.HttpMethod.GET, request.httpMethod());
-        assertEquals(DEFAULT_BASE_URL + mailgunDomainsApi.getApiVersion().getValue() + "/domains", request.url());
+        assertEquals(DEFAULT_BASE_URL_US_REGION + mailgunDomainsApi.getApiVersion().getValue() + "/domains", request.url());
         assertNotNull(feignResponse.body());
         DomainListResponse domainListResponse = ObjectMapperUtil.decode(feignResponse, DomainListResponse.class);
         assertTrue(CollectionUtils.isNotEmpty(domainListResponse.getItems()));

@@ -20,6 +20,7 @@ import feign.Response;
  *
  * @see <a href="https://documentation.mailgun.com/en/latest/api-webhooks.html">Webhooks</a>
  */
+@Headers("Accept: application/json")
 public interface MailgunWebhooksApi extends MailgunApi {
 
     /**
@@ -30,7 +31,6 @@ public interface MailgunWebhooksApi extends MailgunApi {
      * @param domain Name of the domain
      * @return {@link WebhookListResult}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /domains/{domain}/webhooks")
     WebhookListResult getAllWebhooks(@Param("domain") String domain);
 
@@ -42,7 +42,6 @@ public interface MailgunWebhooksApi extends MailgunApi {
      * @param domain Name of the domain
      * @return {@link Response}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /domains/{domain}/webhooks")
     Response getAllWebhooksFeignResponse(@Param("domain") String domain);
 
@@ -55,7 +54,6 @@ public interface MailgunWebhooksApi extends MailgunApi {
      * @param webhookName Name of the webhook.
      * @return {@link WebhookDetailsResult}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /domains/{domain}/webhooks/{name}")
     WebhookDetailsResult getWebhookDetails(@Param("domain") String domain, @Param(value = "name", expander = EnumExpander.class) WebhookName webhookName);
 
@@ -68,7 +66,6 @@ public interface MailgunWebhooksApi extends MailgunApi {
      * @param webhookName Name of the webhook.
      * @return {@link Response}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /domains/{domain}/webhooks/{name}")
     Response getWebhookDetailsFeignResponse(@Param("domain") String domain, @Param(value = "name", expander = EnumExpander.class) WebhookName webhookName);
 
@@ -82,7 +79,7 @@ public interface MailgunWebhooksApi extends MailgunApi {
      * @param request {@link WebhookRequest}
      * @return {@link WebhookResult}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /domains/{domain}/webhooks")
     WebhookResult createNewWebhook(@Param("domain") String domain, WebhookRequest request);
 
@@ -96,7 +93,7 @@ public interface MailgunWebhooksApi extends MailgunApi {
      * @param request {@link WebhookRequest}
      * @return {@link Response}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /domains/{domain}/webhooks")
     Response createNewWebhookFeignResponse(@Param("domain") String domain, WebhookRequest request);
 
@@ -110,7 +107,7 @@ public interface MailgunWebhooksApi extends MailgunApi {
      * @param request     {@link WebhookUpdateRequest}
      * @return {@link WebhookResult}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("PUT /domains/{domain}/webhooks/{name}")
     WebhookResult updateWebhook(@Param("domain") String domain, @Param(value = "name", expander = EnumExpander.class) WebhookName webhookName, WebhookUpdateRequest request);
 
@@ -124,7 +121,7 @@ public interface MailgunWebhooksApi extends MailgunApi {
      * @param request     {@link WebhookUpdateRequest}
      * @return {@link Response}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("PUT /domains/{domain}/webhooks/{name}")
     Response updateWebhookFeignResponse(@Param("domain") String domain, @Param(value = "name", expander = EnumExpander.class) WebhookName webhookName, WebhookUpdateRequest request);
 
@@ -137,7 +134,6 @@ public interface MailgunWebhooksApi extends MailgunApi {
      * @param webhookName Name of the webhook.
      * @return {@link WebhookResult}
      */
-    @Headers({"Accept: application/json"})
     @RequestLine("DELETE /domains/{domain}/webhooks/{name}")
     WebhookResult deleteWebhook(@Param("domain") String domain, @Param(value = "name", expander = EnumExpander.class) WebhookName webhookName);
 
@@ -150,7 +146,6 @@ public interface MailgunWebhooksApi extends MailgunApi {
      * @param webhookName Name of the webhook.
      * @return {@link Response}
      */
-    @Headers({"Accept: application/json"})
     @RequestLine("DELETE /domains/{domain}/webhooks/{name}")
     Response deleteWebhookFeignResponse(@Param("domain") String domain, @Param(value = "name", expander = EnumExpander.class) WebhookName webhookName);
 

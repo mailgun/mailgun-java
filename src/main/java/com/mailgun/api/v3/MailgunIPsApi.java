@@ -17,6 +17,7 @@ import feign.Response;
  *
  * @see <a href="https://documentation.mailgun.com/en/latest/api-ips.html">IPs</a>
  */
+@Headers("Accept: application/json")
 public interface MailgunIPsApi extends MailgunApi {
 
     /**
@@ -117,7 +118,7 @@ public interface MailgunIPsApi extends MailgunApi {
      * @param ip     IP address that should be assigned to the domain pool.
      * @return {@link ResponseWithMessage}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /domains/{domain}/ips")
     ResponseWithMessage assignIPToDomain(@Param("domain") String domain, @Param("ip") String ip);
 
@@ -133,7 +134,7 @@ public interface MailgunIPsApi extends MailgunApi {
      * @param ip     IP address that should be assigned to the domain pool.
      * @return {@link Response}
      */
-    @Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /domains/{domain}/ips")
     Response assignIPToDomainFeignResponse(@Param("domain") String domain, @Param("ip") String ip);
 

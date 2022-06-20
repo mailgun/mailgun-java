@@ -19,6 +19,7 @@ import feign.Response;
  *
  * @see <a href="https://documentation.mailgun.com/en/latest/api-events.html">Events API</a>
  */
+@Headers("Accept: application/json")
 public interface MailgunEventsApi extends MailgunApi {
 
     /**
@@ -29,7 +30,6 @@ public interface MailgunEventsApi extends MailgunApi {
      * @param domain Name of the domain
      * @return {@link EventsResponse}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /{domain}/events")
     EventsResponse getAllEvents(@Param("domain") String domain);
 
@@ -41,7 +41,6 @@ public interface MailgunEventsApi extends MailgunApi {
      * @param domain Name of the domain
      * @return {@link Response}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /{domain}/events")
     Response getAllEventsFeignResponse(@Param("domain") String domain);
 
@@ -63,7 +62,6 @@ public interface MailgunEventsApi extends MailgunApi {
      * @param queryOptions {@link EventsQueryOptions}
      * @return {@link EventsResponse}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /{domain}/events")
     EventsResponse getEvents(@Param("domain") String domain, @QueryMap EventsQueryOptions queryOptions);
 
@@ -85,7 +83,6 @@ public interface MailgunEventsApi extends MailgunApi {
      * @param queryOptions {@link EventsQueryOptions}
      * @return {@link Response}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /{domain}/events")
     Response getEventsFeignResponse(@Param("domain") String domain, @QueryMap EventsQueryOptions queryOptions);
 
@@ -98,7 +95,6 @@ public interface MailgunEventsApi extends MailgunApi {
      * @param pageId Page ID
      * @return {@link EventsResponse}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /{domain}/events/{pageId}")
     EventsResponse getEvents(@Param("domain") String domain, @Param("pageId") String pageId);
 
@@ -111,7 +107,6 @@ public interface MailgunEventsApi extends MailgunApi {
      * @param pageId Page ID
      * @return {@link Response}
      */
-    @Headers("Accept: application/json")
     @RequestLine("GET /{domain}/events/{pageId}")
     Response getEventsFeignResponse(@Param("domain") String domain, @Param("pageId") String pageId);
 

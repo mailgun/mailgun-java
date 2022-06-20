@@ -6,7 +6,7 @@
 
     <groupId>com.mailgun</groupId>
     <artifactId>mailgun-java</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -23,10 +23,10 @@
         <feign-version>11.8</feign-version>
         <feign-form-version>3.8.0</feign-form-version>
         <slf4j.version>1.7.36</slf4j.version>
-        <jackson.version>2.13.2</jackson.version>
+        <jackson.version>2.13.3</jackson.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <commons-collections4.version>4.4</commons-collections4.version>
-        <lombok.version>1.18.22</lombok.version>
+        <lombok.version>1.18.24</lombok.version>
         <junit-jupiter.version>5.8.2</junit-jupiter.version>
         <wiremock.version>2.27.2</wiremock.version>
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
