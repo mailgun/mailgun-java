@@ -25,7 +25,7 @@ adheres to _[Semantic Versioning][semver]_.
 - Add Import a list of bounces from CSV file API
 
 
-[1.0.1]: https://github.com/mailgun/mailgun-java/compare/0.1.0...0.1.0
+[1.0.1]: https://github.com/mailgun/mailgun-java/compare/release/1.0.0...release/1.0.1
 
 
 [keepachangelog]: https://keepachangelog.com/
