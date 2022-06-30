@@ -92,7 +92,7 @@ implementation 'com.mailgun:mailgun-java:1.0.0'
 
 ### Authentication
 
-When you [Sing up](https://signup.mailgun.com/new/signup), Mailgun generates a primary account API key. 
+When you [Sign up](https://signup.mailgun.com/new/signup), Mailgun generates a primary account API key. 
 
 To view your primary account API key in the Mailgun dashboard, click on Settings on the left-hand nav in the Mailgun dashboard and then API Keys and click on the eye icon next to [API_KEYS][api_keys].
 
