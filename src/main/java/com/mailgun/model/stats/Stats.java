@@ -28,7 +28,7 @@ public class Stats {
      * The starting time.
      * </p>
      */
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = RFC_2822_DATE_TIME_PATTERN_TIME_ZONE_NAME)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = RFC_2822_DATE_TIME_PATTERN_TIME_ZONE_NAME, locale = "en")
     ZonedDateTime time;
 
     /**

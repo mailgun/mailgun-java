@@ -51,7 +51,7 @@ public class UnsubscribeItem {
      * </p>
      * {@link ZonedDateTime}
      */
-    @JsonFormat(pattern = RFC_2822_DATE_TIME_PATTERN_TIME_ZONE_NAME_DAY_OCTAL_LITERAL)
+    @JsonFormat(pattern = RFC_2822_DATE_TIME_PATTERN_TIME_ZONE_NAME_DAY_OCTAL_LITERAL, locale = "en")
     @JsonProperty("created_at")
     ZonedDateTime createdAt;
 

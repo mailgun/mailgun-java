@@ -48,7 +48,7 @@ public class MailingListData {
      * </p>
      * {@link ZonedDateTime}
      */
-    @JsonFormat(pattern = RFC_2822_DATE_TIME_PATTERN_TIME_ZONE_NUMERIC)
+    @JsonFormat(pattern = RFC_2822_DATE_TIME_PATTERN_TIME_ZONE_NUMERIC, locale = "en")
     @JsonProperty("created_at")
     ZonedDateTime createdAt;
 

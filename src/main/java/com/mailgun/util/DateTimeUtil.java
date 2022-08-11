@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 import static com.mailgun.util.Constants.RFC_2822_DATE_TIME_PATTERN_TIME_ZONE_NAME_DAY_OCTAL_LITERAL;
 import static com.mailgun.util.Constants.RFC_2822_DATE_TIME_PATTERN_TIME_ZONE_NUMERIC;
@@ -15,8 +16,8 @@ public class DateTimeUtil {
 
     private static final String UNABLE_TO_FORMAT_PROVIDED_ZONED_DATE_TIME = "Unable to format provided ZonedDateTime";
 
-    private static final DateTimeFormatter FORMATTER_DATE_TIME_PATTERN_TIME_ZONE = DateTimeFormatter.ofPattern(RFC_2822_DATE_TIME_PATTERN_TIME_ZONE_NUMERIC);
-    private static final DateTimeFormatter FORMATTER_DATE_TIME_TIME_ZONE_NAME_DAY = DateTimeFormatter.ofPattern(RFC_2822_DATE_TIME_PATTERN_TIME_ZONE_NAME_DAY_OCTAL_LITERAL);
+    private static final DateTimeFormatter FORMATTER_DATE_TIME_PATTERN_TIME_ZONE = DateTimeFormatter.ofPattern(RFC_2822_DATE_TIME_PATTERN_TIME_ZONE_NUMERIC, Locale.ENGLISH);
+    private static final DateTimeFormatter FORMATTER_DATE_TIME_TIME_ZONE_NAME_DAY = DateTimeFormatter.ofPattern(RFC_2822_DATE_TIME_PATTERN_TIME_ZONE_NAME_DAY_OCTAL_LITERAL, Locale.ENGLISH);
 
     public static String toString(ZonedDateTime zonedDateTime) {
         try {

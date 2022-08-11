@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.LinkedHashSet;
+import java.util.Locale;
 
 import static com.mailgun.constants.TestConstants.ZONED_DATE_TIME_2018_2_3_GMT;
 import static com.mailgun.constants.TestConstants.ZONED_DATE_TIME_2018_2_3_STRING;
