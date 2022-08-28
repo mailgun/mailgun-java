@@ -1,5 +1,11 @@
 package com.mailgun.api;
 
+import java.util.Arrays;
+import java.util.Collections;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.mailgun.api.v3.MailgunStatisticsApi;
 import com.mailgun.client.MailgunClient;
@@ -12,11 +18,6 @@ import com.mailgun.model.stats.StatsResult;
 import com.mailgun.model.stats.StatsTotalValueObject;
 import com.mailgun.util.StringUtil;
 import com.mailgun.utils.TestHeadersUtils;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
-import java.util.Collections;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;
@@ -54,8 +55,7 @@ class MailgunStatisticsApiTest extends WireMockBaseTest {
                 .stats(Collections.singletonList(stats))
                 .build();
 
-
-        stubFor(get(urlPathEqualTo("/" + mailgunStatisticsApi.getApiVersion().getValue() + "/" + TEST_DOMAIN + "/stats/total"))
+        stubFor(get(urlPathEqualTo("/" + MailgunApi.getApiVersion().getValue() + "/" + TEST_DOMAIN + "/stats/total"))
                 .withHeader("Authorization", equalTo(TestHeadersUtils.getExpectedAuthHeader()))
                 .withQueryParam("resolution", WireMock.equalTo("day"))
                 .withQueryParam("duration", WireMock.equalTo("3d"))

@@ -29,8 +29,7 @@ import feign.Response;
  */
 public interface MailgunSeedListApi extends MailgunApi {
 
-    @Override
-    default ApiVersion getApiVersion() {
+    static ApiVersion getApiVersion() {
         return ApiVersion.V_4;
     }
 

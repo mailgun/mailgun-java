@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.LinkedHashSet;
+import java.util.Locale;
 
 import static com.mailgun.constants.TestConstants.ZONED_DATE_TIME_2018_2_3_GMT;
 import static com.mailgun.constants.TestConstants.ZONED_DATE_TIME_2018_2_3_STRING;
@@ -48,6 +49,23 @@ class StatisticsOptionsTest {
                 .start(ZONED_DATE_TIME_2018_2_3_GMT)
                 .end(ZONED_DATE_TIME_2020_4_5_GMT)
                 .build();
+
+        assertNotNull(result);
+        assertEquals(new LinkedHashSet<>(Arrays.asList(StatsEventType.OPENED.getValue(), StatsEventType.ACCEPTED.getValue(), StatsEventType.DELIVERED.getValue())), result.getEvent());
+        assertEquals(ZONED_DATE_TIME_2018_2_3_STRING, result.getStart());
+        assertEquals(ZONED_DATE_TIME_2020_4_5_STRING, result.getEnd());
+    }
+
+    @Test
+    void createStatsOptionsTimeRange_GermanyLocale_SuccessTest() {
+        Locale.setDefault(Locale.GERMANY);
+
+        StatisticsOptions result = StatisticsOptions.builder()
+            .event(StatsEventType.OPENED)
+            .event(Arrays.asList(StatsEventType.ACCEPTED, StatsEventType.DELIVERED))
+            .start(ZONED_DATE_TIME_2018_2_3_GMT)
+            .end(ZONED_DATE_TIME_2020_4_5_GMT)
+            .build();
 
         assertNotNull(result);
         assertEquals(new LinkedHashSet<>(Arrays.asList(StatsEventType.OPENED.getValue(), StatsEventType.ACCEPTED.getValue(), StatsEventType.DELIVERED.getValue())), result.getEvent());

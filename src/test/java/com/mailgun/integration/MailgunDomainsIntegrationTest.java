@@ -1,5 +1,6 @@
 package com.mailgun.integration;
 
+import com.mailgun.api.MailgunApi;
 import com.mailgun.api.v3.MailgunDomainsApi;
 import com.mailgun.client.MailgunClient;
 import com.mailgun.enums.DomainState;
@@ -114,7 +115,7 @@ class MailgunDomainsIntegrationTest {
         assertEquals("OK", feignResponse.reason());
         Request request = feignResponse.request();
         assertEquals(Request.HttpMethod.GET, request.httpMethod());
-        assertEquals(DEFAULT_BASE_URL_US_REGION + mailgunDomainsApi.getApiVersion().getValue() + "/domains", request.url());
+        assertEquals(DEFAULT_BASE_URL_US_REGION + MailgunApi.getApiVersion().getValue() + "/domains", request.url());
         assertNotNull(feignResponse.body());
         DomainListResponse domainListResponse = ObjectMapperUtil.decode(feignResponse, DomainListResponse.class);
         assertTrue(CollectionUtils.isNotEmpty(domainListResponse.getItems()));

@@ -21,8 +21,7 @@ import feign.Response;
 @Headers("Accept: application/json")
 public interface MailgunStoreMessagesApi extends MailgunApi {
 
-    @Override
-    default ApiVersion getApiVersion() {
+    static ApiVersion getApiVersion() {
         throw new UnsupportedOperationException("Please use 'MailgunClient.config(storedMessageUrl, PRIVATE_API_KEY)"
             + ".createApiWithAbsoluteUrl(MailgunStoreMessagesApi.class)' configuration for this method");
     }

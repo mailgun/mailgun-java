@@ -1,35 +1,26 @@
 package com.mailgun.util;
 
-import com.mailgun.api.MailgunApi;
-import com.mailgun.enums.ApiVersion;
-import lombok.experimental.UtilityClass;
+import java.lang.reflect.Method;
+
 import org.apache.commons.lang3.StringUtils;
 
-import java.lang.invoke.MethodHandles;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Proxy;
+import com.mailgun.api.MailgunApi;
+import com.mailgun.enums.ApiVersion;
+import lombok.SneakyThrows;
+import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class MailgunApiUtil {
 
+    @SneakyThrows
     public String getFullUrl(Class<? extends MailgunApi> apiType, String baseUrl) {
-        MailgunApi mailgunApi = (MailgunApi) Proxy.newProxyInstance(
-                Thread.currentThread().getContextClassLoader(),
-                new Class[]{apiType},
-                (proxy, method, args) -> {
-                    Constructor<MethodHandles.Lookup> constructor = MethodHandles.Lookup.class
-                            .getDeclaredConstructor(Class.class);
-                    constructor.setAccessible(true);
-
-                    return constructor.newInstance(apiType)
-                            .in(apiType)
-                            .unreflectSpecial(method, apiType)
-                            .bindTo(proxy)
-                            .invokeWithArguments(args);
-                }
-        );
-
-        ApiVersion apiVersion = mailgunApi.getApiVersion();
+        ApiVersion apiVersion;
+        try {
+            Method declaredMethod = apiType.getDeclaredMethod("getApiVersion");
+            apiVersion = (ApiVersion) declaredMethod.invoke(null);
+        } catch (Exception e) {
+            apiVersion = MailgunApi.getApiVersion();
+        }
 
         return getFullUrl(baseUrl, apiVersion.getValue());
     }

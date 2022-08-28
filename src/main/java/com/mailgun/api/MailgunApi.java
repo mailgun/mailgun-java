@@ -4,7 +4,7 @@ import com.mailgun.enums.ApiVersion;
 
 public interface MailgunApi {
 
-    default ApiVersion getApiVersion() {
+    static ApiVersion getApiVersion() {
         return ApiVersion.V_3;
     }
 

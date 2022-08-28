@@ -37,7 +37,7 @@ class MailgunApiMessagesTest extends WireMockBaseTest {
 
     @Test
     void sendMessageWithDomainSuccessTest() {
-        stubFor(post(urlEqualTo("/" + mailgunMessagesApi.getApiVersion().getValue() + "/" + TEST_DOMAIN + "/messages"))
+        stubFor(post(urlEqualTo("/" + MailgunApi.getApiVersion().getValue() + "/" + TEST_DOMAIN + "/messages"))
                 .withHeader("Authorization", equalTo(TestHeadersUtils.getExpectedAuthHeader()))
                 .withHeader("Content-Type",
                         containing("multipart/form-data"))

@@ -33,8 +33,7 @@ import feign.Response;
  */
 public interface MailgunEmailVerificationApi extends MailgunApi {
 
-    @Override
-    default ApiVersion getApiVersion() {
+    static ApiVersion getApiVersion() {
         return ApiVersion.V_4;
     }
 
