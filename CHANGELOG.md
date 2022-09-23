@@ -6,6 +6,10 @@ The format is based on _[Keep a Changelog][keepachangelog]_, and this project
 adheres to _[Semantic Versioning][semver]_.
 
 
+## [1.0.3] (released: 2022-09-23)
+### Added
+- add attachments support.
+
 ## [1.0.2] (released: 2022-08-28)
 ### Added
 - Non-English locale date support.
