@@ -1,11 +1,10 @@
 package com.mailgun.model.events;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Value;
 import lombok.extern.jackson.Jacksonized;
-
-import java.util.List;
 
 /**
  * <p>
@@ -18,33 +17,26 @@ import java.util.List;
 @Jacksonized
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class EventMessage {
+public class EventMessageAttachment {
 
     /**
      * <p>
-     * Event message headers.
-     * {@link EventMessageHeaders}
+     * Attachment file name.
      * </p>
      */
-    EventMessageHeaders headers;
+    String filename;
 
     /**
      * <p>
-     * Message attachments..
+     * Attachment content type.
      * </p>
      */
-    List<EventMessageAttachment> attachments;
+    @JsonProperty("content-type")
+    String contentType;
 
     /**
      * <p>
-     * Message recipients.
-     * </p>
-     */
-    List<String> recipients;
-
-    /**
-     * <p>
-     * Message size.
+     * Attachment size.
      * </p>
      */
     Integer size;
