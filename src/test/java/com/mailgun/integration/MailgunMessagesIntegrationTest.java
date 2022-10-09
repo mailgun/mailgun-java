@@ -1,13 +1,16 @@
 package com.mailgun.integration;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -20,6 +23,7 @@ import com.mailgun.model.message.MessageResponse;
 import com.mailgun.util.ObjectMapperUtil;
 import feign.Request;
 import feign.Response;
+import feign.form.FormData;
 
 import static com.mailgun.constants.IntegrationTestConstants.EMAIL_FROM;
 import static com.mailgun.constants.IntegrationTestConstants.EMAIL_TO;
@@ -198,6 +202,27 @@ class MailgunMessagesIntegrationTest {
                 .attachment(testImages)
                 .attachment(Arrays.asList(mailgunAwesomeness, mailgunLogo))
                 .build();
+
+        MessageResponse result = mailgunMessagesApi.sendMessage(MAIN_DOMAIN, message);
+
+        assertEquals(EMAIL_RESPONSE_MESSAGE, result.getMessage());
+    }
+
+    @Test
+    void message_Attachment_FormData_Test() throws IOException {
+//        Emulate InputStream
+        InputStream inputStream = new FileInputStream("src/test/resources/mailgun_awesomeness.txt");
+        byte[] bytes = IOUtils.toByteArray(inputStream);
+        FormData formData = new FormData("text/plain", "mailgun_awesomeness.txt", bytes);
+
+        Message message = Message.builder()
+            .from(EMAIL_FROM)
+            .to(EMAIL_TO)
+            .subject("FormData attachment example.")
+            .text(TEST_EMAIL_TEXT)
+            .formData(formData)
+            .build();
+
 
         MessageResponse result = mailgunMessagesApi.sendMessage(MAIN_DOMAIN, message);
 

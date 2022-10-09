@@ -1,5 +1,7 @@
 package com.mailgun.client;
 
+import java.util.concurrent.Executors;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mailgun.api.MailgunApi;
 import com.mailgun.util.ConsoleLogger;
@@ -7,6 +9,7 @@ import com.mailgun.util.MailgunApiUtil;
 import com.mailgun.util.ObjectMapperUtil;
 import feign.AsyncClient;
 import feign.AsyncFeign;
+import feign.Client;
 import feign.Feign;
 import feign.Logger;
 import feign.Request;
@@ -68,7 +71,10 @@ public class MailgunClient {
         private Logger logger = new ConsoleLogger();
         private ErrorDecoder errorDecoder = new ErrorDecoder.Default();
         private Request.Options options = new Request.Options();
-        private AsyncClient<Object> client = null;
+        private AsyncClient<Object> client = new AsyncClient.Default<>(
+            new Client.Default(null, null),
+            Executors.newSingleThreadExecutor()
+        );
 
         private String baseUrl = DEFAULT_BASE_URL_US_REGION;
         private final String apiKey;

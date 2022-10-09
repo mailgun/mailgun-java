@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class EmailUtilTest {
 
     @Test
-    void emailWithNameTest() {
+    void nameWithEmailTest() {
         String result = EmailUtil.nameWithEmail(TEST_USER_NAME, TEST_EMAIL_1);
 
         assertEquals("Zarathustra <some-fake-address-01@example.com>", result);

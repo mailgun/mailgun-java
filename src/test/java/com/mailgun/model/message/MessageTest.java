@@ -3,11 +3,16 @@ package com.mailgun.model.message;
 import com.mailgun.enums.YesNo;
 import com.mailgun.enums.YesNoHtml;
 import com.mailgun.util.EmailUtil;
+import feign.form.FormData;
+
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -230,6 +235,25 @@ class MessageTest {
         Exception exception = assertThrows(IllegalArgumentException.class, messageBuilder::build);
 
         assertEquals(String.format(FIELD_CANNOT_BE_NULL_OR_EMPTY, "to"), exception.getMessage());
+    }
+
+
+    @Test
+    void messageAttachmentAndFromDataTogetherExceptionTest() throws IOException {
+        File file = getTempFile("temp.1");
+        InputStream inputStream = new FileInputStream(getTempFile("temp.2"));
+        byte[] txtBytes = IOUtils.toByteArray(inputStream);
+        FormData formData = new FormData("text/plain", "temp.txt", txtBytes);
+
+        Message.MessageBuilder messageBuilder = Message.builder()
+            .from(TEST_EMAIL_1)
+            .to(TEST_EMAIL_2)
+            .attachment(file)
+            .formData(formData);
+
+        Exception exception = assertThrows(IllegalArgumentException.class, messageBuilder::build);
+
+        assertEquals("You cannot use 'attachment' and 'formData' together", exception.getMessage());
     }
 
     private File getTempFile(String prefix) throws IOException {

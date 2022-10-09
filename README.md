@@ -85,7 +85,7 @@ Add the following to your `pom.xml`:
 Gradle Groovy DSL .
 
 ```xml
-implementation 'com.mailgun:mailgun-java:1.0.2'
+implementation 'com.mailgun:mailgun-java:1.0.4'
 ```
 
 
@@ -253,10 +253,13 @@ More information:
 - [Methods](#methods)
   - [Messages](#messages)
     - [Set up MailgunMessagesApi](#Set-up-MailgunMessagesApi)
-    - [Send email(s)](#send-emails)
+    - [Send email](#send-email)
+    - [Send email(name with email)](#send-email-name-with-email)
+    - [Send emails](#send-emails)
     - [Async send email(s)](#async-send-emails)
     - [Send email (html example)](#send-email-html-example)
     - [Send email (attachments example)](#send-email-attachments-example)
+    - [Send email (attachment FormData example)](#send-email-attachment-FormData-example)
     - [Send email (inline multiple files example)](#send-email-inline-multiple-files-example)
     - [Send email (delay example)](#send-email-delay-example)
     - [Send email (reply-to example)](#send-email-reply-to-example)
@@ -433,11 +436,47 @@ When you submit messages for delivery, Mailgun places them in a message queue.
 ```
 
 
+#### Send email
+```java
+        Message message = Message.builder()
+                .from(EMAIL_FROM)
+                .to(USER_EMAIL)
+                .subject(SUBJECT)
+                .text(TEXT)
+                .build();
+
+        MessageResponse messageResponse = mailgunMessagesApi.sendMessage(DOMAIN, message);
+```
+
+#### Send email (name with email)
+```java
+        Message message = Message.builder()
+                .from(EMAIL_FROM)
+                .to(EmailUtil.nameWithEmail(USER_NAME, USER_EMAIL))
+                .subject(SUBJECT)
+                .text(TEXT)
+                .build();
+
+        MessageResponse messageResponse = mailgunMessagesApi.sendMessage(DOMAIN, message);
+```
+
 #### Send email(s)
 ```java
         Message message = Message.builder()
                 .from(EMAIL_FROM)
-                .to(EmailUtil.emailWithName(USER_NAME, USER_EMAIL)
+                .to(Arrays.asList(USER_EMAIL_1, USER_EMAIL_2))
+                .subject(SUBJECT)
+                .text(TEXT)
+                .build();
+
+        MessageResponse messageResponse = mailgunMessagesApi.sendMessage(DOMAIN, message);
+```
+or
+```java
+        Message message = Message.builder()
+                .from(EMAIL_FROM)
+                .to(USER_EMAIL_1)
+                .to(USER_EMAIL_2)
                 .subject(SUBJECT)
                 .text(TEXT)
                 .build();
@@ -453,7 +492,7 @@ Asynchronously send email(s).
 
         Message message = Message.builder()
                 .from(EMAIL_FROM)
-                .to(EmailUtil.emailWithName(USER_NAME, USER_EMAIL)
+                .to(USER_EMAIL)
                 .subject(SUBJECT)
                 .text(TEXT)
                 .build();
@@ -489,6 +528,19 @@ Asynchronously send email(s).
                 .attachment(ATTACHMENT_1)
                 .attachment(ATTACHMENT_2)
                 .attachment(Arrays.asList(ATTACHMENT_3, ATTACHMENT_4))
+                .build();
+
+        MessageResponse messageResponse = mailgunMessagesApi.sendMessage(DOMAIN, message);
+```
+
+#### Send email (attachment FormData example)
+```java
+        Message message = Message.builder()
+                .from(EMAIL_FROM)
+                .to(EMAIL_TO)
+                .subject(SUBJECT)
+                .text(TEXT)
+                .formData(new FormData("image/png", "filename.png", myDataAsByteArray))
                 .build();
 
         MessageResponse messageResponse = mailgunMessagesApi.sendMessage(DOMAIN, message);

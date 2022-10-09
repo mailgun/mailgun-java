@@ -5,6 +5,10 @@ All _notable_ changes to this project will be documented in this file.
 The format is based on _[Keep a Changelog][keepachangelog]_, and this project
 adheres to _[Semantic Versioning][semver]_.
 
+## [1.0.4] (released: 2022-10-10)
+### Added
+- add FormData attachment support.
+- add default AsyncClient.
 
 ## [1.0.3] (released: 2022-09-23)
 ### Added
@@ -34,6 +38,8 @@ adheres to _[Semantic Versioning][semver]_.
 - Add Import a list of bounces from CSV file API
 
 
+[1.0.4]: https://github.com/mailgun/mailgun-java/compare/release/1.0.3...release/1.0.4
+[1.0.3]: https://github.com/mailgun/mailgun-java/compare/release/1.0.2...release/1.0.3
 [1.0.2]: https://github.com/mailgun/mailgun-java/compare/release/1.0.1...release/1.0.2
 [1.0.1]: https://github.com/mailgun/mailgun-java/compare/release/1.0.0...release/1.0.1
 

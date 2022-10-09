@@ -5,6 +5,7 @@ import com.mailgun.enums.YesNoHtml;
 import com.mailgun.util.CollectionUtil;
 import com.mailgun.util.DateTimeUtil;
 import com.mailgun.util.StringUtil;
+import feign.form.FormData;
 import feign.form.FormProperty;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -17,6 +18,7 @@ import java.io.File;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import static com.mailgun.util.Constants.FIELD_CANNOT_BE_NULL_OR_EMPTY;
@@ -90,6 +92,14 @@ public class Message {
      * </p>
      */
     Set<File> attachment;
+
+    /**
+     * <p>
+     * File attachment in form of {@link FormData}.
+     * </p>
+     */
+    @FormProperty("attachment")
+    FormData formData;
 
     /**
      * <p>
@@ -284,6 +294,10 @@ public class Message {
                     .filter(StringUtils::isNotBlank)
                     .findFirst()
                     .orElseThrow(() -> new IllegalArgumentException(String.format(FIELD_CANNOT_BE_NULL_OR_EMPTY, "to")));
+
+            if (CollectionUtils.isNotEmpty(super.attachment) && Objects.nonNull(super.formData)) {
+                throw new IllegalArgumentException("You cannot use 'attachment' and 'formData' together");
+            }
 
             return super.build();
         }

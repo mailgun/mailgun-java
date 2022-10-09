@@ -42,6 +42,7 @@ import static com.mailgun.constants.IntegrationTestConstants.TEMPLATE_VERSION_TA
 import static com.mailgun.constants.IntegrationTestConstants.MAIN_DOMAIN;
 import static com.mailgun.constants.IntegrationTestConstants.PRIVATE_API_KEY;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -210,7 +211,7 @@ class MailgunTemplatesIntegrationTest {
         assertNotNull(templateWithVersions.getName());
         assertNotNull(templateWithVersions.getDescription());
         List<TemplateVersions> versions = templateWithVersions.getVersions();
-        assertTrue(versions.size() > 1);
+        assertFalse(versions.isEmpty());
         TemplateVersions version = versions.get(0);
         assertNotNull(version.getId());
         assertNotNull(version.getActive());
