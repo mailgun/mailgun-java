@@ -130,7 +130,7 @@ mailgunMessagesApi.sendMessage(YOUR_DOMAIN, message);
 
 ### Client Configuration
 
-[Configuration examples](https://github.com/mailgun/mailgun-java/blob/49355cb9867963bbb847361801918aed48ead71a/src/test/java/com/mailgun/client/MailgunClientTest.java)
+[Configuration examples](https://github.com/mailgun/mailgun-java/blob/main/src/test/java/com/mailgun/client/MailgunClientTest.java)
 
 #### Default Mailgun Client configuration:
 
@@ -215,7 +215,7 @@ More information:
 
 But `Feign` does not have the functionality to deserialize responses out of the box.
 
-To retrieves a JavaBean class from the `FeignResponse` you can use [decode](https://github.com/mailgun/mailgun-java/blob/35cd7438f05953009a91668b3e5efccd9081a722/src/main/java/com/mailgun/util/StringUtils.java#L16) method:
+To retrieves a JavaBean class from the `FeignResponse` you can use [decode](https://github.com/mailgun/mailgun-java/blob/main/src/main/java/com/mailgun/util/ObjectMapperUtil.java#L34) method:
 ```java
         MessageResponse messageResponse = ObjectMapperUtil.decode(feignResponse, MessageResponse.class);
 ```
