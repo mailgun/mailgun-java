@@ -42,12 +42,12 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class MailgunMessagesIntegrationTest {
 
-    public static final String AWESOMENESS_TXT_PATH = "src/test/resources/mailgun_awesomeness.txt";
-    public static final String HELLO_WORLD_TXT_PATH = "src/test/resources/hello_world.txt";
-    public static final String TEST_IMAGES_JPEG_PATH = "src/test/resources/test_images.jpeg";
-    public static final String MAILGUN_LOGO_PNG_PATH = "src/test/resources/mailgun_logo.png";
-    private static MailgunMessagesApi mailgunMessagesApi;
+    private static final String AWESOMENESS_TXT_PATH = "src/test/resources/mailgun_awesomeness.txt";
+    private static final String HELLO_WORLD_TXT_PATH = "src/test/resources/hello_world.txt";
+    private static final String TEST_IMAGES_JPEG_PATH = "src/test/resources/test_images.jpeg";
+    private static final String MAILGUN_LOGO_PNG_PATH = "src/test/resources/mailgun_logo.png";
 
+    private static MailgunMessagesApi mailgunMessagesApi;
 
     @BeforeAll
     static void beforeAll() {
