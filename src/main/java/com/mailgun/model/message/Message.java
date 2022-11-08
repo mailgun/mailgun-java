@@ -95,11 +95,15 @@ public class Message {
 
     /**
      * <p>
-     * File attachment in form of {@link FormData}.
+     * File attachments in form of {@link FormData}.
+     * This object encapsulates a byte array and its associated content type.
+     * </p>
+     * <p>
+     * You can post multiple attachment values.
      * </p>
      */
     @FormProperty("attachment")
-    FormData formData;
+    Set<FormData> formData;
 
     /**
      * <p>
@@ -295,7 +299,7 @@ public class Message {
                     .findFirst()
                     .orElseThrow(() -> new IllegalArgumentException(String.format(FIELD_CANNOT_BE_NULL_OR_EMPTY, "to")));
 
-            if (CollectionUtils.isNotEmpty(super.attachment) && Objects.nonNull(super.formData)) {
+            if (CollectionUtils.isNotEmpty(super.attachment) && CollectionUtils.isNotEmpty(super.formData)) {
                 throw new IllegalArgumentException("You cannot use 'attachment' and 'formData' together");
             }
 
@@ -408,6 +412,36 @@ public class Message {
          */
         public Message.MessageBuilder attachment(List<File> attachments) {
             this.attachment = CollectionUtil.addToSet(this.attachment, attachments);
+            return this;
+        }
+
+        /**
+         * <p>
+         * File attachment in form of {@link FormData}.
+         * This object encapsulates a byte array and its associated content type.
+         * </p>
+         * You can post multiple attachment values.
+         *
+         * @param attachment attachment in form of {@link FormData}.
+         * @return Returns a reference to this object so that method calls can be chained together.
+         */
+        public Message.MessageBuilder formData(FormData attachment) {
+            this.formData = CollectionUtil.addToSet(this.formData, attachment);
+            return this;
+        }
+
+        /**
+         * <p>
+         * File attachment in form of {@link FormData}.
+         * This object encapsulates a byte array and its associated content type.
+         * </p>
+         * You can post multiple attachment values.
+         *
+         * @param attachments attachments in form of {@link FormData}.
+         * @return Returns a reference to this object so that method calls can be chained together.
+         */
+        public Message.MessageBuilder formData(List<FormData> attachments) {
+            this.formData = CollectionUtil.addToSet(this.formData, attachments);
             return this;
         }
 

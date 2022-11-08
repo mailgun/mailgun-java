@@ -2,6 +2,7 @@ package com.mailgun.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mailgun.api.v3.MailgunMessagesApi;
+import com.mailgun.util.ConsoleLogger;
 import com.mailgun.util.ObjectMapperUtil;
 import feign.Feign;
 import feign.Logger;
@@ -13,7 +14,6 @@ import feign.form.FormEncoder;
 import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
 import feign.querymap.FieldQueryMapEncoder;
-import feign.slf4j.Slf4jLogger;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.TimeUnit;
@@ -63,7 +63,7 @@ class MailgunClientTest {
         MailgunMessagesApi mailgunMessagesApi = Feign.builder()
                 .logLevel(Logger.Level.FULL)
                 .retryer(new Retryer.Default())
-                .logger(new Slf4jLogger(MailgunMessagesApi.class))
+                .logger(new ConsoleLogger())
                 .encoder(new FormEncoder(new JacksonEncoder(objectMapper)))
                 .decoder(new JacksonDecoder(objectMapper))
                 .queryMapEncoder(new FieldQueryMapEncoder())

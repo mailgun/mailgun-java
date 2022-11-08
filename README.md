@@ -76,7 +76,7 @@ Add the following to your `pom.xml`:
   <dependency>
     <groupId>com.mailgun</groupId>
     <artifactId>mailgun-java</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.5</version>
   </dependency>
   ...
 </dependencies>
@@ -85,7 +85,7 @@ Add the following to your `pom.xml`:
 Gradle Groovy DSL .
 
 ```xml
-implementation 'com.mailgun:mailgun-java:1.0.4'
+implementation 'com.mailgun:mailgun-java:1.0.5'
 ```
 
 
@@ -130,7 +130,7 @@ mailgunMessagesApi.sendMessage(YOUR_DOMAIN, message);
 
 ### Client Configuration
 
-[Configuration examples](https://github.com/mailgun/mailgun-java/blob/49355cb9867963bbb847361801918aed48ead71a/src/test/java/com/mailgun/client/MailgunClientTest.java)
+[Configuration examples](https://github.com/mailgun/mailgun-java/blob/main/src/test/java/com/mailgun/client/MailgunClientTest.java)
 
 #### Default Mailgun Client configuration:
 
@@ -215,7 +215,7 @@ More information:
 
 But `Feign` does not have the functionality to deserialize responses out of the box.
 
-To retrieves a JavaBean class from the `FeignResponse` you can use [decode](https://github.com/mailgun/mailgun-java/blob/35cd7438f05953009a91668b3e5efccd9081a722/src/main/java/com/mailgun/util/StringUtils.java#L16) method:
+To retrieves a JavaBean class from the `FeignResponse` you can use [decode](https://github.com/mailgun/mailgun-java/blob/main/src/main/java/com/mailgun/util/ObjectMapperUtil.java#L34) method:
 ```java
         MessageResponse messageResponse = ObjectMapperUtil.decode(feignResponse, MessageResponse.class);
 ```
@@ -485,11 +485,27 @@ or
 ```
 
 #### Async send email(s)
-Asynchronously send email(s).
+
+Default Async Mailgun Client configuration:
 ```java
         MailgunMessagesApi mailgunAsyncMessagesApi = MailgunClient.config(PRIVATE_API_KEY)
-            .createAsyncApi(MailgunMessagesApi.class);
+        .client(asyncClient)
+        .createAsyncApi(MailgunMessagesApi.class);
+```
+Custom Async Mailgun Client configuration:
+```java
+        ExecutorService executor = Executors.newFixedThreadPool(2);
+        AsyncClient.Default<Object> asyncClient = new AsyncClient.Default<>(
+        new Client.Default(null, null), executor);
 
+        MailgunMessagesApi mailgunAsyncMessagesApi = MailgunClient.config(PRIVATE_API_KEY)
+        .client(asyncClient)
+        .createAsyncApi(MailgunMessagesApi.class);
+```
+Your can create your own implementation of feign AsyncClient.
+
+Asynchronously send email(s).
+```java
         Message message = Message.builder()
                 .from(EMAIL_FROM)
                 .to(USER_EMAIL)
@@ -525,9 +541,9 @@ Asynchronously send email(s).
                 .to(EMAIL_TO)
                 .subject(SUBJECT)
                 .text(TEXT)
-                .attachment(ATTACHMENT_1)
-                .attachment(ATTACHMENT_2)
-                .attachment(Arrays.asList(ATTACHMENT_3, ATTACHMENT_4))
+                .attachment(new File("/path/to/file_1"))
+                .attachment(new File("/path/to/file-2"))
+                .attachment(Arrays.asList(new File("/path/to/file_3"), new File("/path/to/file_4")))
                 .build();
 
         MessageResponse messageResponse = mailgunMessagesApi.sendMessage(DOMAIN, message);
@@ -540,7 +556,12 @@ Asynchronously send email(s).
                 .to(EMAIL_TO)
                 .subject(SUBJECT)
                 .text(TEXT)
-                .formData(new FormData("image/png", "filename.png", myDataAsByteArray))
+                .formData(new FormData("image/png", "filename.png", pngByteArray))
+                .formData(new FormData("text/plain", "filename.txt", txtByteArray))
+                .formData(Arrays.asList(
+                    new FormData("image/jpeg", "filename.jpeg", jpegByteArray),
+                    new FormData("text/plain", "filename.txt", txtByteArray)
+                    ))
                 .build();
 
         MessageResponse messageResponse = mailgunMessagesApi.sendMessage(DOMAIN, message);

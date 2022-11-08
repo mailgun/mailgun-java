@@ -42,7 +42,12 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class MailgunMessagesIntegrationTest {
 
+    public static final String AWESOMENESS_TXT_PATH = "src/test/resources/mailgun_awesomeness.txt";
+    public static final String HELLO_WORLD_TXT_PATH = "src/test/resources/hello_world.txt";
+    public static final String TEST_IMAGES_JPEG_PATH = "src/test/resources/test_images.jpeg";
+    public static final String MAILGUN_LOGO_PNG_PATH = "src/test/resources/mailgun_logo.png";
     private static MailgunMessagesApi mailgunMessagesApi;
+
 
     @BeforeAll
     static void beforeAll() {
@@ -188,10 +193,10 @@ class MailgunMessagesIntegrationTest {
 
     @Test
     void message_Attachment_Test() {
-        File helloWorld = new File("src/test/resources/hello_world.txt");
-        File mailgunAwesomeness = new File("src/test/resources/mailgun_awesomeness.txt");
-        File testImages = new File("src/test/resources/test_images.jpeg");
-        File mailgunLogo = new File("src/test/resources/mailgun_logo.png");
+        File helloWorld = new File(HELLO_WORLD_TXT_PATH);
+        File mailgunAwesomeness = new File(AWESOMENESS_TXT_PATH);
+        File testImages = new File(TEST_IMAGES_JPEG_PATH);
+        File mailgunLogo = new File(MAILGUN_LOGO_PNG_PATH);
 
         Message message = Message.builder()
                 .from(EMAIL_FROM)
@@ -210,19 +215,36 @@ class MailgunMessagesIntegrationTest {
 
     @Test
     void message_Attachment_FormData_Test() throws IOException {
-//        Emulate InputStream
-        InputStream inputStream = new FileInputStream("src/test/resources/mailgun_awesomeness.txt");
-        byte[] bytes = IOUtils.toByteArray(inputStream);
-        FormData formData = new FormData("text/plain", "mailgun_awesomeness.txt", bytes);
+        FormData formData = getFormData("text/plain", "mailgun_awesomeness.txt", AWESOMENESS_TXT_PATH);
 
         Message message = Message.builder()
             .from(EMAIL_FROM)
             .to(EMAIL_TO)
-            .subject("FormData attachment example.")
+            .subject("FormData attachment example. use my mult 1")
             .text(TEST_EMAIL_TEXT)
             .formData(formData)
             .build();
 
+        MessageResponse result = mailgunMessagesApi.sendMessage(MAIN_DOMAIN, message);
+
+        assertEquals(EMAIL_RESPONSE_MESSAGE, result.getMessage());
+    }
+
+    @Test
+    void message_Attachments_FormData_Test() throws IOException {
+        FormData mailgunTextFormData = getFormData("text/plain", "mailgun_awesomeness.txt", AWESOMENESS_TXT_PATH);
+        FormData helloWorldTextFormData = getFormData("text/plain", "hello_world.txt", HELLO_WORLD_TXT_PATH);
+        FormData jpegFormData = getFormData("image/jpeg", "test_images.jpeg", TEST_IMAGES_JPEG_PATH);
+        FormData pngFormData = getFormData("image/png", "mailgun_logo.png", MAILGUN_LOGO_PNG_PATH);
+
+        Message message = Message.builder()
+            .from(EMAIL_FROM)
+            .to(EMAIL_TO)
+            .subject("FormData attachment example. use my mult Nov 7, 7")
+            .text(TEST_EMAIL_TEXT)
+            .formData(mailgunTextFormData)
+            .formData(Arrays.asList(helloWorldTextFormData, jpegFormData, pngFormData))
+            .build();
 
         MessageResponse result = mailgunMessagesApi.sendMessage(MAIN_DOMAIN, message);
 
@@ -231,7 +253,7 @@ class MailgunMessagesIntegrationTest {
 
     @Test
     void message_Inline_Simple_Test() {
-        File mailgunLogo = new File("src/test/resources/mailgun_logo.png");
+        File mailgunLogo = new File(MAILGUN_LOGO_PNG_PATH);
 
         Message message = Message.builder()
                 .from(EMAIL_FROM)
@@ -248,8 +270,8 @@ class MailgunMessagesIntegrationTest {
 
     @Test
     void message_Inline_Multiple_Files_Test() {
-        File mailgunLogo = new File("src/test/resources/mailgun_logo.png");
-        File testImages = new File("src/test/resources/test_images.jpeg");
+        File mailgunLogo = new File(MAILGUN_LOGO_PNG_PATH);
+        File testImages = new File(TEST_IMAGES_JPEG_PATH);
 
         Message message = Message.builder()
                 .from(EMAIL_FROM)
@@ -276,7 +298,8 @@ class MailgunMessagesIntegrationTest {
                 .to(EMAIL_TO)
                 .subject("Delivery time example.")
                 .text(TEST_EMAIL_TEXT)
-                .deliveryTime(ZonedDateTime.now().plusMinutes(2L)) // Two minutes delay.
+//                .deliveryTime(ZonedDateTime.now().plusMinutes(2L)) // Two minutes delay.
+                .deliveryTime(ZonedDateTime.now().plusSeconds(20L)) // Two minutes delay.
                 .build();
 
         MessageResponse result = mailgunMessagesApi.sendMessage(MAIN_DOMAIN, message);
@@ -327,6 +350,13 @@ class MailgunMessagesIntegrationTest {
 
         assertNotNull(result.getId());
         assertEquals(EMAIL_RESPONSE_MESSAGE, result.getMessage());
+    }
+
+    private FormData getFormData(String contentType, String fileName, String path) throws IOException {
+        //        Emulate InputStream
+        InputStream inputStream = new FileInputStream(path);
+        byte[] bytes = IOUtils.toByteArray(inputStream);
+        return new FormData(contentType, fileName, bytes);
     }
 
 }
