@@ -5,6 +5,10 @@ All _notable_ changes to this project will be documented in this file.
 The format is based on _[Keep a Changelog][keepachangelog]_, and this project
 adheres to _[Semantic Versioning][semver]_.
 
+## [1.0.6] (released: 2022-13-09)
+### Replaced
+- slf4j-simple with slf4j-api
+
 ## [1.0.5] (released: 2022-11-09)
 ### Added
 - multiple FormData attachment support.
@@ -42,6 +46,7 @@ adheres to _[Semantic Versioning][semver]_.
 - Add Import a list of bounces from CSV file API
 
 
+[1.0.6]: https://github.com/mailgun/mailgun-java/compare/release/1.0.5...release/1.0.6
 [1.0.5]: https://github.com/mailgun/mailgun-java/compare/release/1.0.4...release/1.0.5
 [1.0.4]: https://github.com/mailgun/mailgun-java/compare/release/1.0.3...release/1.0.4
 [1.0.3]: https://github.com/mailgun/mailgun-java/compare/release/1.0.2...release/1.0.3
