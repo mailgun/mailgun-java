@@ -701,6 +701,22 @@ public class Message {
             this.mailgunVariables = StringUtil.asJsonString(mailgunVariables);
             return this;
         }
+        
+        /**
+         * <p>
+         * Mailgun’s templates use a fork of the very popular template engine handlebars.
+         * </p>
+         * <p>
+         * Use this field to provide values for a substitution to render them in the template.
+         * </p>
+         *
+         * @param mailgunVariables A string with json format, where the key is a placeholder and the value is a value for a substitution.
+         * @return Returns a reference to this object so that method calls can be chained together.
+         */
+        public MessageBuilder mailgunVariables(String mailgunVariables) {
+            this.mailgunVariables = mailgunVariables;
+            return this;
+        }
     }
 
 }
