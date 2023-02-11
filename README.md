@@ -76,7 +76,7 @@ Add the following to your `pom.xml`:
   <dependency>
     <groupId>com.mailgun</groupId>
     <artifactId>mailgun-java</artifactId>
-    <version>1.0.6</version>
+    <version>1.0.7</version>
   </dependency>
   ...
 </dependencies>
@@ -85,7 +85,7 @@ Add the following to your `pom.xml`:
 Gradle Groovy DSL .
 
 ```xml
-implementation 'com.mailgun:mailgun-java:1.0.6'
+implementation 'com.mailgun:mailgun-java:1.0.7'
 ```
 
 

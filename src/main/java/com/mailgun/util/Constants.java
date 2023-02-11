@@ -8,6 +8,8 @@ public class Constants {
     public static final String DEFAULT_BASE_URL_US_REGION = "https://api.mailgun.net/";
     public static final String EU_REGION_BASE_URL = "https://api.eu.mailgun.net";
 
+    public static final String ENGLISH = "en";
+
 //    "Z" ==> "+0900"
     public static final String RFC_2822_DATE_TIME_PATTERN_TIME_ZONE_NUMERIC = "EEE, dd MMM yyyy HH:mm:ss Z";
 //    "z" ==> "UTC"

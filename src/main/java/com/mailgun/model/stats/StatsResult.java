@@ -10,6 +10,7 @@ import lombok.extern.jackson.Jacksonized;
 import java.time.ZonedDateTime;
 import java.util.List;
 
+import static com.mailgun.util.Constants.ENGLISH;
 import static com.mailgun.util.Constants.RFC_2822_DATE_TIME_PATTERN_TIME_ZONE_NAME;
 
 /**
@@ -37,7 +38,7 @@ public class StatsResult {
      * The starting time.
      * </p>
      */
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = RFC_2822_DATE_TIME_PATTERN_TIME_ZONE_NAME)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = RFC_2822_DATE_TIME_PATTERN_TIME_ZONE_NAME, locale = ENGLISH)
     ZonedDateTime start;
 
     /**
@@ -45,7 +46,7 @@ public class StatsResult {
      * The ending date.
      * </p>
      */
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = RFC_2822_DATE_TIME_PATTERN_TIME_ZONE_NAME)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = RFC_2822_DATE_TIME_PATTERN_TIME_ZONE_NAME, locale = ENGLISH)
     ZonedDateTime end;
 
     /**

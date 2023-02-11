@@ -10,6 +10,7 @@ import lombok.extern.jackson.Jacksonized;
 
 import java.time.ZonedDateTime;
 
+import static com.mailgun.util.Constants.ENGLISH;
 import static com.mailgun.util.Constants.RFC_2822_DATE_TIME_PATTERN_TIME_ZONE_NAME_DAY_OCTAL_LITERAL;
 
 /**
@@ -39,7 +40,7 @@ public class ComplaintsItem {
      * </p>
      * {@link ZonedDateTime}
      */
-    @JsonFormat(pattern = RFC_2822_DATE_TIME_PATTERN_TIME_ZONE_NAME_DAY_OCTAL_LITERAL)
+    @JsonFormat(pattern = RFC_2822_DATE_TIME_PATTERN_TIME_ZONE_NAME_DAY_OCTAL_LITERAL, locale = ENGLISH)
     @JsonProperty("created_at")
     ZonedDateTime createdAt;
 

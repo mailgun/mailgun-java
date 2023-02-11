@@ -5,6 +5,10 @@ All _notable_ changes to this project will be documented in this file.
 The format is based on _[Keep a Changelog][keepachangelog]_, and this project
 adheres to _[Semantic Versioning][semver]_.
 
+## [1.0.7] (released: 2023-01-11)
+### Added
+- default locale
+
 ## [1.0.6] (released: 2022-13-09)
 ### Replaced
 - slf4j-simple with slf4j-api
@@ -46,6 +50,7 @@ adheres to _[Semantic Versioning][semver]_.
 - Add Import a list of bounces from CSV file API
 
 
+[1.0.7]: https://github.com/mailgun/mailgun-java/compare/release/1.0.6...release/1.0.7
 [1.0.6]: https://github.com/mailgun/mailgun-java/compare/release/1.0.5...release/1.0.6
 [1.0.5]: https://github.com/mailgun/mailgun-java/compare/release/1.0.4...release/1.0.5
 [1.0.4]: https://github.com/mailgun/mailgun-java/compare/release/1.0.3...release/1.0.4

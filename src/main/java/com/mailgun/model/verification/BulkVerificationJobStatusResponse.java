@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Value;
 import lombok.extern.jackson.Jacksonized;
 
+import static com.mailgun.util.Constants.ENGLISH;
 import static com.mailgun.util.Constants.RFC_2822_DATE_TIME_PATTERN_TIME_ZONE_NAME;
 
 /**
@@ -68,7 +69,7 @@ public class BulkVerificationJobStatusResponse {
      * </p>
      * {@link ZonedDateTime}
      */
-    @JsonFormat(pattern = RFC_2822_DATE_TIME_PATTERN_TIME_ZONE_NAME)
+    @JsonFormat(pattern = RFC_2822_DATE_TIME_PATTERN_TIME_ZONE_NAME, locale = ENGLISH)
     @JsonProperty("created_at")
     ZonedDateTime createdAt;
 

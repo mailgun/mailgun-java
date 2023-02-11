@@ -11,6 +11,7 @@ import lombok.extern.jackson.Jacksonized;
 
 import java.time.ZonedDateTime;
 
+import static com.mailgun.util.Constants.ENGLISH;
 import static com.mailgun.util.Constants.RFC_2822_DATE_TIME_PATTERN_TIME_ZONE_NUMERIC;
 
 /**
@@ -48,7 +49,7 @@ public class MailingListData {
      * </p>
      * {@link ZonedDateTime}
      */
-    @JsonFormat(pattern = RFC_2822_DATE_TIME_PATTERN_TIME_ZONE_NUMERIC)
+    @JsonFormat(pattern = RFC_2822_DATE_TIME_PATTERN_TIME_ZONE_NUMERIC, locale = ENGLISH)
     @JsonProperty("created_at")
     ZonedDateTime createdAt;
 

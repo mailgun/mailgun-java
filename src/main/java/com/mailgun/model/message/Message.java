@@ -1,5 +1,14 @@
 package com.mailgun.model.message;
 
+import java.io.File;
+import java.time.ZonedDateTime;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+
 import com.mailgun.enums.YesNo;
 import com.mailgun.enums.YesNoHtml;
 import com.mailgun.util.CollectionUtil;
@@ -11,15 +20,6 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
-
-import java.io.File;
-import java.time.ZonedDateTime;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
 
 import static com.mailgun.util.Constants.FIELD_CANNOT_BE_NULL_OR_EMPTY;
 
@@ -675,6 +675,22 @@ public class Message {
 
         /**
          * <p>
+         * A dictionary, where the key is a plain recipient address
+         * and the value is a dictionary with variables that can be referenced in the message body.
+         * </p>
+         *
+         * @param recipientVariables A valid JSON-encoded dictionary, where the key is a plain recipient address
+         *                           and the value is a dictionary with variables that can be referenced in the message body.
+         * @return Returns a reference to this object so that method calls can be chained together.
+         * @see <a href="https://documentation.mailgun.com/en/latest/user_manual.html#batch-sending">Batch Sending</a>
+         */
+        public MessageBuilder recipientVariables(String recipientVariables) {
+            this.recipientVariables = recipientVariables;
+            return this;
+        }
+
+        /**
+         * <p>
          * Allows to attach a custom data to the message
          * </p>
          *
@@ -683,6 +699,19 @@ public class Message {
          */
         public MessageBuilder myVar(Map<String, Object> myVar) {
             this.myVar = StringUtil.asJsonString(myVar);
+            return this;
+        }
+
+        /**
+         * <p>
+         * Allows to attach a custom data to the message
+         * </p>
+         *
+         * @param myVar A valid JSON-encoded dictionary
+         * @return Returns a reference to this object so that method calls can be chained together.
+         */
+        public MessageBuilder myVar(String myVar) {
+            this.myVar = myVar;
             return this;
         }
 
@@ -699,6 +728,23 @@ public class Message {
          */
         public MessageBuilder mailgunVariables(Map<String, Object> mailgunVariables) {
             this.mailgunVariables = StringUtil.asJsonString(mailgunVariables);
+            return this;
+        }
+
+        /**
+         * <p>
+         * Mailgun’s templates use a fork of the very popular template engine handlebars.
+         * </p>
+         * <p>
+         * Use this field to provide values for a substitution to render them in the template.
+         * </p>
+         *
+         * @param mailgunVariables A valid JSON-encoded dictionary, where the key is a placeholder and
+         *                         the value is a value for a substitution.
+         * @return Returns a reference to this object so that method calls can be chained together.
+         */
+        public MessageBuilder mailgunVariables(String mailgunVariables) {
+            this.mailgunVariables = mailgunVariables;
             return this;
         }
     }
