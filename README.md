@@ -238,7 +238,7 @@ From `FeignException` you can get:
 //          status code                
             int statusCode = exception.status();
 //          Headers
-            Map<String, Collection<String>> headers = feignResponse.headers();
+            Map<String, Collection<String>> headers = exception.responseHeaders();
 //          etc.
 ```
 More information:
