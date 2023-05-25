@@ -181,24 +181,18 @@ public class MailgunClient {
             return this;
         }
 
-        @SuppressWarnings("unchecked")
-        public <T> T createApi(Class<? extends MailgunApi> apiType) {
+        public <T extends MailgunApi> T createApi(Class<T> apiType) {
             String url = MailgunApiUtil.getFullUrl(apiType, baseUrl);
-            return getFeignBuilder()
-                    .target((Class<T>) apiType, url);
+            return getFeignBuilder().target(apiType, url);
         }
 
-        @SuppressWarnings("unchecked")
-        public <T> T createAsyncApi(Class<? extends MailgunApi> apiType) {
+        public <T extends MailgunApi> T createAsyncApi(Class<T> apiType) {
             String url = MailgunApiUtil.getFullUrl(apiType, baseUrl);
-            return getAsyncFeignBuilder()
-                .target((Class<T>) apiType, url);
+            return getAsyncFeignBuilder().target(apiType, url);
         }
 
-        @SuppressWarnings("unchecked")
-        public <T> T createApiWithAbsoluteUrl(Class<? extends MailgunApi> apiType) {
-            return getFeignBuilder()
-                .target((Class<T>) apiType, baseUrl);
+        public <T extends MailgunApi> T createApiWithAbsoluteUrl(Class<T> apiType) {
+            return getFeignBuilder().target(apiType, baseUrl);
         }
 
         private Feign.Builder getFeignBuilder() {
@@ -215,7 +209,7 @@ public class MailgunClient {
         }
 
         private AsyncFeign.AsyncBuilder<?> getAsyncFeignBuilder() {
-            return AsyncFeign.asyncBuilder()
+            return AsyncFeign.builder()
                 .logLevel(logLevel)
                 .logger(logger)
                 .encoder(ENCODER)

@@ -76,7 +76,7 @@ Add the following to your `pom.xml`:
   <dependency>
     <groupId>com.mailgun</groupId>
     <artifactId>mailgun-java</artifactId>
-    <version>1.0.7</version>
+    <version>1.0.8</version>
   </dependency>
   ...
 </dependencies>
@@ -85,7 +85,7 @@ Add the following to your `pom.xml`:
 Gradle Groovy DSL .
 
 ```xml
-implementation 'com.mailgun:mailgun-java:1.0.7'
+implementation 'com.mailgun:mailgun-java:1.0.8'
 ```
 
 
@@ -238,7 +238,7 @@ From `FeignException` you can get:
 //          status code                
             int statusCode = exception.status();
 //          Headers
-            Map<String, Collection<String>> headers = feignResponse.headers();
+            Map<String, Collection<String>> headers = exception.headers();
 //          etc.
 ```
 More information:
