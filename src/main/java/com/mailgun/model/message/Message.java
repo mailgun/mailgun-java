@@ -279,6 +279,9 @@ public class Message {
     @FormProperty("t:variables")
     String mailgunVariables;
 
+    @FormProperty("h:X-Email-ID")
+    String xoEmailIdOnHeader;
+
     public static MessageBuilder builder() {
         return new CustomMessageBuilder();
     }
