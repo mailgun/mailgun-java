@@ -76,7 +76,7 @@ Add the following to your `pom.xml`:
   <dependency>
     <groupId>com.mailgun</groupId>
     <artifactId>mailgun-java</artifactId>
-    <version>1.0.8</version>
+    <version>1.0.9</version>
   </dependency>
   ...
 </dependencies>
@@ -85,7 +85,7 @@ Add the following to your `pom.xml`:
 Gradle Groovy DSL .
 
 ```xml
-implementation 'com.mailgun:mailgun-java:1.0.8'
+implementation 'com.mailgun:mailgun-java:1.0.9'
 ```
 
 
@@ -264,6 +264,8 @@ More information:
     - [Send email (delay example)](#send-email-delay-example)
     - [Send email (reply-to example)](#send-email-reply-to-example)
     - [Send email (mailing list example)](#send-email-mailing-list-example)
+    - [Send email (sender example)](#send-email-sender-example)
+    - [Send email (with custom form property)](#send-email-with-custom-form-property)
     - [Send email(s) in MIME format](#send-mime-emails)
   - [Store Messages](#store-messages)
     - [Set up MailgunStoreMessagesApi](#Set-up-MailgunStoreMessagesApi)
@@ -616,6 +618,52 @@ Asynchronously send email(s).
         Message message = Message.builder()
                 .from(EMAIL_FROM)
                 .to(MAILING_LIST_ADDRESS)
+                .subject(SUBJECT)
+                .text(TEXT)
+                .build();
+
+        MessageResponse messageResponse = mailgunMessagesApi.sendMessage(DOMAIN, message);
+```
+
+#### Send email (sender example)
+```java
+        Message message = Message.builder()
+		.from(EMAIL_FROM)
+		.to(EMAIL_TO)
+		.sender(SENDER_EMAIL)
+		.subject(SUBJECT)
+		.text(TEXT)
+		.build();
+
+		MessageResponse messageResponse = mailgunMessagesApi.sendMessage(DOMAIN, message);
+```
+or sender with name and email
+```java
+        Message message = Message.builder()
+                .from(EMAIL_FROM)
+                .to(EMAIL_TO)
+                .sender(EmailUtil.nameWithEmail(SENDER_NAME, SENDER_EMAIL))
+                .subject(SUBJECT)
+                .text(TEXT)
+                .build();
+
+        MessageResponse messageResponse = mailgunMessagesApi.sendMessage(DOMAIN, message);
+```
+
+#### Send email (with custom form property)
+You can send email(s) with your own custom dynamic form property with allowed prefixes such as: ```t:, o:, h:, v:``` with the followed by any arbitrary value.
+```java
+        MailgunMessagesApi mailgunMessagesApi = MailgunClient.config(PRIVATE_API_KEY)
+                .createApiWithRequestInterceptor(MailgunMessagesApi.class,
+                        FormPropertyRequestInterceptor.builder()
+                                .addProperty("h:Sender", EmailUtil.nameWithEmail(SENDER_NAME, SENDER_EMAIL))
+                                .addProperty("h:X-My-Header", "my_custom_header")
+                                .build()
+                );
+
+        Message message = Message.builder()
+                .from(EMAIL_FROM)
+                .to(EMAIL_TO)
                 .subject(SUBJECT)
                 .text(TEXT)
                 .build();

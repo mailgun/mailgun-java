@@ -249,6 +249,14 @@ public class Message {
     @FormProperty("h:Reply-To")
     String replyTo;
 
+	/**
+	 * <p>
+	 * Specify Sender address
+	 * </p>
+	 */
+	@FormProperty("h:Sender")
+	String sender;
+
     /**
      * <p>
      * A valid JSON-encoded dictionary, where key is a plain recipient address and value is a dictionary
@@ -656,6 +664,19 @@ public class Message {
             this.replyTo = replyTo;
             return this;
         }
+
+		/**
+		 * <p>
+		 * Specify Sender address
+		 * </p>
+		 *
+		 * @param sender Sender address
+		 * @return Returns a reference to this object so that method calls can be chained together.
+		 */
+		public MessageBuilder sender(String sender) {
+			this.sender = sender;
+			return this;
+		}
 
         /**
          * <p>
