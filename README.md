@@ -76,7 +76,7 @@ Add the following to your `pom.xml`:
   <dependency>
     <groupId>com.mailgun</groupId>
     <artifactId>mailgun-java</artifactId>
-    <version>1.0.9</version>
+    <version>1.1.0</version>
   </dependency>
   ...
 </dependencies>
@@ -85,7 +85,7 @@ Add the following to your `pom.xml`:
 Gradle Groovy DSL .
 
 ```xml
-implementation 'com.mailgun:mailgun-java:1.0.9'
+implementation 'com.mailgun:mailgun-java:1.1.0'
 ```
 
 
@@ -1630,6 +1630,62 @@ Returns the list of members in the given mailing list.
             .build();
 
         MailingListMembersResponse response = mailgunMailingListApi.getMailingListMembers(MAILING_LIST_ADDRESS, request);
+``` 
+
+Returns the first page of the list of members in the given mailing list.
+```java
+        MailingListMembersRequest request = MailingListMembersRequest.builder()
+                .limit(10)
+                .page("first")
+                .build();
+
+        MailingListMembersResponse response = mailgunMailingListApi.getMailingListMembers(MAILING_LIST_ADDRESS, request);
+``` 
+
+Returns the last page of the list of members in the given mailing list.
+```java
+        MailingListMembersRequest request = MailingListMembersRequest.builder()
+                .limit(10)
+                .page("last")
+                .build();
+
+        MailingListMembersResponse response = mailgunMailingListApi.getMailingListMembers(MAILING_LIST_ADDRESS, request);
+``` 
+
+Returns the next page after specified email of the list of members in the given mailing list.
+```java
+        MailingListMembersResponse response = mailgunMailingListApi.getMailingListMembers(MAILING_LIST_ADDRESS, request);
+
+        memberAddress = response.getItems().stream()
+                .reduce((first, last) -> last)
+                .orElseThrow(NoSuchElementException::new)
+                .getAddress();
+		
+        MailingListMembersRequest request = MailingListMembersRequest.builder()
+                .limit(10)
+                .page("next")
+                .address(memberAddress)
+                .build();
+
+        response = mailgunMailingListApi.getMailingListMembers(MAILING_LIST_ADDRESS, request);
+``` 
+
+Returns the previous page before specified email of the list of members in the given mailing list.
+```java
+        MailingListMembersResponse response = mailgunMailingListApi.getMailingListMembers(MAILING_LIST_ADDRESS, request);
+
+        memberAddress = response.getItems().stream()
+                .findFirst()
+                .orElseThrow(NoSuchElementException::new)
+                .getAddress();
+
+        MailingListMembersRequest request = MailingListMembersRequest.builder()
+                .limit(10)
+                .page("prev")
+                .address(memberAddress)
+                .build();
+        
+        response = mailgunMailingListApi.getMailingListMembers(MAILING_LIST_ADDRESS, request);
 ``` 
 
 #### Mailing List member

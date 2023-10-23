@@ -24,6 +24,20 @@ public class MailingListMembersRequest {
      */
     Integer limit;
 
+	/**
+	 * <p>
+	 * Page name: first, last, next or prev.
+	 * </p>
+	 */
+	String page;
+
+	/**
+	 * <p>
+	 * The email address after or before which the list should be returned
+	 * </p>
+	 */
+	String address;
+
     /**
      * <p>
      * <code>yes</code> to lists subscribed.
