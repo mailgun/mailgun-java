@@ -1,5 +1,7 @@
 package com.mailgun.form;
 
+import com.mailgun.interceptors.MailgunRequestInterceptor;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -15,7 +17,10 @@ import feign.form.FormProperty;
  * with allowed prefixes such as: {@code t:, o:, h:, v:} with the followed by any arbitrary value
  * </p>
  * @author Vitalii Chornobryvyi
+ * @deprecated This class is deprecated and will be replaced by {@link MailgunRequestInterceptor} after 1st of the March 2024.
+ * Please consider migrating to the new class for future updates.
  */
+@Deprecated
 public class FormPropertyRequestInterceptor implements RequestInterceptor {
 	private final Map<String, Collection<String>> properties;
 

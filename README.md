@@ -76,7 +76,7 @@ Add the following to your `pom.xml`:
   <dependency>
     <groupId>com.mailgun</groupId>
     <artifactId>mailgun-java</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
   </dependency>
   ...
 </dependencies>
@@ -85,7 +85,7 @@ Add the following to your `pom.xml`:
 Gradle Groovy DSL .
 
 ```xml
-implementation 'com.mailgun:mailgun-java:1.1.0'
+implementation 'com.mailgun:mailgun-java:1.1.1'
 ```
 
 
@@ -152,6 +152,22 @@ You can specify your own logLevel, retryer, logger, errorDecoder, options.
                 .logger(new Logger.NoOpLogger())
                 .errorDecoder(new ErrorDecoder.Default())
                 .options(new Request.Options(10, TimeUnit.SECONDS, 60, TimeUnit.SECONDS, true))
+```
+
+#### Mailgun client configuration with request interceptor for all API calls
+
+You can add your multiple custom:
+
+1) request header in format: ```(headerName, headerValue)```
+2) form property with allowed prefixes such as: ```t:, o:, h:, v:``` with the followed by any arbitrary value.
+```java
+        MailgunMessagesApi mailgunMessagesApi = MailgunClient.config(API_KEY)
+            .createApiWithRequestInterceptor(MailgunMessagesApi.class,
+                MailgunRequestInterceptor.builder()
+                    .addHeader(HEADER_ON_BEHALF_OF, SUBACCOUNT_ACCOUNT_ID)
+                    .addProperty("h:X-My-Header", "my_custom_header")
+                    .build()
+            );
 ```
 
 #### Mailgun client configuration example for the [Mailgun sending emails API](https://documentation.mailgun.com/en/latest/api-sending.html)
@@ -655,7 +671,7 @@ You can send email(s) with your own custom dynamic form property with allowed pr
 ```java
         MailgunMessagesApi mailgunMessagesApi = MailgunClient.config(PRIVATE_API_KEY)
                 .createApiWithRequestInterceptor(MailgunMessagesApi.class,
-                        FormPropertyRequestInterceptor.builder()
+                        MailgunRequestInterceptor.builder()
                                 .addProperty("h:Sender", EmailUtil.nameWithEmail(SENDER_NAME, SENDER_EMAIL))
                                 .addProperty("h:X-My-Header", "my_custom_header")
                                 .build()
