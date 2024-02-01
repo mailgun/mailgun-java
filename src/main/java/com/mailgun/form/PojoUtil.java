@@ -1,8 +1,12 @@
 package com.mailgun.form;
 
 import feign.form.FormProperty;
-import lombok.*;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.Setter;
+import lombok.SneakyThrows;
 import lombok.experimental.FieldDefaults;
+import lombok.val;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
