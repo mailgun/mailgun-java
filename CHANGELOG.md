@@ -5,10 +5,6 @@ All _notable_ changes to this project will be documented in this file.
 The format is based on _[Keep a Changelog][keepachangelog]_, and this project
 adheres to _[Semantic Versioning][semver]_.
 
-## [1.1.2] (released: 2024-01-26)
-### Updated
-- add ability for MailgunMessagesApi to support arbitrary email headers through `.headers`.
-
 ## [1.1.1] (released: 2023-12-12)
 ### Updated
 - add ability for primary accounts to make API calls on behalf of their subaccounts, e.g. sending messages, managing mailing lists, etc.
@@ -71,7 +67,6 @@ adheres to _[Semantic Versioning][semver]_.
 - Add Import a list of bounces from CSV file API
 
 
-[1.1.2]: https://github.com/mailgun/mailgun-java/compare/release/1.1.1...release/1.1.2
 [1.1.1]: https://github.com/mailgun/mailgun-java/compare/release/1.1.0...release/1.1.1
 [1.1.0]: https://github.com/mailgun/mailgun-java/compare/release/1.0.9...release/1.1.0
 [1.0.9]: https://github.com/mailgun/mailgun-java/compare/release/1.0.8...release/1.0.9

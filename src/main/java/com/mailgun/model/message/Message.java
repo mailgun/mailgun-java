@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.mailgun.form.CustomProperties;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -287,14 +286,6 @@ public class Message {
      */
     @FormProperty("t:variables")
     String mailgunVariables;
-
-    /**
-     * <p>
-     * Specify custom email headers
-     * </p>
-     */
-    @CustomProperties(prefix = "h:")
-    Map<String, String> headers;
 
     public static MessageBuilder builder() {
         return new CustomMessageBuilder();
@@ -775,19 +766,6 @@ public class Message {
          */
         public MessageBuilder mailgunVariables(String mailgunVariables) {
             this.mailgunVariables = mailgunVariables;
-            return this;
-        }
-
-        /**
-         * <p>
-         * Specify custom email headers
-         * </p>
-         *
-         * @param headers custom email headers
-         * @return Returns a reference to this object so that method calls can be chained together.
-         */
-        public MessageBuilder headers(Map<String, String> headers) {
-            this.headers = headers;
             return this;
         }
     }

@@ -16,8 +16,8 @@ import feign.form.UrlencodedFormContentProcessor;
 import feign.form.util.CharsetUtil;
 import lombok.val;
 
-import static com.mailgun.form.PojoUtil.isUserPojo;
-import static com.mailgun.form.PojoUtil.toMap;
+import static feign.form.util.PojoUtil.isUserPojo;
+import static feign.form.util.PojoUtil.toMap;
 import static java.util.Arrays.asList;
 
 public class FormEncoder implements Encoder {
