@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.mailgun.form.CustomProperties;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -249,6 +250,14 @@ public class Message {
     @FormProperty("h:Reply-To")
     String replyTo;
 
+	/**
+	 * <p>
+	 * Specify Sender address
+	 * </p>
+	 */
+	@FormProperty("h:Sender")
+	String sender;
+
     /**
      * <p>
      * A valid JSON-encoded dictionary, where key is a plain recipient address and value is a dictionary
@@ -278,6 +287,14 @@ public class Message {
      */
     @FormProperty("t:variables")
     String mailgunVariables;
+
+    /**
+     * <p>
+     * Specify custom email headers
+     * </p>
+     */
+    @CustomProperties(prefix = "h:")
+    Map<String, String> headers;
 
     @FormProperty("h:X-Email-ID")
     String xoEmailIdOnHeader;
@@ -660,6 +677,19 @@ public class Message {
             return this;
         }
 
+		/**
+		 * <p>
+		 * Specify Sender address
+		 * </p>
+		 *
+		 * @param sender Sender address
+		 * @return Returns a reference to this object so that method calls can be chained together.
+		 */
+		public MessageBuilder sender(String sender) {
+			this.sender = sender;
+			return this;
+		}
+
         /**
          * <p>
          * A dictionary, where the key is a plain recipient address
@@ -748,6 +778,19 @@ public class Message {
          */
         public MessageBuilder mailgunVariables(String mailgunVariables) {
             this.mailgunVariables = mailgunVariables;
+            return this;
+        }
+
+        /**
+         * <p>
+         * Specify custom email headers
+         * </p>
+         *
+         * @param headers custom email headers
+         * @return Returns a reference to this object so that method calls can be chained together.
+         */
+        public MessageBuilder headers(Map<String, String> headers) {
+            this.headers = headers;
             return this;
         }
     }

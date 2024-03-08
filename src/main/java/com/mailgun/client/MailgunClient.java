@@ -14,6 +14,7 @@ import feign.Client;
 import feign.Feign;
 import feign.Logger;
 import feign.Request;
+import feign.RequestInterceptor;
 import feign.Retryer;
 import feign.auth.BasicAuthRequestInterceptor;
 import feign.codec.ErrorDecoder;
@@ -185,6 +186,11 @@ public class MailgunClient {
             String url = MailgunApiUtil.getFullUrl(apiType, baseUrl);
             return getFeignBuilder().target(apiType, url);
         }
+
+		public <T extends MailgunApi> T createApiWithRequestInterceptor(Class<T> apiType, RequestInterceptor requestInterceptor) {
+			String url = MailgunApiUtil.getFullUrl(apiType, baseUrl);
+			return getFeignBuilder().requestInterceptor(requestInterceptor).target(apiType, url);
+		}
 
         public <T extends MailgunApi> T createAsyncApi(Class<T> apiType) {
             String url = MailgunApiUtil.getFullUrl(apiType, baseUrl);

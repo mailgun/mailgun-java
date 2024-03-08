@@ -10,6 +10,8 @@ public class Constants {
 
     public static final String ENGLISH = "en";
 
+	public static final String HEADER_ON_BEHALF_OF = "X-Mailgun-On-Behalf-Of";
+
 //    "Z" ==> "+0900"
     public static final String RFC_2822_DATE_TIME_PATTERN_TIME_ZONE_NUMERIC = "EEE, dd MMM yyyy HH:mm:ss Z";
 //    "z" ==> "UTC"

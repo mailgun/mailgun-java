@@ -5,6 +5,26 @@ All _notable_ changes to this project will be documented in this file.
 The format is based on _[Keep a Changelog][keepachangelog]_, and this project
 adheres to _[Semantic Versioning][semver]_.
 
+## [1.1.3] (released: 2024-03-01)
+### Updated
+- jar clean-up
+
+## [1.1.2] (released: 2024-01-26)
+### Updated
+- add ability for MailgunMessagesApi to support arbitrary email headers through `.headers`.
+
+## [1.1.1] (released: 2023-12-12)
+### Updated
+- add ability for primary accounts to make API calls on behalf of their subaccounts, e.g. sending messages, managing mailing lists, etc.
+
+## [1.1.0] (released: 2023-10-23)
+### Updated
+- add ability to get the first / last / next / previous page data.
+
+## [1.0.9] (released: 2023-09-27)
+### Updated
+- allows for appending custom MIME headers to a message
+
 ## [1.0.8] (released: 2023-05-25)
 ### Updated
 - updated dependencies
@@ -55,6 +75,11 @@ adheres to _[Semantic Versioning][semver]_.
 - Add Import a list of bounces from CSV file API
 
 
+[1.1.3]: https://github.com/mailgun/mailgun-java/compare/release/1.1.2...release/1.1.3
+[1.1.2]: https://github.com/mailgun/mailgun-java/compare/release/1.1.1...release/1.1.2
+[1.1.1]: https://github.com/mailgun/mailgun-java/compare/release/1.1.0...release/1.1.1
+[1.1.0]: https://github.com/mailgun/mailgun-java/compare/release/1.0.9...release/1.1.0
+[1.0.9]: https://github.com/mailgun/mailgun-java/compare/release/1.0.8...release/1.0.9
 [1.0.8]: https://github.com/mailgun/mailgun-java/compare/release/1.0.7...release/1.0.8
 [1.0.7]: https://github.com/mailgun/mailgun-java/compare/release/1.0.6...release/1.0.7
 [1.0.6]: https://github.com/mailgun/mailgun-java/compare/release/1.0.5...release/1.0.6
