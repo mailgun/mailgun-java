@@ -1,0 +1,50 @@
+{
+  "items": [
+    {
+      "dimensions": [
+        {
+          "dimension": "time",
+          "display_value": "Thu, 21 Dec 2023 02:56:50 +0000",
+          "value": "Wed, 01 Nov 2023 00:00:00 +0000"
+        }
+      ],
+      "metrics": {
+        "accepted_count": 40,
+        "accepted_incoming_count": 10,
+        "accepted_outgoing_count": 30,
+        "clicked_count": 50,
+        "clicked_rate": "0.8300",
+        "delivered_count": 60,
+        "delivered_http_count": 20,
+        "delivered_optimized_count": 0,
+        "delivered_smtp_count": 40,
+        "opened_count": 55
+      }
+    },
+    {
+      "dimensions": [
+        {
+          "dimension": "time",
+          "display_value": "Fri, 01 Dec 2023 00:00:00 +0000",
+          "value": "Fri, 01 Dec 2023 00:00:00 +0000"
+        }
+      ],
+      "metrics": {
+        "accepted_count": 40,
+        "accepted_incoming_count": 10,
+        "accepted_outgoing_count": 30,
+        "clicked_count": 50,
+        "clicked_rate": "0.8300",
+        "delivered_count": 60,
+        "delivered_http_count": 20,
+        "delivered_optimized_count": 0,
+        "delivered_smtp_count": 40,
+        "opened_count": 55
+      }
+    }
+  ],
+  "duration": "1m",
+  "end": "Thu, 21 Dec 2023 02:56:50 +0000",
+  "start": "Tue, 14 Nov 2023 02:56:50 +0000",
+  "resolution": "month"
+}
