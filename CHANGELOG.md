@@ -5,6 +5,11 @@ All _notable_ changes to this project will be documented in this file.
 The format is based on _[Keep a Changelog][keepachangelog]_, and this project
 adheres to _[Semantic Versioning][semver]_.
 
+## [1.1.4] (released: 2024-03-01)
+### Updated
+- Added Metrics API
+- 
+
 ## [1.1.3] (released: 2024-03-01)
 ### Updated
 - jar clean-up
@@ -75,6 +80,7 @@ adheres to _[Semantic Versioning][semver]_.
 - Add Import a list of bounces from CSV file API
 
 
+[1.1.4]: https://github.com/mailgun/mailgun-java/compare/v1.1.3...v1.1.4
 [1.1.3]: https://github.com/mailgun/mailgun-java/compare/release/1.1.2...release/1.1.3
 [1.1.2]: https://github.com/mailgun/mailgun-java/compare/release/1.1.1...release/1.1.2
 [1.1.1]: https://github.com/mailgun/mailgun-java/compare/release/1.1.0...release/1.1.1
