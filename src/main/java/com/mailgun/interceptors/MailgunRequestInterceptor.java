@@ -24,43 +24,47 @@ import feign.form.FormProperty;
  *         request header in format: {@code .addHeader(headerName, headerValue)}
  *     </li>
  * </ul>
+ *
  * @author Vitalii Chornobryvyi
  */
 public class MailgunRequestInterceptor implements RequestInterceptor {
-	private final Map<String, Collection<String>> headers;
-	private final Map<String, Collection<String>> properties;
+    private final Map<String, Collection<String>> headers;
+    private final Map<String, Collection<String>> properties;
 
-	private MailgunRequestInterceptor(Map<String, Collection<String>> headers, Map<String, Collection<String>> properties) {
-		this.headers = headers;
-		this.properties = properties;
-	}
+    private MailgunRequestInterceptor(Map<String, Collection<String>> headers, Map<String, Collection<String>> properties) {
+        this.headers = headers;
+        this.properties = properties;
+    }
 
-	public static Builder builder() {
-		return new Builder();
-	}
+    public static Builder builder() {
+        return new Builder();
+    }
 
-	@Override
-	public void apply(RequestTemplate requestTemplate) {
-		requestTemplate.headers(headers);
-		requestTemplate.queries(properties);
-	}
+    @Override
+    public void apply(RequestTemplate requestTemplate) {
+        requestTemplate.headers(headers);
 
-	public static class Builder {
-		private final Map<String, Collection<String>> headers = new HashMap<>();
-		private final Map<String, Collection<String>> properties = new HashMap<>();
+        if (!properties.isEmpty()) {
+            properties.forEach((name, values) -> values.forEach(value -> requestTemplate.query(name, value)));
+        }
+    }
 
-		public Builder addHeader(String headerName, String headerValue) {
-			headers.computeIfAbsent(headerName, key -> new ArrayList<>()).add(headerValue);
-			return this;
-		}
+    public static class Builder {
+        private final Map<String, Collection<String>> headers = new HashMap<>();
+        private final Map<String, Collection<String>> properties = new HashMap<>();
 
-		public Builder addProperty(String propertyName, String propertyValue) {
-			properties.computeIfAbsent(propertyName, key -> new ArrayList<>()).add(propertyValue);
-			return this;
-		}
+        public Builder addHeader(String headerName, String headerValue) {
+            headers.computeIfAbsent(headerName, key -> new ArrayList<>()).add(headerValue);
+            return this;
+        }
 
-		public MailgunRequestInterceptor build() {
-			return new MailgunRequestInterceptor(headers, properties);
-		}
-	}
+        public Builder addProperty(String propertyName, String propertyValue) {
+            properties.computeIfAbsent(propertyName, key -> new ArrayList<>()).add(propertyValue);
+            return this;
+        }
+
+        public MailgunRequestInterceptor build() {
+            return new MailgunRequestInterceptor(headers, properties);
+        }
+    }
 }
