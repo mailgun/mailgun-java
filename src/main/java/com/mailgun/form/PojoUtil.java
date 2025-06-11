@@ -6,6 +6,7 @@ import lombok.NonNull;
 import lombok.Setter;
 import lombok.SneakyThrows;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.UtilityClass;
 import lombok.val;
 
 import java.lang.reflect.Field;
@@ -24,6 +25,7 @@ import static lombok.AccessLevel.PRIVATE;
  *
  * @author Artem Labazin
  */
+@UtilityClass
 public final class PojoUtil {
 
     public static boolean isUserPojo (@NonNull Object object) {
@@ -70,10 +72,6 @@ public final class PojoUtil {
 
         }
         return result;
-    }
-
-    private PojoUtil () throws UnexpectedException {
-        throw new UnexpectedException("It is not allowed to instantiate this class");
     }
 
     @Setter

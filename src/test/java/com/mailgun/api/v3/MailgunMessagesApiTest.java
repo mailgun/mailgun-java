@@ -1,6 +1,7 @@
-package com.mailgun.api;
+package com.mailgun.api.v3;
 
-import com.mailgun.api.v3.MailgunMessagesApi;
+import com.mailgun.api.MailgunApi;
+import com.mailgun.api.WireMockBaseTest;
 import com.mailgun.client.MailgunClient;
 import com.mailgun.model.message.Message;
 import com.mailgun.model.message.MessageResponse;
@@ -25,7 +26,7 @@ import static com.mailgun.constants.TestConstants.TEST_EMAIL_SUBJECT;
 import static com.mailgun.constants.TestConstants.TEST_EMAIL_TEXT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class MailgunApiMessagesTest extends WireMockBaseTest {
+class MailgunMessagesApiTest extends WireMockBaseTest {
 
     private MailgunMessagesApi mailgunMessagesApi;
 

@@ -5,6 +5,11 @@ All _notable_ changes to this project will be documented in this file.
 The format is based on _[Keep a Changelog][keepachangelog]_, and this project
 adheres to _[Semantic Versioning][semver]_.
 
+## [2.0.0] (released: 2025-06-11)
+### Updated
+- Added unit tests and updated existing
+- Moved to the new version 2.x.x as JDK was moved to Java 11
+
 ## [1.1.6] (released: 2025-04-28)
 ### Updated
 - Fixed issues
@@ -86,6 +91,7 @@ adheres to _[Semantic Versioning][semver]_.
 - Import a list of complaints from CSV file API
 - Add Import a list of bounces from CSV file API
 
+[2.0.0]: https://github.com/mailgun/mailgun-java/compare/v1.1.6...v2.0.0
 [1.1.6]: https://github.com/mailgun/mailgun-java/compare/v1.1.5...v1.1.6
 [1.1.5]: https://github.com/mailgun/mailgun-java/compare/v1.1.4...v1.1.5
 [1.1.4]: https://github.com/mailgun/mailgun-java/compare/v1.1.3...v1.1.4

@@ -1,9 +1,10 @@
-package com.mailgun.api;
+package com.mailgun.api.v1;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mailgun.api.v1.MailgunAccountMetricsApi;
+import com.mailgun.api.ResponseSampleLoaderUtil;
+import com.mailgun.api.WireMockBaseTest;
 import com.mailgun.client.MailgunClient;
 import com.mailgun.enums.ApiVersion;
 import com.mailgun.model.metrics.AccountMetrics;

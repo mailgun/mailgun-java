@@ -10,7 +10,7 @@ import org.junit.jupiter.api.BeforeAll;
 @Slf4j
 public abstract class WireMockBaseTest {
 
-    static WireMockServer wireMockServer;
+    protected static WireMockServer wireMockServer;
 
     @BeforeAll
     static void beforeAll() {
