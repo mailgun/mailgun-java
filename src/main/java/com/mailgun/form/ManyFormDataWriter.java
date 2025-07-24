@@ -8,7 +8,15 @@ import lombok.val;
 
 public class ManyFormDataWriter extends AbstractWriter {
 
-    private final SingleFormDataWriter formDataWriter = new SingleFormDataWriter();
+    private final SingleFormDataWriter formDataWriter;
+
+    public ManyFormDataWriter(SingleFormDataWriter formDataWriter) {
+        this.formDataWriter = formDataWriter;
+    }
+
+    public ManyFormDataWriter() {
+        this.formDataWriter = new SingleFormDataWriter();
+    }
 
     @Override
     public boolean isApplicable(Object value) {
