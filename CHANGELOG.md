@@ -5,6 +5,10 @@ All _notable_ changes to this project will be documented in this file.
 The format is based on _[Keep a Changelog][keepachangelog]_, and this project
 adheres to _[Semantic Versioning][semver]_.
 
+## [10.0.3] (released: 2025-07-24)
+### Updated
+- Add logs api.
+
 ## [2.0.0] (released: 2025-06-11)
 ### Updated
 - Added unit tests and updated existing
