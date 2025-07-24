@@ -1,0 +1,58 @@
+{
+  "end": "Thu, 21 Dec 2023 02:56:50 +0000",
+  "resolution": "month",
+  "start": "Tue, 14 Nov 2023 02:56:50 +0000",
+  "duration": "1m",
+  "items": [
+    {
+      "dimensions": [
+        {
+          "dimension": "time",
+          "display_value": "Wed, 01 Nov 2023 00:00:00 +0000",
+          "value": "Wed, 01 Nov 2023 00:00:00 +0000"
+        }
+      ],
+      "metrics": {
+        "email_preview_count": 60,
+        "email_preview_failed_count": 16,
+        "email_validation_bulk_count": 40,
+        "email_validation_count": 50,
+        "email_validation_list_count": 20,
+        "email_validation_mailgun_count": 40,
+        "email_validation_mailjet_count": 5,
+        "email_validation_public_count": 55,
+        "email_validation_single_count": 30,
+        "email_validation_valid_count": 10,
+        "link_validation_count": 5,
+        "link_validation_failed_count": 7,
+        "processed_count": 3,
+        "seed_test_count": 9
+      }
+    },
+    {
+      "dimensions": [
+        {
+          "dimension": "time",
+          "display_value": "Fri, 01 Dec 2023 00:00:00 +0000",
+          "value": "Fri, 01 Dec 2023 00:00:00 +0000"
+        }
+      ],
+      "metrics": {
+        "email_preview_count": 60,
+        "email_preview_failed_count": 16,
+        "email_validation_bulk_count": 40,
+        "email_validation_count": 50,
+        "email_validation_list_count": 20,
+        "email_validation_mailgun_count": 40,
+        "email_validation_mailjet_count": 5,
+        "email_validation_public_count": 55,
+        "email_validation_single_count": 30,
+        "email_validation_valid_count": 10,
+        "link_validation_count": 5,
+        "link_validation_failed_count": 7,
+        "processed_count": 3,
+        "seed_test_count": 9
+      }
+    }
+  ]
+}

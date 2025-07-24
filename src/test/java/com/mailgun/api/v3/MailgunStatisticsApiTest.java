@@ -1,4 +1,4 @@
-package com.mailgun.api;
+package com.mailgun.api.v3;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -7,7 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.github.tomakehurst.wiremock.client.WireMock;
-import com.mailgun.api.v3.MailgunStatisticsApi;
+import com.mailgun.api.MailgunApi;
+import com.mailgun.api.WireMockBaseTest;
 import com.mailgun.client.MailgunClient;
 import com.mailgun.enums.Duration;
 import com.mailgun.enums.ResolutionPeriod;

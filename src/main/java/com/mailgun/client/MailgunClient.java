@@ -1,13 +1,14 @@
 package com.mailgun.client;
 
-import java.util.concurrent.Executors;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mailgun.api.MailgunApi;
 import com.mailgun.form.FormEncoder;
 import com.mailgun.util.ConsoleLogger;
 import com.mailgun.util.MailgunApiUtil;
 import com.mailgun.util.ObjectMapperUtil;
+
+import java.util.concurrent.Executors;
+
 import feign.AsyncClient;
 import feign.AsyncFeign;
 import feign.Client;

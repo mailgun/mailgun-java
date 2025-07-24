@@ -49,6 +49,11 @@ public class FormEncoder implements Encoder {
         }
     }
 
+    public FormEncoder(Encoder delegate, Map<ContentType, ContentProcessor> processors) {
+        this.delegate = delegate;
+        this.processors = processors;
+    }
+
     @Override
     @SuppressWarnings("unchecked")
     public void encode(Object object, Type bodyType, RequestTemplate template) throws EncodeException {
