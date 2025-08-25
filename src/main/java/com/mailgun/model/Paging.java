@@ -45,4 +45,11 @@ public class Paging {
      */
     String previous;
 
+    /**
+     * <p>
+     * Total number of items
+     * </p>
+     */
+    Long total;
+
 }

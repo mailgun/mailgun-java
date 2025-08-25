@@ -1,20 +1,5 @@
 package com.mailgun.integration;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
-
 import com.mailgun.api.v3.suppression.MailgunSuppressionBouncesApi;
 import com.mailgun.client.MailgunClient;
 import com.mailgun.model.ResponseWithMessage;
@@ -24,6 +9,19 @@ import com.mailgun.model.suppression.bounces.BouncesListImportRequest;
 import com.mailgun.model.suppression.bounces.BouncesRequest;
 import com.mailgun.model.suppression.bounces.BouncesResponse;
 import com.mailgun.utils.FileUtils;
+
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.List;
+
 import feign.FeignException;
 
 import static com.mailgun.constants.IntegrationTestConstants.MAIN_DOMAIN;

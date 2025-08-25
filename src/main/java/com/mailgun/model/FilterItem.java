@@ -1,4 +1,4 @@
-package com.mailgun.model.metrics;
+package com.mailgun.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

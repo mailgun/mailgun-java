@@ -1,4 +1,4 @@
-package com.mailgun.model.metrics;
+package com.mailgun.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,16 +11,14 @@ import lombok.extern.jackson.Jacksonized;
 
 /**
  * <p>
- * Metric filter.
+ * Filter.
  * </p>
- *
- * @see <a href="https://documentation.mailgun.com/en/latest/api-stats.html#metrics">Metrics</a>
  */
 @Value
 @Builder
 @Jacksonized
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class MetricsFilter {
+public class Filter {
 
     /**
      * <p>

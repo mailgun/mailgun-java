@@ -1,0 +1,41 @@
+{
+  "start": "Mon, 08 Jul 2024 00:00:00 -0000",
+  "end": "Fri, 12 Jul 2024 00:00:00 -0000",
+  "items": [
+    {
+      "id": "JDhSWf9mT5OFxCkZfpDU5d",
+      "event": "failed",
+      "@timestamp": "2024-07-08T16:30:18.530Z",
+      "account": {
+        "id": "12345"
+      },
+      "delivery-status": {
+        "message": "Turret client: server connection failed",
+        "attempt-no": 5,
+        "code": 680,
+        "session-seconds": 15.026,
+        "retry-seconds": 145
+      },
+      "domain": {
+        "name": "example.com"
+      },
+      "recipient": "example@gmail.com",
+      "recipient-domain": "gmail.com",
+      "recipient-provider": "Gmail",
+      "envelope": {
+        "sender": "bob@example.com",
+        "transport": "smtp",
+        "sending-ip": "198.52.100.1",
+        "targets": "bob@example.com"
+      }
+    }
+  ],
+  "pagination": {
+    "previous": "cjsijbijewbu78t678tVTYUYU76754fyuiksi23h75",
+    "next": "cjsijbijewbu78t678tVTYUYU76754fyuiksin98hh",
+    "first": "cjsijbijewbu78t678tVTYUYU76754fyuiksin865g",
+    "last": "875bunjnWkmis75bjklnsdk0s7jksnjknlknc64aTR",
+    "total": 100
+  },
+  "aggregates": {}
+}

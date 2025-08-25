@@ -3,6 +3,7 @@ package com.mailgun.model.metrics;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mailgun.enums.Resolution;
+import com.mailgun.model.Filter;
 
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -74,7 +75,7 @@ public class MetricsRequest {
      * Filters to apply to the query.
      * </p>
      */
-    MetricsFilter filter;
+    Filter filter;
 
     /**
      * <p>
