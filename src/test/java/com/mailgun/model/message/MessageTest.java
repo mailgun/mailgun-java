@@ -18,22 +18,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.mailgun.constants.TestConstants.TEMPLATE_VERSION;
-import static com.mailgun.constants.TestConstants.TEST_EMAIL_1;
-import static com.mailgun.constants.TestConstants.TEST_EMAIL_2;
-import static com.mailgun.constants.TestConstants.TEST_EMAIL_3;
-import static com.mailgun.constants.TestConstants.TEST_EMAIL_4;
-import static com.mailgun.constants.TestConstants.TEST_EMAIL_5;
-import static com.mailgun.constants.TestConstants.TEST_EMAIL_HTML;
-import static com.mailgun.constants.TestConstants.TEST_EMAIL_SUBJECT;
-import static com.mailgun.constants.TestConstants.TEST_EMAIL_TEXT;
-import static com.mailgun.constants.TestConstants.TEST_TAG_1;
-import static com.mailgun.constants.TestConstants.TEST_TAG_2;
-import static com.mailgun.constants.TestConstants.TEST_TAG_3;
-import static com.mailgun.constants.TestConstants.TEST_TAG_4;
-import static com.mailgun.constants.TestConstants.TEST_USER_NAME;
-import static com.mailgun.constants.TestConstants.ZONED_DATE_TIME_2018_2_3_GMT;
-import static com.mailgun.constants.TestConstants.ZONED_DATE_TIME_2018_2_3_GMT_STRING;
+import static com.mailgun.constants.TestConstants.*;
 import static com.mailgun.util.Constants.FIELD_CANNOT_BE_NULL_OR_EMPTY;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -72,6 +57,7 @@ class MessageTest {
         assertNull(result.getSkipVerification());
         assertNull(result.getReplyTo());
         assertNull(result.getRecipientVariables());
+        assertNull(result.getArchiveTo());
     }
 
     @Test
@@ -122,6 +108,7 @@ class MessageTest {
                 .skipVerification(true)
                 .replyTo(TEST_EMAIL_2)
                 .recipientVariables(recipientVariables)
+                .archiveTo(TEST_DOMAIN)
                 .build();
 
         assertNotNull(result);
@@ -144,6 +131,7 @@ class MessageTest {
         assertEquals(YesNo.YES.getValue(), result.getSkipVerification());
         assertEquals(TEST_EMAIL_2, result.getReplyTo());
         assertEquals("{\"firstEmail\":{\"Alice\":\"1\"},\"secondEmail\":{\"Bob\":\"2\"}}", result.getRecipientVariables());
+        assertEquals(TEST_DOMAIN, result.getArchiveTo());
     }
 
     @Test
