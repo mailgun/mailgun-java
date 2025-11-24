@@ -112,6 +112,19 @@ public class MailgunMimeMessage {
     @FormProperty("o:tracking-opens")
     String trackingOpens;
 
+
+    /**
+     * <p>
+     * Sends a copy of successfully delivered messages to the specified URL via HTTP POST.
+     * The request uses Content-Type: application/mime and contains the exact message the recipient's SMTP server received.
+     * </p>
+     * <p>
+     * NOTE: These are accounted for and billed as delivered messages
+     * </p>
+     */
+    @FormProperty("o:archive-to")
+    String archiveTo;
+
     /**
      * <p>
      * Specify Reply-To address

@@ -244,6 +244,18 @@ public class Message {
 
     /**
      * <p>
+     * Sends a copy of successfully delivered messages to the specified URL via HTTP POST.
+     * The request uses Content-Type: application/mime and contains the exact message the recipient's SMTP server received.
+     * </p>
+     * <p>
+     * NOTE: These are accounted for and billed as delivered messages
+     * </p>
+     */
+    @FormProperty("o:archive-to")
+    String archiveTo;
+
+    /**
+     * <p>
      * Specify Reply-To address
      * </p>
      */
@@ -658,6 +670,23 @@ public class Message {
          */
         public MessageBuilder skipVerification(boolean skipVerification) {
             this.skipVerification = YesNo.getValue(skipVerification);
+            return this;
+        }
+
+        /**
+         * <p>
+         * Sends a copy of successfully delivered messages to the specified URL via HTTP POST.
+         * The request uses Content-Type: application/mime and contains the exact message the recipient's SMTP server received.
+         * </p>
+         * <p>
+         * NOTE: These are accounted for and billed as delivered messages
+         * </p>
+         *
+         * @param archiveTo copy emails to this URL
+         * @return Returns a reference to this object so that method calls can be chained together.
+         */
+        public MessageBuilder archiveTo(String archiveTo) {
+            this.archiveTo = archiveTo;
             return this;
         }
 
