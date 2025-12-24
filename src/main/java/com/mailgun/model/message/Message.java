@@ -171,6 +171,36 @@ public class Message {
 
     /**
      * <p>
+     * Delivery deadline for the message.
+     * </p>
+     * <p>
+     * Expects a Golang encoded duration value in range [5m;24h].
+     * </p>
+     * <p>
+     * If specified, an explicit deadline is set for the corresponding smtp2 job
+     * and deliver-by field is added to the fired accepted event with the deadline value.
+     * </p>
+     */
+    @FormProperty("o:deliver-within")
+    String deliverWithin;
+
+    /**
+     * <p>
+     * X-Mailgun-Deliver-Within header - delivery deadline for the message.
+     * </p>
+     * <p>
+     * Expects a Golang encoded duration value in range [5m;24h].
+     * </p>
+     * <p>
+     * If specified, an explicit deadline is set for the corresponding smtp2 job
+     * and deliver-by field is added to the fired accepted event with the deadline value.
+     * </p>
+     */
+    @FormProperty("h:X-Mailgun-Deliver-Within")
+    String xMailgunDeliverWithin;
+
+    /**
+     * <p>
      * Enables sending in test mode.
      * </p>
      *
@@ -571,6 +601,48 @@ public class Message {
          */
         public MessageBuilder deliveryTime(ZonedDateTime deliveryTime) {
             this.deliveryTime = DateTimeUtil.toString(deliveryTime);
+            return this;
+        }
+
+        /**
+         * <p>
+         * Delivery deadline for the message.
+         * </p>
+         * <p>
+         * Expects a Golang encoded duration value in range [5m;24h].
+         * Examples: "5m", "30m", "1h", "12h", "24h".
+         * </p>
+         * <p>
+         * If specified, an explicit deadline is set for the corresponding smtp2 job
+         * and deliver-by field is added to the fired accepted event with the deadline value.
+         * </p>
+         *
+         * @param deliverWithin Golang encoded duration value (e.g., "5m", "1h", "24h")
+         * @return Returns a reference to this object so that method calls can be chained together.
+         */
+        public MessageBuilder deliverWithin(String deliverWithin) {
+            this.deliverWithin = deliverWithin;
+            return this;
+        }
+
+        /**
+         * <p>
+         * X-Mailgun-Deliver-Within header - delivery deadline for the message.
+         * </p>
+         * <p>
+         * Expects a Golang encoded duration value in range [5m;24h].
+         * Examples: "5m", "30m", "1h", "12h", "24h".
+         * </p>
+         * <p>
+         * If specified, an explicit deadline is set for the corresponding smtp2 job
+         * and deliver-by field is added to the fired accepted event with the deadline value.
+         * </p>
+         *
+         * @param xMailgunDeliverWithin Golang encoded duration value (e.g., "5m", "1h", "24h")
+         * @return Returns a reference to this object so that method calls can be chained together.
+         */
+        public MessageBuilder xMailgunDeliverWithin(String xMailgunDeliverWithin) {
+            this.xMailgunDeliverWithin = xMailgunDeliverWithin;
             return this;
         }
 

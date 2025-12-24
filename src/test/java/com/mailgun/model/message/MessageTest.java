@@ -49,6 +49,8 @@ class MessageTest {
         assertNull(result.getTag());
         assertNull(result.getDkim());
         assertNull(result.getDeliveryTime());
+        assertNull(result.getDeliverWithin());
+        assertNull(result.getXMailgunDeliverWithin());
         assertNull(result.getTestMode());
         assertNull(result.getTracking());
         assertNull(result.getTrackingClicks());
@@ -100,6 +102,8 @@ class MessageTest {
                 .tag(Arrays.asList(TEST_TAG_3, TEST_TAG_4))
                 .dkim(true)
                 .deliveryTime(ZONED_DATE_TIME_2018_2_3_GMT)
+                .deliverWithin("1h")
+                .xMailgunDeliverWithin("30m")
                 .testMode(true)
                 .tracking(true)
                 .trackingClicks(YesNoHtml.YES)
@@ -123,6 +127,8 @@ class MessageTest {
         assertEquals(4, result.getTag().size());
         assertEquals(YesNo.YES.getValue(), result.getDkim());
         assertEquals(ZONED_DATE_TIME_2018_2_3_GMT_STRING, result.getDeliveryTime());
+        assertEquals("1h", result.getDeliverWithin());
+        assertEquals("30m", result.getXMailgunDeliverWithin());
         assertEquals(YesNo.YES.getValue(), result.getTestMode());
         assertEquals(YesNo.YES.getValue(), result.getTracking());
         assertEquals(YesNoHtml.YES.getValue(), result.getTrackingClicks());
