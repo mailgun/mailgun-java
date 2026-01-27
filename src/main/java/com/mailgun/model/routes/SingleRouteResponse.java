@@ -10,7 +10,7 @@ import lombok.extern.jackson.Jacksonized;
  * Single Routes response.
  * </p>
  *
- * @see <a href="https://documentation.mailgun.com/en/latest/api-routes.html#routes">Routes</a>
+ * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/routes">Routes</a>
  */
 @Value
 @Jacksonized

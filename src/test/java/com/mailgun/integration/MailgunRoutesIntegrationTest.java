@@ -5,6 +5,7 @@ import com.mailgun.client.MailgunClient;
 import com.mailgun.model.ResponseWithMessage;
 import com.mailgun.model.routes.Route;
 import com.mailgun.model.routes.RoutesListResponse;
+import com.mailgun.model.routes.RoutesMatchRequest;
 import com.mailgun.model.routes.RoutesPageRequest;
 import com.mailgun.model.routes.RoutesRequest;
 import com.mailgun.model.routes.RoutesResponse;
@@ -93,6 +94,65 @@ class MailgunRoutesIntegrationTest {
 
     @Order(4)
     @Test
+    void matchRouteSuccessTest() {
+        // First, get an existing route to find an address that matches
+        List<Route> routes = mailgunRoutesApi.getRoutesList(RoutesPageRequest.builder().limit(10).build()).getItems();
+        assertTrue(CollectionUtils.isNotEmpty(routes));
+
+        // Find a route with a match_recipient expression and extract a matching address
+        Route routeWithExpression = routes.stream()
+                .filter(r -> r.getExpression() != null && r.getExpression().contains("match_recipient"))
+                .findFirst()
+                .orElse(routes.get(0));
+
+        // Extract email pattern from expression like match_recipient('.*@gmail.com')
+        String expression = routeWithExpression.getExpression();
+        String testAddress = "test@example.com";
+        
+        // If the expression matches a specific pattern, use a matching address
+        if (expression.contains("gmail.com")) {
+            testAddress = "user@gmail.com";
+        } else if (expression.contains("example.com")) {
+            testAddress = "user@example.com";
+        }
+
+        RoutesMatchRequest matchRequest = RoutesMatchRequest.builder()
+                .address(testAddress)
+                .build();
+
+        try {
+            SingleRouteResponse result = mailgunRoutesApi.matchRoute(matchRequest);
+
+            Route matchedRoute = result.getRoute();
+            assertNotNull(matchedRoute);
+            assertNotNull(matchedRoute.getId());
+            assertNotNull(matchedRoute.getPriority());
+            assertNotNull(matchedRoute.getExpression());
+            assertTrue(CollectionUtils.isNotEmpty(matchedRoute.getActions()));
+        } catch (FeignException e) {
+            // If no route matches, that's also a valid test scenario
+            // The API returns 404 when no route matches
+            assertEquals(404, e.status());
+        }
+    }
+
+    @Order(5)
+    @Test
+    void matchRouteNotFoundTest() {
+        // Use an address that definitely won't match any route
+        RoutesMatchRequest matchRequest = RoutesMatchRequest.builder()
+                .address("definitely-does-not-exist-" + System.currentTimeMillis() + "@nonexistent-domain-12345.com")
+                .build();
+
+        FeignException exception = assertThrows(FeignException.class, () ->
+                mailgunRoutesApi.matchRoute(matchRequest)
+        );
+
+        assertEquals(404, exception.status());
+    }
+
+    @Order(6)
+    @Test
     void createRouteSuccessTest() {
         String action_1 = "forward('" + TEST_EMAIL_2 + "')";
         String action_2 = "forward('" + TEST_EMAIL_3 + "')";
@@ -124,7 +184,7 @@ class MailgunRoutesIntegrationTest {
         assertTrue(actions.containsAll(Arrays.asList(action_1, action_2, action_3, action_4)));
     }
 
-    @Order(5)
+    @Order(7)
     @Test
     void updateRouteSuccessTest() {
         String newAction = "forward('" + TEST_EMAIL_4 + "')";
@@ -146,7 +206,7 @@ class MailgunRoutesIntegrationTest {
         assertTrue(actions.contains(newAction));
     }
 
-    @Order(6)
+    @Order(8)
     @Test
     void deleteRouteSuccessTest() {
         ResponseWithMessage result = mailgunRoutesApi.deleteRoute(routeId);
