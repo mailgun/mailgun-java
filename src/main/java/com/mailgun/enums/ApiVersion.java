@@ -7,7 +7,8 @@ public enum ApiVersion {
     V_1("v1"),
     V_2("v2"),
     V_3("v3"),
-    V_4("v4");
+    V_4("v4"),
+    V_5("v5");
 
     private final String value;
 
