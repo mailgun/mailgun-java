@@ -175,7 +175,7 @@ public class EventItem {
      * </p>
      */
     @JsonProperty("user-variables")
-    Map<String, String> userVariables;
+    Map<String, Object> userVariables;
 
     /**
      * <p>
