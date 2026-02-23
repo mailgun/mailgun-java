@@ -26,8 +26,12 @@ import static com.mailgun.util.Constants.FIELD_CANNOT_BE_NULL_OR_EMPTY;
 
 /**
  * The object is used for sending messages(emails) using Mailgun API.
+ * <p>
+ * You must provide one of: {@code text}, {@code html}, {@code amp-html}, or {@code template}.
+ * Send options (parameters starting with o:, h:, v:, or t:) are limited to 16KB total.
+ * </p>
  *
- * @see <a href="https://documentation.mailgun.com/en/latest/api-sending.html#sending">field-explanation</a>
+ * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/messages/post-v3--domain-name--messages">Send an email</a>
  */
 @Getter
 @ToString
@@ -83,6 +87,16 @@ public class Message {
      * </p>
      */
     String html;
+
+    /**
+     * <p>
+     * AMP part of the message. Follow Google guidelines to compose and send AMP emails.
+     * </p>
+     *
+     * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/messages/post-v3--domain-name--messages">Send an email</a>
+     */
+    @FormProperty("amp-html")
+    String ampHtml;
 
     /**
      * <p>
@@ -362,6 +376,15 @@ public class Message {
                 throw new IllegalArgumentException("You cannot use 'attachment' and 'formData' together");
             }
 
+            boolean hasBody = StringUtils.isNotBlank(super.text)
+                || StringUtils.isNotBlank(super.html)
+                || StringUtils.isNotBlank(super.ampHtml)
+                || StringUtils.isNotBlank(super.template);
+            if (!hasBody) {
+                throw new IllegalArgumentException(
+                    "At least one of 'text', 'html', 'amp-html', or 'template' must be provided");
+            }
+
             return super.build();
         }
     }
@@ -529,6 +552,19 @@ public class Message {
          */
         public Message.MessageBuilder inline(List<File> attachments) {
             this.inline = CollectionUtil.addToSet(this.inline, attachments);
+            return this;
+        }
+
+        /**
+         * <p>
+         * AMP part of the message. Follow Google guidelines to compose and send AMP emails.
+         * </p>
+         *
+         * @param ampHtml AMP HTML content
+         * @return Returns a reference to this object so that method calls can be chained together.
+         */
+        public Message.MessageBuilder ampHtml(String ampHtml) {
+            this.ampHtml = ampHtml;
             return this;
         }
 

@@ -33,8 +33,10 @@ public class MailgunMimeMessage {
 
     /**
      * <p>
-     * Same as {@link #to} but for Bcc.
+     * MIME string of the message (sent as file upload with appropriate content type).
      * </p>
+     *
+     * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/messages/post-v3--domain-name--messages-mime">Send an email in MIME format</a>
      */
     File message;
 

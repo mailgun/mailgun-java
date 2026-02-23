@@ -33,6 +33,7 @@ class MessageTest {
         Message result = Message.builder()
                 .from(TEST_EMAIL_1)
                 .to(TEST_EMAIL_2)
+                .text(TEST_EMAIL_TEXT)
                 .build();
 
         assertNotNull(result);
@@ -41,7 +42,8 @@ class MessageTest {
         assertNull(result.getCc());
         assertNull(result.getBcc());
         assertNull(result.getSubject());
-        assertNull(result.getText());
+        assertEquals(TEST_EMAIL_TEXT, result.getText());
+        assertNull(result.getAmpHtml());
         assertNull(result.getAttachment());
         assertNull(result.getInline());
         assertNull(result.getTemplateVersion());
@@ -233,6 +235,17 @@ class MessageTest {
 
 
     @Test
+    void messageBodyRequiredExceptionTest() {
+        Message.MessageBuilder messageBuilder = Message.builder()
+                .from(TEST_EMAIL_1)
+                .to(TEST_EMAIL_2);
+
+        Exception exception = assertThrows(IllegalArgumentException.class, messageBuilder::build);
+
+        assertEquals("At least one of 'text', 'html', 'amp-html', or 'template' must be provided", exception.getMessage());
+    }
+
+    @Test
     void messageAttachmentAndFromDataTogetherExceptionTest() throws IOException {
         File file = getTempFile("temp.1");
         InputStream inputStream = new FileInputStream(getTempFile("temp.2"));
@@ -242,6 +255,7 @@ class MessageTest {
         Message.MessageBuilder messageBuilder = Message.builder()
             .from(TEST_EMAIL_1)
             .to(TEST_EMAIL_2)
+            .text(TEST_EMAIL_TEXT)
             .attachment(file)
             .formData(formData);
 
