@@ -1,6 +1,7 @@
 package com.mailgun.model.message;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Value;
 import lombok.extern.jackson.Jacksonized;
@@ -19,6 +20,7 @@ public class SendingQueueInfo {
     /**
      * Flag indicating no new messages are able to be submitted.
      */
+    @JsonProperty("is_disabled")
     Boolean isDisabled;
 
     /**

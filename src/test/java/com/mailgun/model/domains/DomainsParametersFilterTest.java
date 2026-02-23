@@ -20,4 +20,24 @@ class DomainsParametersFilterTest {
         assertEquals(3, filter.getSkip());
     }
 
+    @Test
+    void builderWithSortSearchIncludeSubaccountsTest() {
+        DomainsParametersFilter filter = DomainsParametersFilter.builder()
+                .state(DomainState.UNVERIFIED)
+                .authority("example.com")
+                .limit(1000)
+                .skip(0)
+                .sort("created_at")
+                .search("my-domain")
+                .includeSubaccounts(true)
+                .build();
+
+        assertEquals(DomainState.UNVERIFIED.getValue(), filter.getState());
+        assertEquals("example.com", filter.getAuthority());
+        assertEquals(1000, filter.getLimit());
+        assertEquals("created_at", filter.getSort());
+        assertEquals("my-domain", filter.getSearch());
+        assertEquals(Boolean.TRUE, filter.getInclude_subaccounts());
+    }
+
 }

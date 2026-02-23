@@ -27,9 +27,12 @@ import feign.Response;
 
 /**
  * <p>
- * The domains API allows you to create, access, and validate domains programmatically.
+ * Domains API (v3): delete domain, and manage credentials, connection, and tracking settings.
+ * For listing, creating, getting, updating, and verifying domains use the v4 API:
+ * {@link com.mailgun.api.v4.MailgunDomainsApi} (GET/POST/PUT /v4/domains). Delete domain remains on v3.
  * </p>
  *
+ * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/domains/delete-v3-domains--name-">Delete a domain</a>
  * @see <a href="https://documentation.mailgun.com/en/latest/api-domains.html">Domains</a>
  */
 @Headers("Accept: application/json")
@@ -37,7 +40,8 @@ public interface MailgunDomainsApi extends MailgunApi {
 
     /**
      * <p>
-     * Returns a list of domains under your account (limit to 100 entries).
+     * Returns a list of domains under your account. Prefer {@link com.mailgun.api.v4.MailgunDomainsApi#getDomainsList()}
+     * for v4 (paginated, max 1000 per page, filter by state/authority, sort, search).
      * </p>
      *
      * @return {@link DomainListResponse}
@@ -47,17 +51,7 @@ public interface MailgunDomainsApi extends MailgunApi {
 
     /**
      * <p>
-     * Returns a list of domains under your account (limit to 100 entries).
-     * </p>
-     *
-     * @return {@link Response}
-     */
-    @RequestLine("GET /domains")
-    Response getDomainsListFeignResponse();
-
-    /**
-     * <p>
-     * Returns a list of domains under your account.
+     * Returns a list of domains under your account (with filter). Prefer {@link com.mailgun.api.v4.MailgunDomainsApi#getDomainsList(DomainsParametersFilter)} for v4.
      * </p>
      *
      * @param filter {@link DomainsParametersFilter}
@@ -68,7 +62,17 @@ public interface MailgunDomainsApi extends MailgunApi {
 
     /**
      * <p>
-     * Returns a list of domains under your account.
+     * Returns a list of domains (raw response).
+     * </p>
+     *
+     * @return {@link Response}
+     */
+    @RequestLine("GET /domains")
+    Response getDomainsListFeignResponse();
+
+    /**
+     * <p>
+     * Returns a list of domains with filter (raw response).
      * </p>
      *
      * @param filter {@link DomainsParametersFilter}
@@ -151,18 +155,19 @@ public interface MailgunDomainsApi extends MailgunApi {
 
     /**
      * <p>
-     * Delete a domain from your account.
+     * Delete a domain. Domain must not be disabled or used as authority for another domain. Sandbox domain cannot be deleted. (DELETE /v3/domains/{name})
      * </p>
      *
      * @param domain Name of the domain
      * @return {@link ResponseWithMessage}
+     * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/domains/delete-v3-domains--name-">Delete a domain</a>
      */
     @RequestLine("DELETE /domains/{domain}")
     ResponseWithMessage deleteDomain(@Param("domain") String domain);
 
     /**
      * <p>
-     * Delete a domain from your account.
+     * Delete a domain (raw response).
      * </p>
      *
      * @param domain Name of the domain
