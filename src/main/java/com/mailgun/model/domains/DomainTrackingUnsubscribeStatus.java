@@ -8,11 +8,9 @@ import lombok.Value;
 import lombok.extern.jackson.Jacksonized;
 
 /**
- * <p>
- * Domain unsubscribe tracking settings statuses.
- * </p>
+ * Unsubscribe tracking settings (active, html_footer, text_footer).
  *
- * @see <a href="https://documentation.mailgun.com/en/latest/api-domains.html#domains">Domains</a>
+ * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/domain-tracking/get-v3-domains--name--tracking">Get tracking settings</a>
  */
 @Value
 @Jacksonized

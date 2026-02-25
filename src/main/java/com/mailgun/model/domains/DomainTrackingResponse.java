@@ -7,11 +7,9 @@ import lombok.Value;
 import lombok.extern.jackson.Jacksonized;
 
 /**
- * <p>
- * Domain tracking settings response.
- * </p>
+ * Response for GET /v3/domains/{name}/tracking (open, click, unsubscribe, web_scheme).
  *
- * @see <a href="https://documentation.mailgun.com/en/latest/api-domains.html#domains">Domains</a>
+ * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/domain-tracking/get-v3-domains--name--tracking">Get tracking settings</a>
  */
 @Value
 @Jacksonized

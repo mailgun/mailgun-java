@@ -7,11 +7,9 @@ import lombok.Value;
 import lombok.extern.jackson.Jacksonized;
 
 /**
- * <p>
- * Domain open tracking settings update response.
- * </p>
+ * Response for PUT /v3/domains/{name}/tracking/open (message and open settings including place_at_the_top).
  *
- * @see <a href="https://documentation.mailgun.com/en/latest/api-domains.html#domains">Domains</a>
+ * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/domain-tracking/put-v3-domains--name--tracking-open">Update open tracking settings</a>
  */
 @Value
 @Jacksonized

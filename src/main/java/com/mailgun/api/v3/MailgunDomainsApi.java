@@ -13,6 +13,7 @@ import com.mailgun.model.domains.DomainRequest;
 import com.mailgun.model.domains.DomainResponse;
 import com.mailgun.model.domains.DomainTrackingResponse;
 import com.mailgun.model.domains.DomainUnsubscribeConnectionSettingsRequest;
+import com.mailgun.model.domains.OpenTrackingSettingsRequest;
 import com.mailgun.model.domains.DomainsParametersFilter;
 import com.mailgun.model.domains.SingleDomainResponse;
 import com.mailgun.model.domains.UpdateDomainClickTrackingSettingsResponse;
@@ -308,20 +309,17 @@ public interface MailgunDomainsApi extends MailgunApi {
     Response updateDomainConnectionSettingsFeignResponse(@Param("domain") String domain, DomainConnectionRequest request);
 
     /**
-     * <p>
-     * Returns tracking settings for a domain.
-     * </p>
+     * Get tracking settings (open, click, unsubscribe, web_scheme) for a domain.
      *
      * @param domain Name of the domain
      * @return {@link DomainTrackingResponse}
+     * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/domain-tracking/get-v3-domains--name--tracking">Get tracking settings</a>
      */
     @RequestLine("GET /domains/{domain}/tracking")
     DomainTrackingResponse getDomainTrackingSettings(@Param("domain") String domain);
 
     /**
-     * <p>
-     * Returns tracking settings for a domain.
-     * </p>
+     * Get tracking settings (raw response).
      *
      * @param domain Name of the domain
      * @return {@link Response}
@@ -330,9 +328,19 @@ public interface MailgunDomainsApi extends MailgunApi {
     Response getDomainTrackingSettingsFeignResponse(@Param("domain") String domain);
 
     /**
-     * <p>
-     * Updates the open tracking settings for a domain.
-     * </p>
+     * Update open tracking settings (active and/or place_at_the_top). Omit fields in request to keep current settings.
+     *
+     * @param domain  Name of the domain
+     * @param request {@link OpenTrackingSettingsRequest}
+     * @return {@link UpdateDomainOpenTrackingSettingsResponse}
+     * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/domain-tracking/put-v3-domains--name--tracking-open">Update open tracking settings</a>
+     */
+    @Headers("Content-Type: multipart/form-data")
+    @RequestLine("PUT /domains/{domain}/tracking/open")
+    UpdateDomainOpenTrackingSettingsResponse updateDomainOpenTrackingSettings(@Param("domain") String domain, OpenTrackingSettingsRequest request);
+
+    /**
+     * Update open tracking settings (active only). For active + place_at_the_top use {@link #updateDomainOpenTrackingSettings(String, OpenTrackingSettingsRequest)}.
      *
      * @param domain Name of the domain
      * @param active {@link YesNo}
@@ -344,9 +352,7 @@ public interface MailgunDomainsApi extends MailgunApi {
                                                                               @Param(value = "active", expander = EnumExpander.class) YesNo active);
 
     /**
-     * <p>
-     * Updates the open tracking settings for a domain.
-     * </p>
+     * Update open tracking settings (raw response).
      *
      * @param domain Name of the domain
      * @param active {@link YesNo}
@@ -358,19 +364,23 @@ public interface MailgunDomainsApi extends MailgunApi {
                                                            @Param(value = "active", expander = EnumExpander.class) YesNo active);
 
     /**
-     * <p>
-     * Updates the click tracking settings for a domain.
-     * </p>
+     * Update open tracking settings with request (raw response).
+     *
+     * @param domain  Name of the domain
+     * @param request {@link OpenTrackingSettingsRequest}
+     * @return {@link Response}
+     */
+    @Headers("Content-Type: multipart/form-data")
+    @RequestLine("PUT /domains/{domain}/tracking/open")
+    Response updateDomainOpenTrackingSettingsFeignResponse(@Param("domain") String domain, OpenTrackingSettingsRequest request);
+
+    /**
+     * Update click tracking at domain level. Active values: yes, no, htmlonly.
      *
      * @param domain Name of the domain
      * @param active {@link YesNoHtml}
-     *               <p>
-     *               If set to <code>YES</code>, links will be overwritten and pointed to our servers so we can track clicks.
-     *               </p>
-     *               <p>
-     *               If set to <code>HTML_ONLY</code>, links will only be rewritten in the HTML part of a message.
-     *               </p>
      * @return {@link UpdateDomainClickTrackingSettingsResponse}
+     * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/domain-tracking/put-v3-domains--name--tracking-click">Update click tracking settings</a>
      */
     @Headers("Content-Type: multipart/form-data")
     @RequestLine("PUT /domains/{domain}/tracking/click")
@@ -378,18 +388,10 @@ public interface MailgunDomainsApi extends MailgunApi {
                                                                                 @Param(value = "active", expander = EnumExpander.class) YesNoHtml active);
 
     /**
-     * <p>
-     * Updates the click tracking settings for a domain.
-     * </p>
+     * Update click tracking (raw response).
      *
      * @param domain Name of the domain
      * @param active {@link YesNoHtml}
-     *               <p>
-     *               If set to <code>YES</code>, links will be overwritten and pointed to our servers so we can track clicks.
-     *               </p>
-     *               <p>
-     *               If set to <code>HTML_ONLY</code>, links will only be rewritten in the HTML part of a message.
-     *               </p>
      * @return {@link Response}
      */
     @Headers("Content-Type: multipart/form-data")
@@ -398,22 +400,19 @@ public interface MailgunDomainsApi extends MailgunApi {
                                                             @Param(value = "active", expander = EnumExpander.class) YesNoHtml active);
 
     /**
-     * <p>
-     * Updates unsubscribe tracking settings for a domain.
-     * </p>
+     * Update unsubscribe tracking (active, html_footer, text_footer).
      *
      * @param domain  Name of the domain
      * @param request {@link DomainUnsubscribeConnectionSettingsRequest}
      * @return {@link UpdateDomainUnsubscribeTrackingSettingsResponse}
+     * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/domain-tracking/put-v3-domains--name--tracking-unsubscribe">Update unsubscribe tracking settings</a>
      */
     @Headers("Content-Type: multipart/form-data")
     @RequestLine("PUT /domains/{domain}/tracking/unsubscribe")
     UpdateDomainUnsubscribeTrackingSettingsResponse updateDomainUnsubscribeConnectionSettings(@Param("domain") String domain, DomainUnsubscribeConnectionSettingsRequest request);
 
     /**
-     * <p>
-     * Updates unsubscribe tracking settings for a domain.
-     * </p>
+     * Update unsubscribe tracking (raw response).
      *
      * @param domain  Name of the domain
      * @param request {@link DomainUnsubscribeConnectionSettingsRequest}
