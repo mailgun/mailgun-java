@@ -5,6 +5,7 @@ import com.mailgun.client.MailgunClient;
 import com.mailgun.model.domains.Domain;
 import com.mailgun.model.domains.DomainListResponse;
 import com.mailgun.model.domains.DomainResponse;
+import com.mailgun.enums.DomainState;
 import com.mailgun.model.domains.DomainUpdateRequest;
 import com.mailgun.model.domains.DomainsParametersFilter;
 import com.mailgun.model.domains.SingleDomainResponse;
@@ -53,7 +54,7 @@ class MailgunDomainsApiTest extends WireMockBaseTest {
         Domain domain = result.getItems().get(0);
         assertEquals("id1", domain.getId());
         assertEquals("example.com", domain.getName());
-        assertEquals("active", domain.getState());
+        assertEquals(DomainState.ACTIVE, domain.getState());
     }
 
     @Test
@@ -67,7 +68,7 @@ class MailgunDomainsApiTest extends WireMockBaseTest {
                         .withBody(body)));
 
         DomainsParametersFilter filter = DomainsParametersFilter.builder()
-                .state(com.mailgun.enums.DomainState.ACTIVE)
+                .state(DomainState.ACTIVE)
                 .limit(100)
                 .search("test")
                 .includeSubaccounts(true)

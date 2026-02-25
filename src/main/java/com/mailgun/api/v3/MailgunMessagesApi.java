@@ -24,7 +24,7 @@ import feign.Response;
  * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/messages/post-v3--domain-name--messages">Send an email</a>
  * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/messages/post-v3--domain-name--messages-mime">Send an email in MIME format</a>
  */
-@Headers({"Content-Type: multipart/form-data", "Accept: application/json"})
+@Headers("Accept: application/json")
 public interface MailgunMessagesApi extends MailgunApi {
 
     /**
@@ -36,6 +36,7 @@ public interface MailgunMessagesApi extends MailgunApi {
      * @param message {@link Message}
      * @return {@link MessageResponse}
      */
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /{domain}/messages")
     MessageResponse sendMessage(@Param("domain") String domain, Message message);
 
@@ -48,6 +49,7 @@ public interface MailgunMessagesApi extends MailgunApi {
      * @param message {@link Message}
      * @return {@link Response}
      */
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /{domain}/messages")
     Response sendMessageFeignResponse(@Param("domain") String domain, Message message);
 
@@ -66,6 +68,7 @@ public interface MailgunMessagesApi extends MailgunApi {
      * @param message {@link Message}
      * @return {@link CompletableFuture} wrapped {@link MessageResponse}
      */
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /{domain}/messages")
     CompletableFuture<MessageResponse> sendMessageAsync(@Param("domain") String domain, Message message);
 
@@ -84,6 +87,7 @@ public interface MailgunMessagesApi extends MailgunApi {
      * @param message {@link Message}
      * @return {@link CompletableFuture} wrapped {@link Response}
      */
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /{domain}/messages")
     CompletableFuture<Response> sendMessageFeignResponseAsync(@Param("domain") String domain, Message message);
 
@@ -96,6 +100,7 @@ public interface MailgunMessagesApi extends MailgunApi {
      * @param message {@link MailgunMimeMessage}
      * @return {@link MessageResponse}
      */
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /{domain}/messages.mime")
     MessageResponse sendMIMEMessage(@Param("domain") String domain, MailgunMimeMessage message);
 
@@ -108,6 +113,7 @@ public interface MailgunMessagesApi extends MailgunApi {
      * @param message {@link MailgunMimeMessage}
      * @return {@link Response}
      */
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /{domain}/messages.mime")
     Response sendMIMEMessageFeignResponse(@Param("domain") String domain, MailgunMimeMessage message);
 
@@ -126,6 +132,7 @@ public interface MailgunMessagesApi extends MailgunApi {
      * @param message {@link MailgunMimeMessage}
      * @return {@link CompletableFuture} wrapped {@link MessageResponse}
      */
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /{domain}/messages.mime")
     CompletableFuture<MessageResponse> sendMIMEMessageAsync(@Param("domain") String domain, MailgunMimeMessage message);
 
@@ -144,6 +151,7 @@ public interface MailgunMessagesApi extends MailgunApi {
      * @param message {@link MailgunMimeMessage}
      * @return {@link CompletableFuture} wrapped {@link Response}
      */
+    @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /{domain}/messages.mime")
     CompletableFuture<Response> sendMIMEMessageFeignResponseAsync(@Param("domain") String domain, MailgunMimeMessage message);
 

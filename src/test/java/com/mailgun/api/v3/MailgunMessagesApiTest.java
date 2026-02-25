@@ -21,7 +21,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static com.github.tomakehurst.wiremock.client.WireMock.post;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
-import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
+import static com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo;
 import static com.mailgun.constants.TestConstants.EMAIL_RESPONSE_ID;
 import static com.mailgun.constants.TestConstants.EMAIL_RESPONSE_MESSAGE;
 import static com.mailgun.constants.TestConstants.TEST_API_KEY;
@@ -46,7 +46,7 @@ class MailgunMessagesApiTest extends WireMockBaseTest {
 
     @Test
     void sendMessageWithDomainSuccessTest() {
-        stubFor(post(urlEqualTo("/" + MailgunApi.getApiVersion().getValue() + "/" + TEST_DOMAIN + "/messages"))
+        stubFor(post(urlPathEqualTo("/" + MailgunApi.getApiVersion().getValue() + "/" + TEST_DOMAIN + "/messages"))
                 .withHeader("Authorization", equalTo(TestHeadersUtils.getExpectedAuthHeader()))
                 .withHeader("Content-Type",
                         containing("multipart/form-data"))
@@ -73,7 +73,7 @@ class MailgunMessagesApiTest extends WireMockBaseTest {
     @Test
     void getSendingQueuesSuccessTest() {
         String body = "{\"regular\":{\"is_disabled\":false},\"scheduled\":{\"is_disabled\":true,\"disabled\":{\"until\":\"Fri, 14 Oct 2011 12:00:00 +0000\",\"reason\":\"Maintenance\"}}}}";
-        stubFor(get(urlEqualTo("/" + MailgunApi.getApiVersion().getValue() + "/domains/" + TEST_DOMAIN + "/sending_queues"))
+        stubFor(get(urlPathEqualTo("/" + MailgunApi.getApiVersion().getValue() + "/domains/" + TEST_DOMAIN + "/sending_queues"))
                 .withHeader("Authorization", equalTo(TestHeadersUtils.getExpectedAuthHeader()))
                 .withHeader("Accept", equalTo("application/json"))
                 .willReturn(aResponse()
@@ -98,7 +98,7 @@ class MailgunMessagesApiTest extends WireMockBaseTest {
     @Test
     void deleteEnvelopesSuccessTest() {
         String body = "{\"message\":\"Queued messages deleted\"}";
-        stubFor(delete(urlEqualTo("/" + MailgunApi.getApiVersion().getValue() + "/" + TEST_DOMAIN + "/envelopes"))
+        stubFor(delete(urlPathEqualTo("/" + MailgunApi.getApiVersion().getValue() + "/" + TEST_DOMAIN + "/envelopes"))
                 .withHeader("Authorization", equalTo(TestHeadersUtils.getExpectedAuthHeader()))
                 .withHeader("Accept", equalTo("application/json"))
                 .willReturn(aResponse()

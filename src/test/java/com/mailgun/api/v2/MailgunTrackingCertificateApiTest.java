@@ -38,7 +38,7 @@ class MailgunTrackingCertificateApiTest extends WireMockBaseTest {
 
         assertNotNull(result);
         assertEquals("active", result.getStatus());
-        assertEquals("-----BEGIN CERTIFICATE-----\\n...", result.getCertificate());
+        assertEquals("-----BEGIN CERTIFICATE-----\n...", result.getCertificate());
     }
 
     @Test

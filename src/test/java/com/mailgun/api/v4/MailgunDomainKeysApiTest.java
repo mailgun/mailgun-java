@@ -8,11 +8,7 @@ import com.mailgun.utils.TestHeadersUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
-import static com.github.tomakehurst.wiremock.client.WireMock.get;
-import static com.github.tomakehurst.wiremock.client.WireMock.put;
-import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
-import static com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo;
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.mailgun.constants.TestConstants.TEST_API_KEY;
 import static com.mailgun.constants.TestConstants.TEST_DOMAIN;
 import static org.junit.jupiter.api.Assertions.assertEquals;
