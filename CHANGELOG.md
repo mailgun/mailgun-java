@@ -5,6 +5,14 @@ All _notable_ changes to this project will be documented in this file.
 The format is based on _[Keep a Changelog][keepachangelog]_, and this project
 adheres to _[Semantic Versioning][semver]_.
 
+## [2.4.0] (released: 2026-02-24)
+### Updated
+- Updated Message API
+- Updated Domains API
+- Updated Domains Key API
+- Updated Domain Tracking API
+- Added DKIM Security API
+
 ## [2.3.0] (released: 2026-01-24)
 ### Updated
 - Added deliver within header
@@ -109,6 +117,7 @@ adheres to _[Semantic Versioning][semver]_.
 - Import a list of complaints from CSV file API
 - Add Import a list of bounces from CSV file API
 
+[2.4]: https://github.com/mailgun/mailgun-java/compare/v2.3.0...v2.4.0
 [2.3.0]: https://github.com/mailgun/mailgun-java/compare/v2.2.1...v2.3.0
 [2.2.1]: https://github.com/mailgun/mailgun-java/compare/v2.1.1...v2.2.1
 [2.1.1]: https://github.com/mailgun/mailgun-java/compare/v2.1.0...v2.1.1
