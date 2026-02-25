@@ -19,6 +19,9 @@ import com.mailgun.model.domains.UpdateDomainClickTrackingSettingsResponse;
 import com.mailgun.model.domains.UpdateDomainConnectionResponse;
 import com.mailgun.model.domains.UpdateDomainOpenTrackingSettingsResponse;
 import com.mailgun.model.domains.UpdateDomainUnsubscribeTrackingSettingsResponse;
+import com.mailgun.model.domainkeys.DkimAuthorityRequest;
+import com.mailgun.model.domainkeys.DkimAuthorityResponse;
+import com.mailgun.model.domainkeys.DkimSelectorRequest;
 import feign.Headers;
 import feign.Param;
 import feign.QueryMap;
@@ -27,7 +30,7 @@ import feign.Response;
 
 /**
  * <p>
- * Domains API (v3): delete domain, and manage credentials, connection, and tracking settings.
+ * Domains API (v3): delete domain, credentials, connection, tracking, and DKIM authority/selector.
  * For listing, creating, getting, updating, and verifying domains use the v4 API:
  * {@link com.mailgun.api.v4.MailgunDomainsApi} (GET/POST/PUT /v4/domains). Delete domain remains on v3.
  * </p>
@@ -419,5 +422,59 @@ public interface MailgunDomainsApi extends MailgunApi {
     @Headers("Content-Type: multipart/form-data")
     @RequestLine("PUT /domains/{domain}/tracking/unsubscribe")
     Response updateDomainUnsubscribeConnectionSettingsFeignResponse(@Param("domain") String domain, DomainUnsubscribeConnectionSettingsRequest request);
+
+    /**
+     * <p>
+     * Update DKIM authority: delegate domain authority to another domain or set domain as its own authority (default).
+     * </p>
+     *
+     * @param domain  Name of the domain
+     * @param request {@link DkimAuthorityRequest} (self: true = domain is authority for itself, false = use root domain authority)
+     * @return {@link DkimAuthorityResponse}
+     * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/domain-keys/put-v3-domains--name--dkim-authority">Update DKIM authority</a>
+     */
+    @Headers("Content-Type: multipart/form-data")
+    @RequestLine("PUT /domains/{domain}/dkim_authority")
+    DkimAuthorityResponse updateDkimAuthority(@Param("domain") String domain, DkimAuthorityRequest request);
+
+    /**
+     * <p>
+     * Update DKIM authority (raw response).
+     * </p>
+     *
+     * @param domain  Name of the domain
+     * @param request {@link DkimAuthorityRequest}
+     * @return {@link Response}
+     */
+    @Headers("Content-Type: multipart/form-data")
+    @RequestLine("PUT /domains/{domain}/dkim_authority")
+    Response updateDkimAuthorityFeignResponse(@Param("domain") String domain, DkimAuthorityRequest request);
+
+    /**
+     * <p>
+     * Update DKIM selector for the domain. Selector must be unique among keys.
+     * </p>
+     *
+     * @param domain  Name of the domain
+     * @param request {@link DkimSelectorRequest} (dkim_selector; omit to leave unchanged)
+     * @return {@link ResponseWithMessage}
+     * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/domain-keys/put-v3-domains--name--dkim-selector">Update a DKIM selector</a>
+     */
+    @Headers("Content-Type: multipart/form-data")
+    @RequestLine("PUT /domains/{domain}/dkim_selector")
+    ResponseWithMessage updateDkimSelector(@Param("domain") String domain, DkimSelectorRequest request);
+
+    /**
+     * <p>
+     * Update DKIM selector (raw response).
+     * </p>
+     *
+     * @param domain  Name of the domain
+     * @param request {@link DkimSelectorRequest}
+     * @return {@link Response}
+     */
+    @Headers("Content-Type: multipart/form-data")
+    @RequestLine("PUT /domains/{domain}/dkim_selector")
+    Response updateDkimSelectorFeignResponse(@Param("domain") String domain, DkimSelectorRequest request);
 
 }
