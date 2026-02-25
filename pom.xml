@@ -28,6 +28,7 @@
         <commons-collections4.version>4.4</commons-collections4.version>
         <lombok.version>1.18.30</lombok.version>
         <junit-jupiter.version>5.9.2</junit-jupiter.version>
+        <jsonassert.version>1.5.0</jsonassert.version>
         <wiremock.version>2.27.2</wiremock.version>
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
     </properties>
@@ -97,12 +98,6 @@
             <version>${slf4j.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.skyscreamer</groupId>
-            <artifactId>jsonassert</artifactId>
-            <version>1.5.0</version>
-        </dependency>
-
         <!-- TESTS -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -144,7 +139,12 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
+        <dependency>
+            <groupId>org.skyscreamer</groupId>
+            <artifactId>jsonassert</artifactId>
+            <version>${jsonassert.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <distributionManagement>
