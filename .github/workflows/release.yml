@@ -1,41 +1,171 @@
-name: GitHub Actions Demo
+name: Release
 run-name: New Release Workflow
+
 on:
   workflow_dispatch:
-    inputs:
-      version:
-        description: 'Version number for the new release'
-        required: true
-        default: '2.0.0'
-      commit_hash:
-        description: 'Commit hash for the release'
-        required: true
-        default: ''
-      message:
-        description: 'Release message'
-        required: true
-        default: ''
+
+permissions:
+  contents: write
+
 jobs:
-  run-test:
+  resolve-version:
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.resolve.outputs.version }}
+      tag: ${{ steps.resolve.outputs.tag }}
+
     steps:
-      - name: Checkout code
+      - name: Checkout main with full history
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.inputs.commit_hash || github.sha }}
+          ref: main
+          fetch-depth: 0
 
-      - name: Run Tests
-        run: mvn test
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
 
-
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      - name: Check out repository code
-        uses: actions/checkout@v4
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-      - name: List files in the repository
+      - name: Resolve version from pom.xml
+        id: resolve
+        shell: bash
         run: |
-          ls ${{ github.workspace }}
-      - run: echo "🍏 This job's status is ${{ job.status }}."
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout | tail -n 1)
+
+          if [[ -z "$VERSION" ]]; then
+            echo "Could not resolve version from pom.xml"
+            exit 1
+          fi
+
+          if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$ ]]; then
+            echo "Invalid Maven version: $VERSION"
+            exit 1
+          fi
+
+          TAG="v$VERSION"
+
+          echo "Resolved version: $VERSION"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+
+      - name: Check that tag does not already exist
+        shell: bash
+        run: |
+          TAG="${{ steps.resolve.outputs.tag }}"
+
+          if git ls-remote --tags origin "refs/tags/$TAG" | grep -q "$TAG"; then
+            echo "Tag $TAG already exists"
+            exit 1
+          fi
+
+      - name: Check that CHANGELOG entry exists
+        shell: bash
+        run: |
+          VERSION="${{ steps.resolve.outputs.version }}"
+
+          if ! grep -q "^## \[$VERSION\]" CHANGELOG.md; then
+            echo "CHANGELOG.md does not contain section for version $VERSION"
+            exit 1
+          fi
+
+  build:
+    runs-on: ubuntu-latest
+    needs: resolve-version
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+
+      - name: Show build info
+        run: |
+          echo "Building version ${{ needs.resolve-version.outputs.version }}"
+          git log -1 --oneline
+
+      - name: Build Maven project
+        run: mvn -B clean verify
+
+  create-tag:
+    runs-on: ubuntu-latest
+    needs: [resolve-version, build]
+
+    steps:
+      - name: Checkout main with full history
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Configure git user
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Create tag on latest main commit
+        shell: bash
+        run: |
+          TAG="${{ needs.resolve-version.outputs.tag }}"
+          COMMIT_SHA=$(git rev-parse origin/main)
+
+          git tag -a "$TAG" "$COMMIT_SHA" -m "Release $TAG"
+          git push origin "$TAG"
+
+  create-release:
+    runs-on: ubuntu-latest
+    needs: [resolve-version, create-tag]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Extract release notes from CHANGELOG.md
+        shell: bash
+        run: |
+          VERSION="${{ needs.resolve-version.outputs.version }}"
+          TAG="${{ needs.resolve-version.outputs.tag }}"
+
+          awk -v version="$VERSION" '
+            $0 ~ "^## \\[" version "\\]" { capture=1; next }
+            capture && $0 ~ "^## \\[" { exit }
+            capture { print }
+          ' CHANGELOG.md > RELEASE_BODY.md
+
+          if [ ! -s RELEASE_BODY.md ]; then
+            echo "Could not find changelog entry for version $VERSION in CHANGELOG.md"
+            exit 1
+          fi
+
+          PREV_TAG=$(git tag --sort=-version:refname | grep '^v' | grep -vx "$TAG" | head -n 1 || true)
+
+          {
+            echo "# Release $TAG"
+            echo
+            cat RELEASE_BODY.md
+            echo
+            if [ -n "$PREV_TAG" ]; then
+              echo "Full Changelog: https://github.com/${{ github.repository }}/compare/$PREV_TAG...$TAG"
+            fi
+          } > RELEASE_NOTES.md
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="${{ needs.resolve-version.outputs.tag }}"
+
+          gh release create "$TAG" \
+            --title "Release $TAG" \
+            --notes-file RELEASE_NOTES.md
