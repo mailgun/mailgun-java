@@ -11,6 +11,13 @@ public enum WebhookName implements EnumWithValue {
 
     /**
      * <p>
+     * Tracking Accepted messages.
+     * </p>
+     */
+    ACCEPTED("accepted"),
+
+    /**
+     * <p>
      * Tracking Clicks.
      * </p>
      *
