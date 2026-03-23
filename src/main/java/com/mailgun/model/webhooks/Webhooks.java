@@ -11,13 +11,20 @@ import lombok.extern.jackson.Jacksonized;
  * Webhooks.
  * </p>
  *
- * @see <a href="https://documentation.mailgun.com/en/latest/api-webhooks.html#webhooks">Webhooks</a>
+ * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/domain-webhooks/get-v3-domains--domain--webhooks.md">Get domain webhooks</a>
  */
 @Value
 @Jacksonized
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Webhooks {
+
+    /**
+     * <p>
+     * Tracking Accepted messages.
+     * </p>
+     */
+    Webhook accepted;
 
     /**
      * <p>
