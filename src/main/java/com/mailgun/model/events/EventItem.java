@@ -149,6 +149,22 @@ public class EventItem {
     String recipientDomain;
 
     /**
+     * Name of the Inbox Provider for the given recipient, if known.
+     */
+    @JsonProperty("recipient-provider")
+    String recipientProvider;
+
+    /**
+     * Template the message was rendered from, if given.
+     */
+    EventTemplate template;
+
+    /**
+     * Batch the message belongs to, if any.
+     */
+    EventBatch batch;
+
+    /**
      * <p>
      * List of campaigns.
      * </p>

@@ -39,6 +39,13 @@ public class LogsRequest {
 
     /**
      * <p>
+     * A duration in the format of '1d' '2h'. If provided, it is calculated from the end date and overwrites the start date.
+     * </p>
+     */
+    String duration;
+
+    /**
+     * <p>
      * The set of events to include.
      * </p>
      */
@@ -73,6 +80,7 @@ public class LogsRequest {
      * Include total number of log entries.
      * </p>
      */
+    @JsonProperty("include_totals")
     Boolean includeTotals;
 
     /**

@@ -80,6 +80,23 @@ public class StatisticsOptions {
      */
     String duration;
 
+    /**
+     * <p>
+     * A filter for account-level metrics, e.g. {@code filter=domain:my.example.com}.
+     * </p>
+     * Used by {@code GET /v3/stats/filter}.
+     */
+    String filter;
+
+    /**
+     * <p>
+     * The key to group metrics by.
+     * Must be one of: {@code total, time, day, month, domain, ip, provider, tag, country}.
+     * </p>
+     * Used by {@code GET /v3/stats/filter}.
+     */
+    String group;
+
     public static class StatisticsOptionsBuilder {
 
         /**

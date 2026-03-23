@@ -68,6 +68,13 @@ public class EventsQueryOptions {
 
     /**
      * <p>
+     * Filter by mailing list email address that the message was originally sent to.
+     * </p>
+     */
+    String list;
+
+    /**
+     * <p>
      * A name of an attached file.
      * </p>
      */

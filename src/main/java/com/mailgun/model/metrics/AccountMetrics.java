@@ -86,8 +86,17 @@ public class AccountMetrics {
     @JsonProperty("bounced_count")
     Integer bouncedCount;
 
+    /**
+     * Deprecated — use {@code temporaryFailedEspBlockCount} instead.
+     */
     @JsonProperty("esp_block_count")
     Integer espBlockCount;
+
+    @JsonProperty("temporary_failed_esp_block_count")
+    Integer temporaryFailedEspBlockCount;
+
+    @JsonProperty("permanent_failed_esp_block_count")
+    Integer permanentFailedEspBlockCount;
 
     @JsonProperty("webhook_count")
     Integer webhookCount;

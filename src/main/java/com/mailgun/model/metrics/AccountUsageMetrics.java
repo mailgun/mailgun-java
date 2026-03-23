@@ -61,4 +61,25 @@ public class AccountUsageMetrics {
 
     @JsonProperty("seed_test_count")
     Integer seedTestCount;
+
+    @JsonProperty("ip_blocklist_monitoring_count")
+    Integer ipBlocklistMonitoringCount;
+
+    @JsonProperty("domain_blocklist_monitoring_count")
+    Integer domainBlocklistMonitoringCount;
+
+    @JsonProperty("accessibility_count")
+    Integer accessibilityCount;
+
+    @JsonProperty("accessibility_failed_count")
+    Integer accessibilityFailedCount;
+
+    @JsonProperty("image_validation_count")
+    Integer imageValidationCount;
+
+    @JsonProperty("image_validation_failed_count")
+    Integer imageValidationFailedCount;
+
+    @JsonProperty("archived_count")
+    Integer archivedCount;
 }

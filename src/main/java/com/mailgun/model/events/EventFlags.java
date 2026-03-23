@@ -34,4 +34,16 @@ public class EventFlags {
     @JsonProperty("is-test-mode")
     Boolean isTestMode;
 
+    /**
+     * True if the message has an AMP component.
+     */
+    @JsonProperty("is-amp")
+    Boolean isAmp;
+
+    /**
+     * True if the message has been encrypted before being stored.
+     */
+    @JsonProperty("is-encrypted")
+    Boolean isEncrypted;
+
 }

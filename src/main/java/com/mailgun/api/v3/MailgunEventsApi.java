@@ -10,14 +10,15 @@ import feign.RequestLine;
 import feign.Response;
 
 /**
+ * Events API (v3) — deprecated in favour of the
+ * <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/logs">Logs API</a>.
  * <p>
  * Mailgun tracks every event that happens to your emails and makes this data available to you through the Events API.
- * </p>
- * <p>
- * Mailgun retains this detailed data for one day for free accounts and up to 30 days for paid accounts based on the subscription plan.
+ * Mailgun retains this detailed data for at least 3 days.
  * </p>
  *
- * @see <a href="https://documentation.mailgun.com/en/latest/api-events.html">Events API</a>
+ * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/events">Events API</a>
+ * @deprecated Use the Logs API instead.
  */
 @Headers("Accept: application/json")
 public interface MailgunEventsApi extends MailgunApi {

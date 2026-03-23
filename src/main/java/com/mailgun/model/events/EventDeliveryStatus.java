@@ -50,4 +50,16 @@ public class EventDeliveryStatus {
     @JsonProperty("certificate-verified")
     Boolean certificateVerified;
 
+    /**
+     * A more specific SMTP error code from the ESP.
+     */
+    @JsonProperty("enhanced-code")
+    String enhancedCode;
+
+    /**
+     * Time elapsed in seconds between message acceptance and the first delivery attempt to the ESP.
+     */
+    @JsonProperty("first-delivery-attempt-seconds")
+    Double firstDeliveryAttemptSeconds;
+
 }

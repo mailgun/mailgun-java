@@ -42,6 +42,9 @@ public class LogsResponseItem {
     @JsonProperty("api-key-id")
     String apiKeyId;
 
+    @JsonProperty("delivered-at")
+    String deliveredAt;
+
     @JsonProperty("delivery-status")
     ItemDeliveryStatus deliveryStatus;
 

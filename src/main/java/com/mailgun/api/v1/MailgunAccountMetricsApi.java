@@ -40,12 +40,12 @@ public interface MailgunAccountMetricsApi extends MailgunApi {
 
     /**
      * <p>
-     * Gets filtered metrics for an account
+     * Gets filtered usage metrics for an account.
      * </p>
      *
      * @param metricsRequest {@link MetricsRequest}
      * @return {@link MetricsResponse}
      */
-    @RequestLine("GET /analytics/usage/metrics")
+    @RequestLine("POST /analytics/usage/metrics")
     MetricsResponse<AccountUsageMetrics> getUsageMetrics(MetricsRequest metricsRequest);
 }

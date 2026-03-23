@@ -1,0 +1,30 @@
+{
+  "items": [
+    {
+      "account_id": "acc-1",
+      "parent_account_id": "parent-acc-1",
+      "tag": "welcome-email",
+      "description": "Welcome email campaign",
+      "first_seen": "Thu, 01 Jan 2024 00:00:00 +0000",
+      "last_seen": "Fri, 01 Mar 2024 00:00:00 +0000",
+      "metrics": {
+        "accepted_count": 100,
+        "delivered_count": 95,
+        "opened_count": 60,
+        "clicked_count": 30,
+        "delivered_rate": "0.9500",
+        "opened_rate": "0.6316",
+        "clicked_rate": "0.3000",
+        "bounce_rate": "0.0500"
+      },
+      "account_name": "Test Account"
+    }
+  ],
+  "pagination": {
+    "sort": "lastseen:desc",
+    "skip": 0,
+    "limit": 10,
+    "total": 1,
+    "include_total": true
+  }
+}
