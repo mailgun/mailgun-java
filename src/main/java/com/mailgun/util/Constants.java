@@ -21,4 +21,10 @@ public class Constants {
     public static final String FIELD_CANNOT_BE_NULL_OR_EMPTY = "Field '%s' cannot be null or empty!";
     public static final String DURATION_MUST_BE_GREATER_THAN_ZERO = "Duration' must be greater than zero: %d";
 
+    /**
+     * Maximum combined size for Mailgun per-message send options (fields whose names start with
+     * {@code o:}, {@code h:}, {@code v:}, or {@code t:}).
+     */
+    public static final int MAILGUN_SEND_OPTIONS_MAX_BYTES = 16 * 1024;
+
 }

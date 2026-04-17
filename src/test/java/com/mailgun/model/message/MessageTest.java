@@ -2,6 +2,7 @@ package com.mailgun.model.message;
 
 import com.mailgun.enums.YesNo;
 import com.mailgun.enums.YesNoHtml;
+import com.mailgun.form.PojoUtil;
 import com.mailgun.util.EmailUtil;
 import feign.form.FormData;
 
@@ -62,6 +63,16 @@ class MessageTest {
         assertNull(result.getReplyTo());
         assertNull(result.getRecipientVariables());
         assertNull(result.getArchiveTo());
+        assertNull(result.getSecondaryDkim());
+        assertNull(result.getSecondaryDkimPublic());
+        assertNull(result.getDeliveryTimeOptimizePeriod());
+        assertNull(result.getTimeZoneLocalize());
+        assertNull(result.getSendingIp());
+        assertNull(result.getSendingIpPool());
+        assertNull(result.getTrackingPixelLocationTop());
+        assertNull(result.getSuppressHeaders());
+        assertNull(result.getInlineFormData());
+        assertNull(result.getUserVariables());
     }
 
     @Test
@@ -115,6 +126,15 @@ class MessageTest {
                 .replyTo(TEST_EMAIL_2)
                 .recipientVariables(recipientVariables)
                 .archiveTo(TEST_DOMAIN)
+                .secondaryDkim("example.com/s1")
+                .secondaryDkimPublic("public.example.com/s1")
+                .deliveryTimeOptimizePeriod("48h")
+                .timeZoneLocalize("09:00")
+                .sendingIp(TEST_IP_1)
+                .sendingIpPool("pool-1")
+                .trackingPixelLocationTop(YesNoHtml.YES)
+                .suppressHeaders("X-Mailgun-Variables")
+                .userVariables(Map.of("batch-id", "42"))
                 .build();
 
         assertNotNull(result);
@@ -140,6 +160,15 @@ class MessageTest {
         assertEquals(TEST_EMAIL_2, result.getReplyTo());
         assertEquals("{\"firstEmail\":{\"Alice\":\"1\"},\"secondEmail\":{\"Bob\":\"2\"}}", result.getRecipientVariables());
         assertEquals(TEST_DOMAIN, result.getArchiveTo());
+        assertEquals("example.com/s1", result.getSecondaryDkim());
+        assertEquals("public.example.com/s1", result.getSecondaryDkimPublic());
+        assertEquals("48h", result.getDeliveryTimeOptimizePeriod());
+        assertEquals("09:00", result.getTimeZoneLocalize());
+        assertEquals(TEST_IP_1, result.getSendingIp());
+        assertEquals("pool-1", result.getSendingIpPool());
+        assertEquals(YesNoHtml.YES.getValue(), result.getTrackingPixelLocationTop());
+        assertEquals("X-Mailgun-Variables", result.getSuppressHeaders());
+        assertEquals(Map.of("batch-id", "42"), result.getUserVariables());
     }
 
     @Test
@@ -243,6 +272,51 @@ class MessageTest {
         Exception exception = assertThrows(IllegalArgumentException.class, messageBuilder::build);
 
         assertEquals("At least one of 'text', 'html', 'amp-html', or 'template' must be provided", exception.getMessage());
+    }
+
+    @Test
+    void messageTemplateWithoutFromSuccessTest() {
+        Message result = Message.builder()
+                .to(TEST_EMAIL_2)
+                .template("welcome")
+                .build();
+
+        assertNotNull(result);
+        assertNull(result.getFrom());
+        assertEquals("welcome", result.getTemplate());
+    }
+
+    @Test
+    void messageUserVariablesFormKeysTest() {
+        Message message = Message.builder()
+                .from(TEST_EMAIL_1)
+                .to(TEST_EMAIL_2)
+                .text(TEST_EMAIL_TEXT)
+                .userVariables(Map.of("user-id", "123", "segment", "a"))
+                .build();
+
+        Map<String, Object> map = PojoUtil.toMap(message);
+        assertEquals("123", map.get("v:user-id"));
+        assertEquals("a", map.get("v:segment"));
+    }
+
+    @Test
+    void messageInlineAndInlineFormDataTogetherExceptionTest() throws IOException {
+        File file = getTempFile("temp.1");
+        InputStream inputStream = new FileInputStream(getTempFile("temp.2"));
+        byte[] pngBytes = IOUtils.toByteArray(inputStream);
+        FormData formData = new FormData("image/png", "pixel.png", pngBytes);
+
+        Message.MessageBuilder messageBuilder = Message.builder()
+                .from(TEST_EMAIL_1)
+                .to(TEST_EMAIL_2)
+                .text(TEST_EMAIL_TEXT)
+                .inline(file)
+                .inlineFormData(formData);
+
+        Exception exception = assertThrows(IllegalArgumentException.class, messageBuilder::build);
+
+        assertEquals("You cannot use 'inline' and 'inlineFormData' together", exception.getMessage());
     }
 
     @Test

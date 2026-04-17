@@ -6,11 +6,9 @@ import lombok.extern.jackson.Jacksonized;
 
 
 /**
- * <p>
- * The object is used for sending messages(emails) using Mailgun API.
- * </p>
+ * Response body for {@code POST /v3/{domain_name}/messages} (HTTP 200, {@code application/json}).
  *
- * @see <a href="https://documentation.mailgun.com/en/latest/api-sending.html#sending">field-explanation</a>
+ * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/messages/post-v3--domain-name--messages">Send an email</a>
  */
 @Value
 @Jacksonized

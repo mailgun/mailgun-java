@@ -14,11 +14,12 @@ import feign.RequestLine;
 import feign.Response;
 
 /**
- * <p>
  * Messages API: send emails, retrieve/resend stored messages, manage queue status.
- * </p>
  * <p>
- * Send endpoints require one of: text, html, amp-html, or template. Send options (o:, h:, v:, t:) are limited to 16KB total.
+ * {@code POST /v3/{domain_name}/messages} (API version 3.0.0) uses {@code multipart/form-data} and HTTP Basic authentication.
+ * You must provide at least one of {@code text}, {@code html}, {@code amp-html}, or {@code template}.
+ * Send options (parameter names starting with {@code o:}, {@code h:}, {@code v:}, or {@code t:}) are limited to
+ * {@value com.mailgun.util.Constants#MAILGUN_SEND_OPTIONS_MAX_BYTES} bytes in total.
  * </p>
  *
  * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/messages/post-v3--domain-name--messages">Send an email</a>
@@ -28,11 +29,9 @@ import feign.Response;
 public interface MailgunMessagesApi extends MailgunApi {
 
     /**
-     * <p>
-     * Send email(s).
-     * </p>
+     * Send email(s): {@code POST /v3/{domain_name}/messages}, {@code multipart/form-data}.
      *
-     * @param domain  Name of the domain
+     * @param domain  Sending domain name ({@code domain_name})
      * @param message {@link Message}
      * @return {@link MessageResponse}
      */
@@ -92,11 +91,12 @@ public interface MailgunMessagesApi extends MailgunApi {
     CompletableFuture<Response> sendMessageFeignResponseAsync(@Param("domain") String domain, Message message);
 
     /**
-     * <p>
-     * Send email(s) in MIME format.
-     * </p>
+     * Send email(s) in MIME format: {@code POST /v3/{domain_name}/messages.mime}, {@code multipart/form-data}.
+     * The MIME document is posted as the {@code message} form field (see {@link MailgunMimeMessage}).
+     * Send options (names starting with {@code o:}, {@code h:}, {@code v:}, or {@code t:}) are limited to
+     * {@value com.mailgun.util.Constants#MAILGUN_SEND_OPTIONS_MAX_BYTES} bytes in total.
      *
-     * @param domain  Name of the domain
+     * @param domain  Sending domain name ({@code domain_name})
      * @param message {@link MailgunMimeMessage}
      * @return {@link MessageResponse}
      */
@@ -105,11 +105,9 @@ public interface MailgunMessagesApi extends MailgunApi {
     MessageResponse sendMIMEMessage(@Param("domain") String domain, MailgunMimeMessage message);
 
     /**
-     * <p>
-     * Send email(s) in MIME format.
-     * </p>
+     * Same as {@link #sendMIMEMessage(String, MailgunMimeMessage)} returning the raw Feign {@link Response}.
      *
-     * @param domain  Name of the domain
+     * @param domain  Sending domain name ({@code domain_name})
      * @param message {@link MailgunMimeMessage}
      * @return {@link Response}
      */
@@ -118,38 +116,26 @@ public interface MailgunMessagesApi extends MailgunApi {
     Response sendMIMEMessageFeignResponse(@Param("domain") String domain, MailgunMimeMessage message);
 
     /**
-     * <p>
-     * Asynchronously send email(s) in MIME format.
-     * </p>
-     * <p>
-     * Note: Use the asynchronous Mailgun client for this method.
+     * Asynchronously send MIME email(s). Use the asynchronous Mailgun client for this method.
      * <pre>
      * <code>MailgunClient.config(PRIVATE_API_KEY)
      *             .createAsyncApi(MailgunMessagesApi.class);</code>
      * </pre>
      *
-     * @param domain  Name of the domain
+     * @param domain  Sending domain name ({@code domain_name})
      * @param message {@link MailgunMimeMessage}
-     * @return {@link CompletableFuture} wrapped {@link MessageResponse}
+     * @return {@link CompletableFuture} wrapping {@link MessageResponse}
      */
     @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /{domain}/messages.mime")
     CompletableFuture<MessageResponse> sendMIMEMessageAsync(@Param("domain") String domain, MailgunMimeMessage message);
 
     /**
-     * <p>
-     * Asynchronously send email(s) in MIME format.
-     * </p>
-     * <p>
-     * Note: Use the asynchronous Mailgun client for this method.
-     * <pre>
-     * <code>MailgunClient.config(PRIVATE_API_KEY)
-     *             .createAsyncApi(MailgunMessagesApi.class);</code>
-     * </pre>
+     * Asynchronous variant of {@link #sendMIMEMessageFeignResponse(String, MailgunMimeMessage)}.
      *
-     * @param domain  Name of the domain
+     * @param domain  Sending domain name ({@code domain_name})
      * @param message {@link MailgunMimeMessage}
-     * @return {@link CompletableFuture} wrapped {@link Response}
+     * @return {@link CompletableFuture} wrapping {@link Response}
      */
     @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /{domain}/messages.mime")
