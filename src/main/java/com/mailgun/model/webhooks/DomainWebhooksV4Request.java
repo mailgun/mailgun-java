@@ -42,6 +42,10 @@ public class DomainWebhooksV4Request {
     @FormProperty("event_types")
     Set<String> eventTypes;
 
+    /** Merged by Lombok; present so Javadoc can resolve the builder type without running APs. */
+    public static class DomainWebhooksV4RequestBuilder {
+    }
+
     public static DomainWebhooksV4RequestBuilder builder() {
         return new CustomDomainWebhooksV4RequestBuilder();
     }

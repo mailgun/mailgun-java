@@ -50,6 +50,10 @@ public class AccountWebhookRequest {
     @FormProperty("url")
     String url;
 
+    /** Merged by Lombok; present so Javadoc can resolve the builder type without running APs. */
+    public static class AccountWebhookRequestBuilder {
+    }
+
     public static AccountWebhookRequestBuilder builder() {
         return new CustomAccountWebhookRequestBuilder();
     }
