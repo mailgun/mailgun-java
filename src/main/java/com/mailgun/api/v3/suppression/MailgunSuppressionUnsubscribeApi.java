@@ -7,8 +7,10 @@ import com.mailgun.model.suppression.unsubscribe.UnsubscribeItem;
 import com.mailgun.model.suppression.unsubscribe.UnsubscribeItemResponse;
 import com.mailgun.model.suppression.unsubscribe.UnsubscribeSingleItemRequest;
 import com.mailgun.model.suppression.unsubscribe.UnsubscribesListImportRequest;
+import com.mailgun.model.suppression.unsubscribe.UnsubscribesListQuery;
 import feign.Headers;
 import feign.Param;
+import feign.QueryMap;
 import feign.RequestLine;
 import feign.Response;
 
@@ -45,6 +47,7 @@ import java.util.List;
  * </p>.
  *
  * @see <a href="https://documentation.mailgun.com/en/latest/api-suppressions.html#unsubscribes">Suppressions/Unsubscribe</a>
+ * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/unsubscribe/get-v3--domainid--unsubscribes.md">List all unsubscribes</a>
  */
 @Headers("Accept: application/json")
 public interface MailgunSuppressionUnsubscribeApi extends MailgunApi {
@@ -110,6 +113,30 @@ public interface MailgunSuppressionUnsubscribeApi extends MailgunApi {
      */
     @RequestLine("GET /{domain}/unsubscribes?limit={limit}")
     Response getAllUnsubscribeFeignResponse(@Param("domain") String domain, @Param("limit") Integer limit);
+
+    /**
+     * <p>
+     * Paginated list of unsubscribes for a domain ({@code limit}, {@code page}, {@code address}, {@code term}).
+     * </p>
+     *
+     * @param domain Name of the domain
+     * @param query  optional pagination and filter parameters
+     * @return {@link UnsubscribeItemResponse}
+     */
+    @RequestLine("GET /{domain}/unsubscribes")
+    UnsubscribeItemResponse getAllUnsubscribe(@Param("domain") String domain, @QueryMap UnsubscribesListQuery query);
+
+    /**
+     * <p>
+     * Paginated list of unsubscribes for a domain (raw response).
+     * </p>
+     *
+     * @param domain Name of the domain
+     * @param query  optional pagination and filter parameters
+     * @return {@link Response}
+     */
+    @RequestLine("GET /{domain}/unsubscribes")
+    Response getAllUnsubscribeFeignResponse(@Param("domain") String domain, @QueryMap UnsubscribesListQuery query);
 
     /**
      * <p>
@@ -197,8 +224,11 @@ public interface MailgunSuppressionUnsubscribeApi extends MailgunApi {
      * <pre>
      * <code>address</code> Valid email address
      * <code>tags</code> Tag to unsubscribe from, use * to unsubscribe an address from all domain’s correspondence (optional, default: *)
-     * <code>created_at</code> Timestamp of a bounce event in RFC2822 format (optional, default: current time)
+     * <code>created_at</code> Timestamp of the unsubscribe event in RFC2822 format (optional, default: current time)
      * </pre>
+     * <p>
+     * CSV must be 25MB or smaller.
+     * </p>
      *
      * @param domain  Name of the domain
      * @param request list of {@link UnsubscribesListImportRequest}
@@ -218,8 +248,11 @@ public interface MailgunSuppressionUnsubscribeApi extends MailgunApi {
      * <pre>
      * <code>address</code> Valid email address
      * <code>tags</code> Tag to unsubscribe from, use * to unsubscribe an address from all domain’s correspondence (optional, default: *)
-     * <code>created_at</code> Timestamp of a bounce event in RFC2822 format (optional, default: current time)
+     * <code>created_at</code> Timestamp of the unsubscribe event in RFC2822 format (optional, default: current time)
      * </pre>
+     * <p>
+     * CSV must be 25MB or smaller.
+     * </p>
      *
      * @param domain  Name of the domain
      * @param request list of {@link UnsubscribesListImportRequest}
@@ -229,24 +262,44 @@ public interface MailgunSuppressionUnsubscribeApi extends MailgunApi {
     @RequestLine("POST /{domain}/unsubscribes/import")
     Response importAddressesToUnsubscribeTableFeignResponse(@Param("domain") String domain, UnsubscribesListImportRequest request);
 
+    /**
+     * <p>
+     * Clear all unsubscribe records for the domain.
+     * </p>
+     *
+     * @param domain Name of the domain
+     * @return {@link ResponseWithMessage}
+     */
+    @RequestLine("DELETE /{domain}/unsubscribes")
+    ResponseWithMessage clearAllUnsubscribes(@Param("domain") String domain);
 
     /**
      * <p>
-     * Remove an address from the unsubscribes list.
+     * Clear all unsubscribe records for the domain (raw response).
+     * </p>
+     *
+     * @param domain Name of the domain
+     * @return {@link Response}
+     */
+    @RequestLine("DELETE /{domain}/unsubscribes")
+    Response clearAllUnsubscribesFeignResponse(@Param("domain") String domain);
+
+    /**
+     * <p>
+     * Remove an address from the unsubscribes list for a specific tag only.
      * </p>
      *
      * @param domain  Name of the domain
      * @param address An email address
-     * @param tag     Specific tag to remove (optional)
+     * @param tag     Specific tag to remove
      * @return {@link SuppressionResponse}
      */
-    @Headers("Content-Type: multipart/form-data")
-    @RequestLine("DELETE /{domain}/unsubscribes/{address}")
+    @RequestLine("DELETE /{domain}/unsubscribes/{address}?tag={tag}")
     SuppressionResponse removeAddressFromUnsubscribeTag(@Param("domain") String domain, @Param("address") String address, @Param("tag") String tag);
 
     /**
      * <p>
-     * Remove an address from the unsubscribes list.
+     * Remove an address from the unsubscribes list for a specific tag only (raw response).
      * </p>
      *
      * @param domain  Name of the domain
@@ -254,8 +307,7 @@ public interface MailgunSuppressionUnsubscribeApi extends MailgunApi {
      * @param tag     Specific tag to remove
      * @return {@link Response}
      */
-    @Headers("Content-Type: multipart/form-data")
-    @RequestLine("DELETE /{domain}/unsubscribes/{address}")
+    @RequestLine("DELETE /{domain}/unsubscribes/{address}?tag={tag}")
     Response removeAddressFromUnsubscribeTagFeignResponse(@Param("domain") String domain, @Param("address") String address, @Param("tag") String tag);
 
     /**

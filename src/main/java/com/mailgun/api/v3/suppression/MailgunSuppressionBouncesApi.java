@@ -5,10 +5,12 @@ import com.mailgun.model.ResponseWithMessage;
 import com.mailgun.model.suppression.SuppressionResponse;
 import com.mailgun.model.suppression.bounces.BouncesItem;
 import com.mailgun.model.suppression.bounces.BouncesListImportRequest;
+import com.mailgun.model.suppression.bounces.BouncesListQuery;
 import com.mailgun.model.suppression.bounces.BouncesRequest;
 import com.mailgun.model.suppression.bounces.BouncesResponse;
 import feign.Headers;
 import feign.Param;
+import feign.QueryMap;
 import feign.RequestLine;
 import feign.Response;
 
@@ -42,10 +44,11 @@ import java.util.List;
  *
  * <p>
  * Mailgun can notify your application every time a message bounces via a
- * <a href="https://documentation.mailgun.com/en/latest/user_manual.html#um-tracking-failures">ermanent_fail webhook</a>.
+ * <a href="https://documentation.mailgun.com/en/latest/user_manual.html#um-tracking-failures">permanent_fail webhook</a>.
  * </p>
  *
  * @see <a href="https://documentation.mailgun.com/en/latest/api-suppressions.html#bounces">Suppressions/Bounces</a>
+ * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/bounces/get-v3--domainid--bounces.md">List all bounces</a>
  */
 @Headers("Accept: application/json")
 public interface MailgunSuppressionBouncesApi extends MailgunApi {
@@ -95,6 +98,30 @@ public interface MailgunSuppressionBouncesApi extends MailgunApi {
      */
     @RequestLine("GET /{domain}/bounces?limit={limit}")
     Response getBouncesFeignResponse(@Param("domain") String domain, @Param("limit") Integer limit);
+
+    /**
+     * <p>
+     * Paginated list of bounces for a domain ({@code limit}, {@code page}, {@code address}, {@code term}).
+     * </p>
+     *
+     * @param domain Name of the domain
+     * @param query  optional pagination and filter parameters
+     * @return {@link BouncesResponse}
+     */
+    @RequestLine("GET /{domain}/bounces")
+    BouncesResponse getBounces(@Param("domain") String domain, @QueryMap BouncesListQuery query);
+
+    /**
+     * <p>
+     * Paginated list of bounces for a domain (raw response).
+     * </p>
+     *
+     * @param domain Name of the domain
+     * @param query  optional pagination and filter parameters
+     * @return {@link Response}
+     */
+    @RequestLine("GET /{domain}/bounces")
+    Response getBouncesFeignResponse(@Param("domain") String domain, @QueryMap BouncesListQuery query);
 
     /**
      * <p>
@@ -195,8 +222,11 @@ public interface MailgunSuppressionBouncesApi extends MailgunApi {
      * <code>address</code> Valid email address
      * <code>code</code> Error code (optional, default: 550)
      * <code>error</code> Error description (optional, default: empty string)
-     * <code>created_at</code> Timestamp of a bounce event in RFC2822 format (optional, default: current time)
+     * <code>created_at</code> Timestamp of the bounce event in RFC2822 format (optional, default: current time)
      * </pre>
+     * <p>
+     * CSV must be 25MB or smaller.
+     * </p>
      *
      * @param domain  Name of the domain
      * @param request {@link BouncesListImportRequest}
@@ -217,8 +247,11 @@ public interface MailgunSuppressionBouncesApi extends MailgunApi {
      * <code>address</code> Valid email address
      * <code>code</code> Error code (optional, default: 550)
      * <code>error</code> Error description (optional, default: empty string)
-     * <code>created_at</code> Timestamp of a bounce event in RFC2822 format (optional, default: current time)
+     * <code>created_at</code> Timestamp of the bounce event in RFC2822 format (optional, default: current time)
      * </pre>
+     * <p>
+     * CSV must be 25MB or smaller.
+     * </p>
      *
      * @param domain  Name of the domain
      * @param request {@link BouncesListImportRequest}
@@ -262,20 +295,20 @@ public interface MailgunSuppressionBouncesApi extends MailgunApi {
 
     /**
      * <p>
-     * Delete all bounced email addresses for a domain.
-     * Delivery to the deleted email addresses will no longer be suppressed.
+     * Clear all bounces for the domain ({@code DELETE /v3/{domain}/bounces}).
+     * Delivery to the removed addresses is no longer suppressed until they bounce again.
      * </p>
      *
      * @param domain Name of the domain
      * @return {@link ResponseWithMessage}
+     * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/bounces/delete-v3--domainid--bounces.md">Clear all bounces</a>
      */
     @RequestLine("DELETE /{domain}/bounces")
     ResponseWithMessage deleteAllBounces(@Param("domain") String domain);
 
     /**
      * <p>
-     * Delete all bounced email addresses for a domain.
-     * Delivery to the deleted email addresses will no longer be suppressed.
+     * Clear all bounces for the domain (raw response).
      * </p>
      *
      * @param domain Name of the domain

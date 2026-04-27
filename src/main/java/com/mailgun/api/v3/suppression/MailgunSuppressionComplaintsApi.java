@@ -6,9 +6,11 @@ import com.mailgun.model.suppression.SuppressionResponse;
 import com.mailgun.model.suppression.bounces.ComplaintsListImportRequest;
 import com.mailgun.model.suppression.complaints.ComplaintsItem;
 import com.mailgun.model.suppression.complaints.ComplaintsItemResponse;
+import com.mailgun.model.suppression.complaints.ComplaintsListQuery;
 import com.mailgun.model.suppression.complaints.ComplaintsSingleItemRequest;
 import feign.Headers;
 import feign.Param;
+import feign.QueryMap;
 import feign.RequestLine;
 import feign.Response;
 
@@ -40,6 +42,7 @@ import java.util.List;
  * </p>
  *
  * @see <a href="https://documentation.mailgun.com/en/latest/api-suppressions.html#complaints">Suppressions/Complaints</a>
+ * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/complaints/get-v3--domainid--complaints.md">List all complaints</a>
  */
 @Headers("Accept: application/json")
 public interface MailgunSuppressionComplaintsApi extends MailgunApi {
@@ -108,6 +111,30 @@ public interface MailgunSuppressionComplaintsApi extends MailgunApi {
 
     /**
      * <p>
+     * Paginated list of complaints for a domain ({@code limit}, {@code page}, {@code address}, {@code term}).
+     * </p>
+     *
+     * @param domain Name of the domain
+     * @param query  optional pagination and filter parameters
+     * @return {@link ComplaintsItemResponse}
+     */
+    @RequestLine("GET /{domain}/complaints")
+    ComplaintsItemResponse getAllComplaints(@Param("domain") String domain, @QueryMap ComplaintsListQuery query);
+
+    /**
+     * <p>
+     * Paginated list of complaints for a domain (raw response).
+     * </p>
+     *
+     * @param domain Name of the domain
+     * @param query  optional pagination and filter parameters
+     * @return {@link Response}
+     */
+    @RequestLine("GET /{domain}/complaints")
+    Response getAllComplaintsFeignResponse(@Param("domain") String domain, @QueryMap ComplaintsListQuery query);
+
+    /**
+     * <p>
      * Fetch a single spam complaint by a given email address. This is useful to check if a particular user has complained.
      * </p>
      *
@@ -162,8 +189,8 @@ public interface MailgunSuppressionComplaintsApi extends MailgunApi {
      * </p>
      *
      * @param domain  Name of the domain
-     * @param request {@link ComplaintsItem}
-     * @return list of {@link ResponseWithMessage}
+     * @param request list of {@link ComplaintsItem} (up to 1000 records)
+     * @return {@link ResponseWithMessage}
      */
     @Headers("Content-Type: application/json")
     @RequestLine("POST /{domain}/complaints")
@@ -175,8 +202,8 @@ public interface MailgunSuppressionComplaintsApi extends MailgunApi {
      * </p>
      *
      * @param domain  Name of the domain
-     * @param request {@link ComplaintsItem}
-     * @return list of {@link Response}
+     * @param request list of {@link ComplaintsItem} (up to 1000 records)
+     * @return {@link Response}
      */
     @Headers("Content-Type: application/json")
     @RequestLine("POST /{domain}/complaints")
@@ -194,21 +221,21 @@ public interface MailgunSuppressionComplaintsApi extends MailgunApi {
      * </p>
      * <pre>
      * <code>address</code> Valid email address
-     * <code>created_at</code> Timestamp of a bounce event in RFC2822 format (optional, default: current time)
+     * <code>created_at</code> Timestamp of the complaint event in RFC2822 format (optional, default: current time)
      * </pre>
+     * <p>
+     * CSV must be 25MB or smaller.
+     * </p>
      *
      * @param domain  Name of the domain
-     * @param request {@link ComplaintsItem}
-     * @return list of {@link ResponseWithMessage}
+     * @param request {@link ComplaintsListImportRequest}
+     * @return {@link ResponseWithMessage}
      */
     @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /{domain}/complaints/import")
     ResponseWithMessage importComplaintsList(@Param("domain") String domain, ComplaintsListImportRequest request);
 
     /**
-     * <p>
-     * Add multiple complaints.
-     * </p>
      * <p>
      * Import a CSV file containing a list of addresses to add to the complaint list.
      * </p>
@@ -217,17 +244,41 @@ public interface MailgunSuppressionComplaintsApi extends MailgunApi {
      * </p>
      * <pre>
      * <code>address</code> Valid email address
-     * <code>created_at</code> Timestamp of a bounce event in RFC2822 format (optional, default: current time)
+     * <code>created_at</code> Timestamp of the complaint event in RFC2822 format (optional, default: current time)
      * </pre>
+     * <p>
+     * CSV must be 25MB or smaller.
+     * </p>
      *
      * @param domain  Name of the domain
-     * @param request {@link ComplaintsItem}
-     * @return list of {@link Response}
+     * @param request {@link ComplaintsListImportRequest}
+     * @return {@link Response}
      */
     @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /{domain}/complaints/import")
     Response importComplaintsListFeignResponse(@Param("domain") String domain, ComplaintsListImportRequest request);
 
+    /**
+     * <p>
+     * Clear all complaint records for the domain.
+     * </p>
+     *
+     * @param domain Name of the domain
+     * @return {@link ResponseWithMessage}
+     */
+    @RequestLine("DELETE /{domain}/complaints")
+    ResponseWithMessage clearAllComplaints(@Param("domain") String domain);
+
+    /**
+     * <p>
+     * Clear all complaint records for the domain (raw response).
+     * </p>
+     *
+     * @param domain Name of the domain
+     * @return {@link Response}
+     */
+    @RequestLine("DELETE /{domain}/complaints")
+    Response clearAllComplaintsFeignResponse(@Param("domain") String domain);
 
     /**
      * <p>

@@ -13,6 +13,7 @@ import lombok.ToString;
  * </p>
  *
  * @see <a href="https://documentation.mailgun.com/en/latest/api-suppressions.html#import-a-list-of-unsubscribes">Import a list of unsubscribes</a>
+ * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/unsubscribe/post-v3--domainid--unsubscribes-import.md">Import unsubscribe list</a>
  */
 @Getter
 @ToString
@@ -30,7 +31,7 @@ public class UnsubscribesListImportRequest {
      * <pre>
      * <code>address</code> Valid email address
      * <code>tags</code> Tag to unsubscribe from, use * to unsubscribe an address from all domain’s correspondence (optional, default: *)
-     * <code>created_at</code> Timestamp of a bounce event in RFC2822 format (optional, default: current time)
+     * <code>created_at</code> Timestamp of the unsubscribe event in RFC2822 format (optional, default: current time)
      * </pre>
      */
     File file;

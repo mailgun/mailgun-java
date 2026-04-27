@@ -13,6 +13,7 @@ import lombok.ToString;
  * </p>
  *
  * @see <a href="https://documentation.mailgun.com/en/latest/api-suppressions.html#import-a-list-of-bounces">Import a list of bounces</a>
+ * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/bounces/post-v3--domainid--bounces-import.md">Import list of bounces</a>
  */
 @Getter
 @ToString
@@ -31,7 +32,7 @@ public class BouncesListImportRequest {
      * <code>address</code> Valid email address
      * <code>code</code> Error code (optional, default: 550)
      * <code>error</code> Error description (optional, default: empty string)
-     * <code>created_at</code> Timestamp of a bounce event in RFC2822 format (optional, default: current time)
+     * <code>created_at</code> Timestamp of the bounce event in RFC2822 format (optional, default: current time)
      * </pre>
      */
     File file;

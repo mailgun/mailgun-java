@@ -13,6 +13,7 @@ import lombok.ToString;
  * </p>
  *
  * @see <a href="https://documentation.mailgun.com/en/latest/api-suppressions.html#import-a-list-of-complaints">Import a list of complaints</a>
+ * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/complaints/post-v3--domainid--complaints-import.md">Import complaint list</a>
  */
 @Getter
 @ToString
@@ -29,7 +30,7 @@ public class ComplaintsListImportRequest {
      * </p>
      * <pre>
      * <code>address</code> Valid email address
-     * <code>created_at</code> Timestamp of a bounce event in RFC2822 format (optional, default: current time)
+     * <code>created_at</code> Timestamp of the complaint event in RFC2822 format (optional, default: current time)
      * </pre>
      */
     File file;
