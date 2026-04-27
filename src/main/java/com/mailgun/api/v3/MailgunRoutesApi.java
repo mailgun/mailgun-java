@@ -17,26 +17,23 @@ import feign.Response;
 
 /**
  * <p>
- * Mailgun Routes Api
+ * Mailgun Routes API (v3): define how incoming email is handled when it matches a route expression.
  * </p>
  * <p>
- * Mailgun Routes are a powerful way to handle the incoming traffic.
+ * Mailgun can forward matching messages to your application over HTTP, to another email address, or store them
+ * temporarily (about three days) for later retrieval.
  * </p>
  * <p>
- * See
- * <a href="https://documentation.mailgun.com/en/latest/user_manual.html#um-routes">user-manual/Routes</a>
- * section in the User Manual to learn more about how they work.
+ * Routes are defined <strong>globally per account</strong>, not per sending domain.
  * </p>
  * <p>
- * This API allows you to work with routes programmatically.
- * <p>
- * Routes are comprised of the following arguments:
+ * See the
+ * <a href="https://documentation.mailgun.com/en/latest/user_manual.html#um-routes">User Manual (Routes)</a>
+ * for behaviour details.
  * </p>
- * <pre>
- * A filter (when to do something).
- * A priority (in what order).
- * An action (what to do).
- * </pre>
+ * <p>
+ * Each route has a filter expression, a priority (lower number runs first), and one or more actions.
+ * </p>
  *
  * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/routes">Routes</a>
  */

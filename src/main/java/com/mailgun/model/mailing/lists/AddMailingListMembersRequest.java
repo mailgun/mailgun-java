@@ -11,9 +11,13 @@ import java.util.List;
 
 /**
  * <p>
- * Request to add members to the mailing list.
+ * Request to add members to the mailing list (bulk JSON, up to 1000 per request).
+ * </p>
+ * <p>
+ * If the payload contains more than 100 members, Mailgun may update the list asynchronously.
  * </p>
  *
+ * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/mailing-lists/post-lists-list_address-members.json.md">Bulk upload members (JSON)</a>
  * @see <a href="https://documentation.mailgun.com/en/latest/api-mailinglists.html#mailing-lists">Mailing Lists</a>
  */
 @Jacksonized

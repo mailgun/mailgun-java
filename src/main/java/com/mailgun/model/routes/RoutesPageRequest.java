@@ -9,7 +9,7 @@ import lombok.extern.jackson.Jacksonized;
  * Routes page request.
  * </p>
  *
- * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/routes">Routes</a>
+ * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/routes/get-v3-routes.md">Get all routes</a>
  */
 @Value
 @Jacksonized

@@ -14,7 +14,8 @@ import java.util.Set;
  * Routes request.
  * </p>
  *
- * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/routes">Routes</a>
+ * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/routes/post-v3-routes.md">Create a route</a>
+ * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/routes/put-v3-routes-id.md">Update a route</a>
  */
 @Getter
 @ToString
