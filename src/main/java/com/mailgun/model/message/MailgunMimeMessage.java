@@ -26,7 +26,8 @@ import static com.mailgun.util.Constants.FIELD_CANNOT_BE_NULL_OR_EMPTY;
 /**
  * Multipart form model for {@code POST /v3/{domain_name}/messages.mime} (Mailgun Sending API 3.0.0).
  * <p>
- * Supply the raw MIME document as a file upload ({@link #message}) or as {@link FormData} ({@link #messageFormData}).
+ * Supply the raw MIME document as the {@code message} form field using {@code multipart/form-data}
+ * ({@link File} via {@link #message} or bytes/filename via {@link #messageFormData}).
  * Send options (parameter names starting with {@code o:}, {@code h:}, {@code v:}, or {@code t:}) are limited to
  * {@value com.mailgun.util.Constants#MAILGUN_SEND_OPTIONS_MAX_BYTES} bytes in total.
  * </p>
@@ -56,30 +57,43 @@ public class MailgunMimeMessage {
     FormData messageFormData;
 
     /**
-     * Template name for optional body rendering.
+     * Template name from the Templates API; optional with raw MIME, required when using template rendering options.
+     *
+     * @see <a href="https://documentation.mailgun.com/docs/mailgun/user-manual/sending-messages/send-templates">Templates</a>
      */
     String template;
 
+    /**
+     * Renders a specific template version; {@link #template} must also be set.
+     */
     @FormProperty("t:version")
     String templateVersion;
 
     /**
-     * When set to {@code yes}, generates {@code text/plain} from the template ({@code t:text=yes}).
+     * When set to {@code yes}, Mailgun adds a {@code text/plain} part from the template ({@code t:text=yes}).
      */
     @FormProperty("t:text")
     String renderTemplate;
 
+    /**
+     * JSON-encoded dictionary for template variable expansion.
+     *
+     * @see <a href="https://documentation.mailgun.com/docs/mailgun/user-manual/sending-messages/send-templates">Templates</a>
+     */
     @FormProperty("t:variables")
     String mailgunVariables;
 
     /**
-     * Tag strings for tracking.
+     * Tag strings for analytics and routing.
      *
-     * @see <a href="https://documentation.mailgun.com/docs/mailgun/user-manual/tracking-messages/track-tagging">Tagging</a>
+     * @see <a href="https://documentation.mailgun.com/docs/mailgun/user-manual/tracking-messages/track-tagging">Tags</a>
      */
     @FormProperty("o:tag")
     Set<String> tag;
 
+    /**
+     * Enables or disables DKIM for this message ({@code yes}, {@code no}, {@code true}, {@code false}).
+     */
     @FormProperty("o:dkim")
     String dkim;
 
@@ -101,24 +115,54 @@ public class MailgunMimeMessage {
     @FormProperty("o:deliver-within")
     String deliverWithin;
 
+    /**
+     * Send Time Optimization window, for example {@code 24h} (minimum {@code 24h}, maximum {@code 72h}).
+     *
+     * @see <a href="https://documentation.mailgun.com/docs/mailgun/user-manual/sending-messages/send-sto">Sending a Message with STO</a>
+     */
     @FormProperty("o:deliverytime-optimize-period")
     String deliveryTimeOptimizePeriod;
 
+    /**
+     * Timezone Optimization preferred local delivery time ({@code HH:mm} or {@code hh:mmaa}).
+     *
+     * @see <a href="https://documentation.mailgun.com/docs/mailgun/user-manual/sending-messages/send-tzo">Sending a Message with TZO</a>
+     */
     @FormProperty("o:time-zone-localize")
     String timeZoneLocalize;
 
     @FormProperty("h:X-Mailgun-Deliver-Within")
     String xMailgunDeliverWithin;
 
+    /**
+     * Test mode: messages are accepted and processed but not delivered to recipients.
+     *
+     * @see <a href="https://documentation.mailgun.com/docs/mailgun/user-manual/sending-messages/test-mode">Sending in Test Mode</a>
+     */
     @FormProperty("o:testmode")
     String testMode;
 
+    /**
+     * Toggles click and open tracking ({@code yes}, {@code no}, {@code true}, {@code false}, {@code htmlonly}).
+     *
+     * @see <a href="https://documentation.mailgun.com/docs/mailgun/user-manual/tracking-messages">Tracking Messages</a>
+     */
     @FormProperty("o:tracking")
     String tracking;
 
+    /**
+     * Click tracking override ({@code yes}, {@code no}, {@code true}, {@code false}, {@code htmlonly}).
+     *
+     * @see <a href="https://documentation.mailgun.com/docs/mailgun/user-manual/tracking-messages/tracking-clicks">Tracking Clicks</a>
+     */
     @FormProperty("o:tracking-clicks")
     String trackingClicks;
 
+    /**
+     * Open tracking override ({@code yes}, {@code no}, {@code true}, {@code false}).
+     *
+     * @see <a href="https://documentation.mailgun.com/docs/mailgun/user-manual/tracking-messages/tracking-opens">Tracking Opens</a>
+     */
     @FormProperty("o:tracking-opens")
     String trackingOpens;
 
@@ -137,9 +181,15 @@ public class MailgunMimeMessage {
     @FormProperty("o:tracking-pixel-location-top")
     String trackingPixelLocationTop;
 
+    /**
+     * Comma-separated {@code X-Mailgun} header names to strip, or {@code all}.
+     */
     @FormProperty("o:suppress-headers")
     String suppressHeaders;
 
+    /**
+     * POST successfully delivered MIME to this URL ({@code Content-Type: application/mime}); billed as delivered.
+     */
     @FormProperty("o:archive-to")
     String archiveTo;
 
@@ -157,12 +207,21 @@ public class MailgunMimeMessage {
     /**
      * Example single {@code v:} user variable ({@code v:my-var}). For multiple variables prefer {@link #userVariables}.
      */
+    /**
+     * Example {@code v:} variable; prefer {@link #userVariables} for multiple keys.
+     */
     @FormProperty("v:my-var")
     String myVar;
 
+    /**
+     * Additional {@code v:} variables (keys without the {@code v:} prefix).
+     */
     @CustomProperties(prefix = "v:")
     Map<String, String> userVariables;
 
+    /**
+     * Custom {@code h:} headers (map keys are names without the {@code h:} prefix).
+     */
     @CustomProperties(prefix = "h:")
     Map<String, String> headers;
 
@@ -255,6 +314,9 @@ public class MailgunMimeMessage {
             return this;
         }
 
+        /**
+         * @see <a href="https://documentation.mailgun.com/docs/mailgun/user-manual/sending-messages/test-mode">Sending in Test Mode</a>
+         */
         public MailgunMimeMessageBuilder testMode(boolean enableTestMode) {
             if (enableTestMode) {
                 this.testMode = YesNo.YES.getValue();
@@ -262,16 +324,35 @@ public class MailgunMimeMessage {
             return this;
         }
 
+        /**
+         * Toggles tracking using {@code yes} or {@code no}. For {@code htmlonly} (or other API values), use {@link #tracking(YesNoHtml)}.
+         */
         public MailgunMimeMessageBuilder tracking(boolean toggleTracking) {
             this.tracking = YesNo.getValue(toggleTracking);
             return this;
         }
 
+        /**
+         * Toggles click and open tracking, including {@link YesNoHtml#HTML_ONLY}.
+         *
+         * @see <a href="https://documentation.mailgun.com/docs/mailgun/user-manual/tracking-messages">Tracking Messages</a>
+         */
+        public MailgunMimeMessageBuilder tracking(YesNoHtml tracking) {
+            this.tracking = tracking.getValue();
+            return this;
+        }
+
+        /**
+         * @see <a href="https://documentation.mailgun.com/docs/mailgun/user-manual/tracking-messages/tracking-clicks">Tracking Clicks</a>
+         */
         public MailgunMimeMessageBuilder trackingClicks(YesNoHtml yesNoHtml) {
             this.trackingClicks = yesNoHtml.getValue();
             return this;
         }
 
+        /**
+         * @see <a href="https://documentation.mailgun.com/docs/mailgun/user-manual/tracking-messages/tracking-opens">Tracking Opens</a>
+         */
         public MailgunMimeMessageBuilder trackingOpens(boolean toggleOpensTracking) {
             this.trackingOpens = YesNo.getValue(toggleOpensTracking);
             return this;

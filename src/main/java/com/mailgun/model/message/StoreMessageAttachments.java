@@ -11,7 +11,7 @@ import lombok.extern.jackson.Jacksonized;
  * Store Message Attachments.
  * </p>
  *
- * @see <a href="https://documentation.mailgun.com/en/latest/api-sending.html#retrieving-stored-messages">Retrieving Stored Messages</a>
+ * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/messages/get-v3-domains--domain-name--messages--storage-key">Retrieve a stored email</a>
  */
 @Value
 @Jacksonized

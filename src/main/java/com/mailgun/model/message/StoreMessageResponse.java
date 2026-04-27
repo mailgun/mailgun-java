@@ -2,6 +2,7 @@ package com.mailgun.model.message;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
@@ -9,11 +10,16 @@ import lombok.Value;
 import lombok.extern.jackson.Jacksonized;
 
 /**
+ * JSON body for {@code GET /v3/domains/{domain_name}/messages/{storage_key}} (HTTP 200).
  * <p>
- * The object returned from a stored message url.
+ * The {@code storage_key} comes from {@code storage.key} on sending-related events (for example accepted or delivered).
+ * Keys remain valid for your domain's message retention window.
+ * </p>
+ * <p>
+ * Error responses (HTTP 400, 404) use {@code {"message":"..."}}; decode with {@link com.mailgun.model.ResponseWithMessage}.
  * </p>
  *
- * @see <a href="https://documentation.mailgun.com/en/latest/api-sending.html#retrieving-stored-messages">Retrieving Stored Messages</a>
+ * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/messages/get-v3-domains--domain-name--messages--storage-key">Retrieve a stored email</a>
  */
 @Value
 @Jacksonized
@@ -21,112 +27,65 @@ import lombok.extern.jackson.Jacksonized;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class StoreMessageResponse {
 
-    /**
-     * <p>
-     * Recipient of the message as reported by MAIL TO during SMTP chat.
-     * </p>
-     */
-    String recipients;
+    @JsonProperty("Content-Transfer-Encoding")
+    String contentTransferEncoding;
 
-    /**
-     * <p>
-     * Email address from <code>To</code> header.
-     * </p>
-     */
-    @JsonProperty("To")
-    String to;
+    @JsonProperty("Content-Type")
+    String contentType;
 
-    /**
-     * <p>
-     * Sender of the message as reported by MAIL FROM during SMTP chat. Note: this value may differ from From MIME header.
-     * </p>
-     */
-    String sender;
-
-    /**
-     * <p>
-     * Sender of the message as reported by From message header, for example “Bob Lee <blee@mailgun.net>”.
-     * </p>
-     */
     @JsonProperty("From")
     String from;
 
-    /**
-     * <p>
-     * Subject string.
-     * </p>
-     */
+    @JsonProperty("Message-Id")
+    String messageId;
+
+    @JsonProperty("Mime-Version")
+    String mimeVersion;
+
+    @JsonProperty("Subject")
+    @JsonAlias("subject")
     String subject;
 
-    /**
-     * <p>
-     * text version of the email. This field is always present. If the incoming message only has HTML body, Mailgun will create a text representation for you.
-     * </p>
-     */
+    @JsonProperty("To")
+    String to;
+
+    @JsonProperty("X-Mailgun-Tag")
+    String xMailgunTag;
+
+    String sender;
+
+    String recipients;
+
+    @JsonProperty("body-html")
+    String bodyHtml;
+
     @JsonProperty("body-plain")
     String bodyPlain;
 
-    /**
-     * <p>
-     * Text version of the message without quoted parts and signature block (if found).
-     * </p>
-     */
+    @JsonProperty("stripped-html")
+    String strippedHtml;
+
     @JsonProperty("stripped-text")
     String strippedText;
 
-    /**
-     * <p>
-     * The signature block stripped from the plain text message (if found).
-     * </p>
-     */
     @JsonProperty("stripped-signature")
     String strippedSignature;
 
     /**
-     * <p>
-     * HTML version of the message, without quoted parts.
-     * </p>
-     */
-    @JsonProperty("stripped-html")
-    String strippedHtml;
-
-    /**
-     * <p>
-     * Message id.
-     * </p>
-     */
-    @JsonProperty("Message-Id")
-    String messageId;
-
-    /**
-     * <p>
-     * List of {@link StoreMessageAttachments}.
-     * </p>
-     */
-    List<StoreMessageAttachments> attachments;
-
-    /**
-     * <p>
-     * List of headers.
-     * </p>
+     * Header name/value pairs as returned by the API (each element is typically a two-element list).
      */
     @JsonProperty("message-headers")
     List<List<String>> headers;
 
-    /**
-     * <p>
-     * Content type.
-     * </p>
-    */
-    @JsonProperty("Content-Type")
-    String contentType;
+    @JsonProperty("X-Mailgun-Template-Name")
+    String xMailgunTemplateName;
 
-     /**
-     * <p>
-     * Mime-Version.
-     * </p>
+    @JsonProperty("X-Mailgun-Template-Variables")
+    String xMailgunTemplateVariables;
+
+    /**
+     * Attachments metadata when present (not listed in all OpenAPI summaries; ignored if absent).
      */
-    @JsonProperty("Mime-Version")
-    String mimeVersion;
+    List<StoreMessageAttachments> attachments;
 
 }

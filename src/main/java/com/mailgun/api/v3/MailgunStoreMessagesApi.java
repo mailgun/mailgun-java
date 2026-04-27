@@ -12,11 +12,11 @@ import feign.RequestLine;
 import feign.Response;
 
 /**
- * <p>
- * This API allows you to work with stored messages.
- * </p>
+ * Client for the <strong>absolute</strong> per-message storage URL from {@code storage.url} on events (often a regional storage host).
+ * For {@code GET /v3/domains/{domain_name}/messages/{storage_key}} on the main API host, use
+ * {@link com.mailgun.api.v3.MailgunMessagesApi#getStoredMessage(String, String)} with {@code storage.key}.
  *
- * @see <a href="https://documentation.mailgun.com/en/latest/api-sending.html">Stored Messages</a>
+ * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/messages/get-v3-domains--domain-name--messages--storage-key">Retrieve a stored email</a>
  */
 @Headers("Accept: application/json")
 public interface MailgunStoreMessagesApi extends MailgunApi {
@@ -87,9 +87,8 @@ public interface MailgunStoreMessagesApi extends MailgunApi {
     CompletableFuture<Response> resendMessageFeignResponseAsync(@Param("to") String recipientEmail);
 
     /**
-     * <p>
-     * Retrieve email(s).
-     * </p>
+     * Retrieves the stored message from this client’s absolute storage URL; response JSON matches {@link StoreMessageResponse}
+     * (same fields as {@link com.mailgun.api.v3.MailgunMessagesApi#getStoredMessage(String, String)} on the primary API).
      *
      * @return {@link StoreMessageResponse}
      */
@@ -97,11 +96,7 @@ public interface MailgunStoreMessagesApi extends MailgunApi {
     StoreMessageResponse retrieveMessage();
 
     /**
-     * <p>
-     * Retrieve email(s).
-     *</p>
-     *
-     * @return {@link Response}
+     * Same as {@link #retrieveMessage()} returning the raw Feign {@link Response}.
      */
     @RequestLine("GET")
     Response retrieveMessageFeignResponse();

@@ -26,9 +26,7 @@ public class Storage {
     String url;
 
     /**
-     * <p>
-     * Storage key.
-     * </p>
+     * Storage key for {@code GET /v3/domains/{domain_name}/messages/{storage_key}} (see {@link com.mailgun.api.v3.MailgunMessagesApi#getStoredMessage(String, String)}).
      */
     String key;
 

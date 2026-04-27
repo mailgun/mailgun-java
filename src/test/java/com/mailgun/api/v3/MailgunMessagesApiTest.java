@@ -9,6 +9,7 @@ import com.mailgun.model.message.MessageResponse;
 import com.mailgun.model.message.SendingQueueDisabled;
 import com.mailgun.model.message.SendingQueueInfo;
 import com.mailgun.model.message.SendingQueuesResponse;
+import com.mailgun.model.message.StoreMessageResponse;
 import com.mailgun.utils.MessageUtils;
 import com.mailgun.utils.TestHeadersUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -109,5 +110,44 @@ class MailgunMessagesApiTest extends WireMockBaseTest {
         ResponseWithMessage result = mailgunMessagesApi.deleteEnvelopes(TEST_DOMAIN);
 
         assertEquals("Queued messages deleted", result.getMessage());
+    }
+
+    @Test
+    void getStoredMessageSuccessTest() {
+        String storageKey = "AgEFbHVtemk";
+        String body = "{"
+            + "\"Content-Transfer-Encoding\":\"7bit\","
+            + "\"Content-Type\":\"multipart/alternative; boundary=xyz\","
+            + "\"From\":\"Bob <bob@example.com>\","
+            + "\"Message-Id\":\"<id@example.com>\","
+            + "\"Mime-Version\":\"1.0\","
+            + "\"Subject\":\"Hi\","
+            + "\"To\":\"Alice <alice@example.com>\","
+            + "\"X-Mailgun-Tag\":\"t1\","
+            + "\"sender\":\"bob@example.com\","
+            + "\"recipients\":\"alice@example.com\","
+            + "\"body-html\":\"<p>x</p>\","
+            + "\"body-plain\":\"x\","
+            + "\"stripped-html\":\"<p>x</p>\","
+            + "\"stripped-text\":\"x\","
+            + "\"stripped-signature\":\"\","
+            + "\"message-headers\":[[\"Subject\",\"Hi\"]],"
+            + "\"X-Mailgun-Template-Name\":\"\","
+            + "\"X-Mailgun-Template-Variables\":\"\""
+            + "}";
+        stubFor(get(urlPathEqualTo("/" + MailgunApi.getApiVersion().getValue() + "/domains/" + TEST_DOMAIN + "/messages/" + storageKey))
+                .withHeader("Authorization", equalTo(TestHeadersUtils.getExpectedAuthHeader()))
+                .withHeader("Accept", equalTo("application/json"))
+                .willReturn(aResponse()
+                        .withStatus(200)
+                        .withHeader("Content-Type", "application/json")
+                        .withBody(body)));
+
+        StoreMessageResponse result = mailgunMessagesApi.getStoredMessage(TEST_DOMAIN, storageKey);
+
+        assertEquals("7bit", result.getContentTransferEncoding());
+        assertEquals("Hi", result.getSubject());
+        assertEquals("<p>x</p>", result.getBodyHtml());
+        assertEquals("t1", result.getXMailgunTag());
     }
 }

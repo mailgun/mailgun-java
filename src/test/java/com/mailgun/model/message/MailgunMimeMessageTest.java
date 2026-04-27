@@ -65,6 +65,20 @@ class MailgunMimeMessageTest {
     }
 
     @Test
+    void mimeTrackingHtmlOnlySuccessTest() throws IOException {
+        File f = tempFile("mime-track");
+
+        MailgunMimeMessage message = MailgunMimeMessage.builder()
+                .to(TEST_EMAIL_2)
+                .message(f)
+                .tracking(YesNoHtml.HTML_ONLY)
+                .build();
+
+        assertEquals(YesNoHtml.HTML_ONLY.getValue(), message.getTracking());
+        assertEquals(YesNoHtml.HTML_ONLY.getValue(), PojoUtil.toMap(message).get("o:tracking"));
+    }
+
+    @Test
     void mimeUserVariablesAndHeadersFormKeysTest() throws IOException {
         File f = tempFile("mime-map");
 

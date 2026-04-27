@@ -155,7 +155,7 @@ public class Message {
      * Tag string.
      * </p>
      *
-     * @see <a href="https://documentation.mailgun.com/en/latest/user_manual.html#tagging-1">Tagging</a>
+     * @see <a href="https://documentation.mailgun.com/docs/mailgun/user-manual/tracking-messages/track-tagging">Tagging</a>
      */
     @FormProperty("o:tag")
     Set<String> tag;
@@ -226,17 +226,15 @@ public class Message {
      * Enables sending in test mode.
      * </p>
      *
-     * @see <a href="https://documentation.mailgun.com/en/latest/user_manual.html#manual-testmode">Sending in Test Mode</a>
+     * @see <a href="https://documentation.mailgun.com/docs/mailgun/user-manual/sending-messages/test-mode">Sending in Test Mode</a>
      */
     @FormProperty("o:testmode")
     String testMode;
 
     /**
-     * <p>
-     * Toggles tracking on a per-message basis.
-     * </p>
+     * Toggles click and open tracking on a per-message basis ({@code yes}, {@code no}, {@code true}, {@code false}, {@code htmlonly}).
      *
-     * @see <a href="https://documentation.mailgun.com/en/latest/user_manual.html#tracking-messages">Tracking Messages</a>
+     * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/messages/post-v3--domain-name--messages">Send an email</a>
      */
     @FormProperty("o:tracking")
     String tracking;
@@ -338,13 +336,11 @@ public class Message {
     @FormProperty("h:Reply-To")
     String replyTo;
 
-	/**
-	 * <p>
-	 * Specify Sender address
-	 * </p>
-	 */
-	@FormProperty("h:Sender")
-	String sender;
+    /**
+     * {@code Sender} header value ({@code h:Sender}).
+     */
+    @FormProperty("h:Sender")
+    String sender;
 
     /**
      * JSON-encoded map of recipient address to per-recipient variables (batch sending; up to 1,000 recipients per batch).
@@ -641,7 +637,7 @@ public class Message {
          *
          * @param tag Tag string.
          * @return Returns a reference to this object so that method calls can be chained together.
-         * @see <a href="https://documentation.mailgun.com/en/latest/user_manual.html#tagging-1">Tagging</a>
+         * @see <a href="https://documentation.mailgun.com/docs/mailgun/user-manual/tracking-messages/track-tagging">Tagging</a>
          */
         public Message.MessageBuilder tag(String tag) {
             this.tag = CollectionUtil.addToSet(this.tag, tag);
@@ -655,7 +651,7 @@ public class Message {
          *
          * @param tags Tag strings.
          * @return Returns a reference to this object so that method calls can be chained together.
-         * @see <a href="https://documentation.mailgun.com/en/latest/user_manual.html#tagging-1">Tagging</a>
+         * @see <a href="https://documentation.mailgun.com/docs/mailgun/user-manual/tracking-messages/track-tagging">Tagging</a>
          */
         public Message.MessageBuilder tag(List<String> tags) {
             this.tag = CollectionUtil.addToSet(this.tag, tags);
@@ -767,7 +763,7 @@ public class Message {
          *
          * @param enableSendingInTestMode Enables sending in test mode.
          * @return Returns a reference to this object so that method calls can be chained together.
-         * @see <a href="https://documentation.mailgun.com/en/latest/user_manual.html#manual-testmode">Sending in Test Mode</a>
+         * @see <a href="https://documentation.mailgun.com/docs/mailgun/user-manual/sending-messages/test-mode">Sending in Test Mode</a>
          */
         public MessageBuilder testMode(boolean enableSendingInTestMode) {
             if (enableSendingInTestMode) {
@@ -777,16 +773,22 @@ public class Message {
         }
 
         /**
-         * <p>
-         * Toggles tracking on a per-message basis.
-         * </p>
+         * Toggles click and open tracking using {@code yes} or {@code no}. For {@code htmlonly} (or other API values), use {@link #tracking(YesNoHtml)}.
          *
-         * @param toggleTracking Toggles tracking on a per-message basis.
+         * @param toggleTracking when {@code true}, {@code yes}; when {@code false}, {@code no}
          * @return Returns a reference to this object so that method calls can be chained together.
-         * @see <a href="https://documentation.mailgun.com/en/latest/user_manual.html#tracking-messages">Tracking Messages</a>
+         * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/messages/post-v3--domain-name--messages">Send an email</a>
          */
         public MessageBuilder tracking(boolean toggleTracking) {
             this.tracking = YesNo.getValue(toggleTracking);
+            return this;
+        }
+
+        /**
+         * Toggles click and open tracking on a per-message basis, including {@link YesNoHtml#HTML_ONLY} for HTML-only tracking.
+         */
+        public MessageBuilder tracking(YesNoHtml tracking) {
+            this.tracking = tracking.getValue();
             return this;
         }
 
@@ -930,18 +932,16 @@ public class Message {
             return this;
         }
 
-		/**
-		 * <p>
-		 * Specify Sender address
-		 * </p>
-		 *
-		 * @param sender Sender address
-		 * @return Returns a reference to this object so that method calls can be chained together.
-		 */
-		public MessageBuilder sender(String sender) {
-			this.sender = sender;
-			return this;
-		}
+        /**
+         * Sets the {@code Sender} header ({@code h:Sender}).
+         *
+         * @param sender Sender address
+         * @return Returns a reference to this object so that method calls can be chained together.
+         */
+        public MessageBuilder sender(String sender) {
+            this.sender = sender;
+            return this;
+        }
 
         /**
          * <p>
@@ -952,7 +952,7 @@ public class Message {
          * @param recipientVariables A dictionary, where the key is a plain recipient address
          *                           and the value is a dictionary with variables that can be referenced in the message body.
          * @return Returns a reference to this object so that method calls can be chained together.
-         * @see <a href="https://documentation.mailgun.com/en/latest/user_manual.html#batch-sending">Batch Sending</a>
+         * @see <a href="https://documentation.mailgun.com/docs/mailgun/user-manual/sending-messages/batch-sending">Batch Sending</a>
          */
         public MessageBuilder recipientVariables(Map<String, Object> recipientVariables) {
             this.recipientVariables = StringUtil.asJsonString(recipientVariables);
@@ -968,7 +968,7 @@ public class Message {
          * @param recipientVariables A valid JSON-encoded dictionary, where the key is a plain recipient address
          *                           and the value is a dictionary with variables that can be referenced in the message body.
          * @return Returns a reference to this object so that method calls can be chained together.
-         * @see <a href="https://documentation.mailgun.com/en/latest/user_manual.html#batch-sending">Batch Sending</a>
+         * @see <a href="https://documentation.mailgun.com/docs/mailgun/user-manual/sending-messages/batch-sending">Batch Sending</a>
          */
         public MessageBuilder recipientVariables(String recipientVariables) {
             this.recipientVariables = recipientVariables;

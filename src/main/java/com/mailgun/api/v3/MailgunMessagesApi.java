@@ -8,6 +8,8 @@ import com.mailgun.model.message.MailgunMimeMessage;
 import com.mailgun.model.message.Message;
 import com.mailgun.model.message.MessageResponse;
 import com.mailgun.model.message.SendingQueuesResponse;
+import com.mailgun.model.message.StoreMessageResponse;
+import feign.FeignException;
 import feign.Headers;
 import feign.Param;
 import feign.RequestLine;
@@ -24,9 +26,28 @@ import feign.Response;
  *
  * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/messages/post-v3--domain-name--messages">Send an email</a>
  * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/messages/post-v3--domain-name--messages-mime">Send an email in MIME format</a>
+ * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/messages/get-v3-domains--domain-name--messages--storage-key">Retrieve a stored email</a>
  */
 @Headers("Accept: application/json")
 public interface MailgunMessagesApi extends MailgunApi {
+
+    /**
+     * Retrieve a stored outbound message: {@code GET /v3/domains/{domain_name}/messages/{storage_key}}.
+     * Use {@code storage.key} from the related sending event (for example accepted or delivered).
+     *
+     * @param domain      Domain that sent the message ({@code domain_name})
+     * @param storageKey  Storage key from the event ({@code storage_key})
+     * @return {@link StoreMessageResponse}
+     * @throws FeignException on HTTP 400, 404, etc.; decode error JSON as {@link ResponseWithMessage}
+     */
+    @RequestLine("GET /domains/{domain}/messages/{storageKey}")
+    StoreMessageResponse getStoredMessage(@Param("domain") String domain, @Param("storageKey") String storageKey);
+
+    /**
+     * Same as {@link #getStoredMessage(String, String)} returning the raw Feign {@link Response}.
+     */
+    @RequestLine("GET /domains/{domain}/messages/{storageKey}")
+    Response getStoredMessageFeignResponse(@Param("domain") String domain, @Param("storageKey") String storageKey);
 
     /**
      * Send email(s): {@code POST /v3/{domain_name}/messages}, {@code multipart/form-data}.
@@ -34,6 +55,7 @@ public interface MailgunMessagesApi extends MailgunApi {
      * @param domain  Sending domain name ({@code domain_name})
      * @param message {@link Message}
      * @return {@link MessageResponse}
+     * @throws FeignException on HTTP 400, 429, 500, etc.; response JSON is {@code {"message":"..."}} and can be decoded as {@link ResponseWithMessage}
      */
     @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /{domain}/messages")
@@ -99,6 +121,7 @@ public interface MailgunMessagesApi extends MailgunApi {
      * @param domain  Sending domain name ({@code domain_name})
      * @param message {@link MailgunMimeMessage}
      * @return {@link MessageResponse}
+     * @throws FeignException on HTTP 400, 429, 500, etc.; response JSON is {@code {"message":"..."}} and can be decoded as {@link ResponseWithMessage}
      */
     @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /{domain}/messages.mime")

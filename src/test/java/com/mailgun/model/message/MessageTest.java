@@ -287,6 +287,19 @@ class MessageTest {
     }
 
     @Test
+    void messageTrackingHtmlOnlySuccessTest() {
+        Message message = Message.builder()
+                .from(TEST_EMAIL_1)
+                .to(TEST_EMAIL_2)
+                .text(TEST_EMAIL_TEXT)
+                .tracking(YesNoHtml.HTML_ONLY)
+                .build();
+
+        assertEquals(YesNoHtml.HTML_ONLY.getValue(), message.getTracking());
+        assertEquals(YesNoHtml.HTML_ONLY.getValue(), PojoUtil.toMap(message).get("o:tracking"));
+    }
+
+    @Test
     void messageUserVariablesFormKeysTest() {
         Message message = Message.builder()
                 .from(TEST_EMAIL_1)
