@@ -8,9 +8,10 @@ import lombok.extern.jackson.Jacksonized;
 import java.util.List;
 
 /**
- * Filter applied to a send alert.
+ * Dimension filter used by send alerts and account limit thresholds (same JSON shape).
  *
  * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/send-alerts/post-v1-thresholds-alerts-send.md">Create a send alert</a>
+ * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/limits/post-v1-thresholds-limits.md">Create a limit threshold</a>
  */
 @Value
 @Jacksonized

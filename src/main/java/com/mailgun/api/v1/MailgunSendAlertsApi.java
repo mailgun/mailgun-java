@@ -22,6 +22,9 @@ import feign.RequestLine;
  * For Mailgun Alerts <em>delivery</em> settings (email, webhook, Slack for events), use {@link MailgunAlertsApi}
  * ({@code /v1/alerts/...}), not this interface.
  * </p>
+ * <p>
+ * For pre-send <em>usage limits</em> on subaccounts ({@code /v1/thresholds/limits}), use {@link MailgunLimitsApi}.
+ * </p>
  *
  * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/send-alerts/get-v1-thresholds-alerts-send.md">List send alerts</a>
  * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/send-alerts/post-v1-thresholds-alerts-send.md">Create a send alert</a>
