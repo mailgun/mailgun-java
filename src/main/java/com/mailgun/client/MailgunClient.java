@@ -21,6 +21,7 @@ import feign.auth.BasicAuthRequestInterceptor;
 import feign.codec.ErrorDecoder;
 import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
+import feign.okhttp.OkHttpClient;
 import feign.querymap.FieldQueryMapEncoder;
 import lombok.experimental.UtilityClass;
 
@@ -40,6 +41,7 @@ public class MailgunClient {
     private static final FormEncoder ENCODER = new FormEncoder(new JacksonEncoder(OBJECT_MAPPER));
     private static final JacksonDecoder DECODER = new JacksonDecoder(OBJECT_MAPPER);
     private static final FieldQueryMapEncoder QUERY_MAP_ENCODER = new FieldQueryMapEncoder();
+    private static final OkHttpClient HTTP_CLIENT = new OkHttpClient();
 
     /**
      * <p>
@@ -204,6 +206,7 @@ public class MailgunClient {
 
         private Feign.Builder getFeignBuilder() {
             return Feign.builder()
+                    .client(HTTP_CLIENT)
                     .logLevel(logLevel)
                     .retryer(retryer)
                     .logger(logger)
