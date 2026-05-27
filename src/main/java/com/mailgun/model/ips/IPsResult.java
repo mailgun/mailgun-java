@@ -22,6 +22,17 @@ import java.util.List;
 public class IPsResult {
 
     /**
+     * IPs that can be assigned to dedicated IP pools (present when DIPPs feature is enabled).
+     */
+    @JsonProperty("assignable_to_pools")
+    List<String> assignableToPools;
+
+    /**
+     * Detailed information per IP.
+     */
+    List<IpDetail> details;
+
+    /**
      * <p>
      * List of IPs.
      * </p>
@@ -30,7 +41,7 @@ public class IPsResult {
 
     /**
      * <p>
-     * The total number of IPs.
+     * The total number of IPs returned for the query.
      * </p>
      */
     @JsonProperty("total_count")
