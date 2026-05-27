@@ -3,6 +3,8 @@ package com.mailgun.api.v3;
 import com.mailgun.api.MailgunApi;
 import com.mailgun.model.PagingWithPivot;
 import com.mailgun.model.ResponseWithMessage;
+import com.mailgun.model.templates.CopyTemplateRequest;
+import com.mailgun.model.templates.CopyTemplateResponse;
 import com.mailgun.model.templates.TemplateAllVersionsResponse;
 import com.mailgun.model.templates.TemplateRequest;
 import com.mailgun.model.templates.TemplateResponse;
@@ -24,7 +26,8 @@ import feign.Response;
  * Templates Api.
  * </p>
  * <p>
- * This API allows you to store predefined templates and use them to send messages using the Sending API.
+ * Domain-scoped templates ({@code /v3/{domain}/templates}). For account-level templates across all domains,
+ * use {@link com.mailgun.api.v4.MailgunAccountTemplatesApi} ({@code /v4/templates}).
  * </p>
  * <p>
  * The API has the following limitations:
@@ -439,5 +442,29 @@ public interface MailgunTemplatesApi extends MailgunApi {
     @RequestLine("PUT /{domain}/templates/{templateName}/versions/{versionName}/copy/{newVersionName}")
     Response copyTemplateVersionFeignResponse(@Param("domain") String domain, @Param("templateName") String templateName,
                                              @Param("versionName") String versionName, @Param("newVersionName") String newVersionName);
+
+    /**
+     * {@code PUT /v3/{domain_name}/templates/{template_name}/copy}: copy into other accounts ({@code application/json}).
+     */
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    @RequestLine("PUT /{domain}/templates/{templateName}/copy")
+    CopyTemplateResponse copyTemplate(@Param("domain") String domain, @Param("templateName") String templateName,
+                                      CopyTemplateRequest request);
+
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    @RequestLine("PUT /{domain}/templates/{templateName}/copy")
+    Response copyTemplateFeignResponse(@Param("domain") String domain, @Param("templateName") String templateName,
+                                       CopyTemplateRequest request);
+
+    /**
+     * {@code PUT /v3/{domain_name}/templates/{template_name}/rename/{new_template_name}}.
+     */
+    @RequestLine("PUT /{domain}/templates/{templateName}/rename/{newTemplateName}")
+    TemplateWithMessageResponse renameTemplate(@Param("domain") String domain, @Param("templateName") String templateName,
+                                                 @Param("newTemplateName") String newTemplateName);
+
+    @RequestLine("PUT /{domain}/templates/{templateName}/rename/{newTemplateName}")
+    Response renameTemplateFeignResponse(@Param("domain") String domain, @Param("templateName") String templateName,
+                                          @Param("newTemplateName") String newTemplateName);
 
 }

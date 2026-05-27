@@ -10,7 +10,8 @@ import lombok.ToString;
  * Template request.
  * </p>
  *
- * @see <a href="https://documentation.mailgun.com/en/latest/api-templates.html">Templates</a>
+ * @see <a href="https://documentation.mailgun.com/en/latest/api-templates.html">Domain templates</a>
+ * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/account-templates/post-v4-templates">Create an account-level template</a>
  */
 @Getter
 @ToString
