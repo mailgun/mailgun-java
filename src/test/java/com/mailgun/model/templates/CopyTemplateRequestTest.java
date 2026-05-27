@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.mailgun.util.ObjectMapperUtil;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collections;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -17,13 +19,13 @@ class CopyTemplateRequestTest {
                         .name("welcome-copy")
                         .domain("example.com")
                         .build())
-                .sourceVersion("v1")
+                .sourceVersions(Collections.singletonList("v1"))
                 .build();
 
         String json = ObjectMapperUtil.getObjectMapper().writeValueAsString(request);
 
         assertEquals(
-                "{\"requests\":[{\"account_id\":\"acct-1\",\"name\":\"welcome-copy\",\"domain\":\"example.com\"}],"
+                "{\"requests\":[{\"name\":\"welcome-copy\",\"domain\":\"example.com\",\"account_id\":\"acct-1\"}],"
                         + "\"source_versions\":[\"v1\"]}",
                 json);
     }

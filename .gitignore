@@ -4,3 +4,4 @@ target/
 *.iml
 .classpath
 .project
+.cursor/

@@ -38,7 +38,7 @@ import feign.Response;
  * 100Kb max template size
  * </pre>
  *
- * @see <a href="https://documentation.mailgun.com/en/latest/api-templates.html">Templates</a>
+ * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/domain-templates">Domain Templates</a>
  */
 @Headers("Accept: application/json")
 public interface MailgunTemplatesApi extends MailgunApi {
@@ -93,11 +93,14 @@ public interface MailgunTemplatesApi extends MailgunApi {
      * <p>
      * Returns metadata information about the stored template specified in the url.
      * If the active flag is provided, the content of the active version of the template is returned.
+     * If the {@code version_name} flag is provided, version information is included; see
+     * {@link #getTemplateWithVersion(String, String, String)}.
      * </p>
      *
      * @param domain Name of the domain
      * @param name   Name of the template
      * @return {@link TemplateResponse}
+     * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/domain-templates/get-v3--domain-name--templates--template-name-">Get template</a>
      */
     @RequestLine("GET /{domain}/templates/{name}")
     TemplateResponse getTemplate(@Param("domain") String domain, @Param("name") String name);
@@ -138,6 +141,35 @@ public interface MailgunTemplatesApi extends MailgunApi {
      */
     @RequestLine("GET /{domain}/templates/{name}?active=yes")
     Response getActiveTemplateVersionContentFeignResponse(@Param("domain") String domain, @Param("name") String name);
+
+    /**
+     * <p>
+     * Returns template metadata with the version identified by {@code version_name} included in the response.
+     * </p>
+     *
+     * @param domain      Name of the domain
+     * @param name        Name of the template
+     * @param versionName Version tag/name
+     * @return {@link TemplateWithVersionResponse}
+     * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/domain-templates/get-v3--domain-name--templates--template-name-">Get template</a>
+     */
+    @RequestLine("GET /{domain}/templates/{name}?version_name={versionName}")
+    TemplateWithVersionResponse getTemplateWithVersion(@Param("domain") String domain, @Param("name") String name,
+                                                       @Param("versionName") String versionName);
+
+    /**
+     * <p>
+     * Returns template metadata with the version identified by {@code version_name} included in the response.
+     * </p>
+     *
+     * @param domain      Name of the domain
+     * @param name        Name of the template
+     * @param versionName Version tag/name
+     * @return {@link Response}
+     */
+    @RequestLine("GET /{domain}/templates/{name}?version_name={versionName}")
+    Response getTemplateWithVersionFeignResponse(@Param("domain") String domain, @Param("name") String name,
+                                                 @Param("versionName") String versionName);
 
     /**
      * <p>
