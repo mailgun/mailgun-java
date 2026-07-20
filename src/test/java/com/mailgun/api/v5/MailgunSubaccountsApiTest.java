@@ -4,9 +4,9 @@ import com.mailgun.api.WireMockBaseTest;
 import com.mailgun.client.MailgunClient;
 import com.mailgun.enums.ApiVersion;
 import com.mailgun.model.ResponseWithMessage;
-import com.mailgun.model.subaccounts.CustomSendingLimitResponse;
+import com.mailgun.model.custommessagelimit.CustomMessageLimitResponse;
+import com.mailgun.model.custommessagelimit.CustomMessageLimitSuccessResponse;
 import com.mailgun.model.subaccounts.DisableSubaccountQuery;
-import com.mailgun.model.subaccounts.OperationSuccessResponse;
 import com.mailgun.model.subaccounts.SubaccountFeaturesResponse;
 import com.mailgun.model.subaccounts.SubaccountResponse;
 import com.mailgun.model.subaccounts.SubaccountsListQuery;
@@ -167,7 +167,7 @@ class MailgunSubaccountsApiTest extends WireMockBaseTest {
         stubFor(get(urlEqualTo(SUBACCOUNT_PATH + "/limit/custom/monthly"))
                 .willReturn(jsonResponse("{\"limit\":10000,\"current\":0,\"period\":\"1m\"}")));
 
-        CustomSendingLimitResponse result = api.getCustomSendingLimit(SUBACCOUNT_ID);
+        CustomMessageLimitResponse result = api.getCustomSendingLimit(SUBACCOUNT_ID);
 
         assertEquals(new BigDecimal("10000"), result.getLimit());
         assertEquals(new BigDecimal("0"), result.getCurrent());
@@ -180,7 +180,8 @@ class MailgunSubaccountsApiTest extends WireMockBaseTest {
                 .withQueryParam("limit", equalTo("5000"))
                 .willReturn(jsonResponse("{\"success\":true}")));
 
-        OperationSuccessResponse result = api.setCustomSendingLimit(SUBACCOUNT_ID, new BigDecimal("5000"));
+        CustomMessageLimitSuccessResponse result = api.setCustomSendingLimit(
+                SUBACCOUNT_ID, new BigDecimal("5000"));
 
         assertTrue(result.getSuccess());
     }
@@ -190,7 +191,7 @@ class MailgunSubaccountsApiTest extends WireMockBaseTest {
         stubFor(delete(urlEqualTo(SUBACCOUNT_PATH + "/limit/custom/monthly"))
                 .willReturn(jsonResponse("{\"success\":true}")));
 
-        OperationSuccessResponse result = api.deleteCustomSendingLimit(SUBACCOUNT_ID);
+        CustomMessageLimitSuccessResponse result = api.deleteCustomSendingLimit(SUBACCOUNT_ID);
 
         assertTrue(result.getSuccess());
     }

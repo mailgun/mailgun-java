@@ -3,9 +3,9 @@ package com.mailgun.api.v5;
 import com.mailgun.api.MailgunApi;
 import com.mailgun.enums.ApiVersion;
 import com.mailgun.model.ResponseWithMessage;
-import com.mailgun.model.subaccounts.CustomSendingLimitResponse;
+import com.mailgun.model.custommessagelimit.CustomMessageLimitResponse;
+import com.mailgun.model.custommessagelimit.CustomMessageLimitSuccessResponse;
 import com.mailgun.model.subaccounts.DisableSubaccountQuery;
-import com.mailgun.model.subaccounts.OperationSuccessResponse;
 import com.mailgun.model.subaccounts.SubaccountFeaturesResponse;
 import com.mailgun.model.subaccounts.SubaccountResponse;
 import com.mailgun.model.subaccounts.SubaccountsListQuery;
@@ -86,21 +86,21 @@ public interface MailgunSubaccountsApi extends MailgunApi {
     Response enableSubaccountFeignResponse(@Param("subaccount_id") String subaccountId);
 
     @RequestLine("GET /accounts/subaccounts/{subaccount_id}/limit/custom/monthly")
-    CustomSendingLimitResponse getCustomSendingLimit(@Param("subaccount_id") String subaccountId);
+    CustomMessageLimitResponse getCustomSendingLimit(@Param("subaccount_id") String subaccountId);
 
     @RequestLine("GET /accounts/subaccounts/{subaccount_id}/limit/custom/monthly")
     Response getCustomSendingLimitFeignResponse(@Param("subaccount_id") String subaccountId);
 
     @RequestLine("PUT /accounts/subaccounts/{subaccount_id}/limit/custom/monthly?limit={limit}")
-    OperationSuccessResponse setCustomSendingLimit(@Param("subaccount_id") String subaccountId,
-                                                    @Param("limit") BigDecimal limit);
+    CustomMessageLimitSuccessResponse setCustomSendingLimit(@Param("subaccount_id") String subaccountId,
+                                                             @Param("limit") BigDecimal limit);
 
     @RequestLine("PUT /accounts/subaccounts/{subaccount_id}/limit/custom/monthly?limit={limit}")
     Response setCustomSendingLimitFeignResponse(@Param("subaccount_id") String subaccountId,
                                                  @Param("limit") BigDecimal limit);
 
     @RequestLine("DELETE /accounts/subaccounts/{subaccount_id}/limit/custom/monthly")
-    OperationSuccessResponse deleteCustomSendingLimit(@Param("subaccount_id") String subaccountId);
+    CustomMessageLimitSuccessResponse deleteCustomSendingLimit(@Param("subaccount_id") String subaccountId);
 
     @RequestLine("DELETE /accounts/subaccounts/{subaccount_id}/limit/custom/monthly")
     Response deleteCustomSendingLimitFeignResponse(@Param("subaccount_id") String subaccountId);
