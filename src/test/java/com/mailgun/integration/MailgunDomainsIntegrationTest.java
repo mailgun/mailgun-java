@@ -88,6 +88,7 @@ class MailgunDomainsIntegrationTest {
         assertNotNull(domain.getWebScheme());
         assertNotNull(domain.getWildcard());
         assertNotNull(domain.getCreatedAt());
+        assertNotNull(domain.getMessageTimeToLive());
     }
 
     @Test
@@ -168,6 +169,7 @@ class MailgunDomainsIntegrationTest {
                 .dkimKeySize(1024)
                 .ips(Arrays.asList(IP_1, IP_2))
                 .webScheme(WebScheme.HTTPS)
+                .messageTimeToLive(6000)
                 .build();
 
         DomainResponse result = mailgunDomainsApi.createNewDomain(request);
@@ -182,6 +184,7 @@ class MailgunDomainsIntegrationTest {
         assertEquals(true, domain.getWildcard());
         assertTrue(CollectionUtils.isNotEmpty(result.getReceivingDnsRecords()));
         assertTrue(CollectionUtils.isNotEmpty(result.getSendingDnsRecords()));
+        assertEquals(6000, domain.getMessageTimeToLive());
     }
 
     @Test

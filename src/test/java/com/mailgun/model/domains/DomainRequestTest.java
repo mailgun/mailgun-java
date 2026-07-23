@@ -24,6 +24,7 @@ class DomainRequestTest {
                 .dkimKeySize(1024)
                 .ips(Arrays.asList(TEST_IP_1, TEST_IP_2))
                 .webScheme(WebScheme.HTTPS)
+                .messageTimeToLive(6000)
                 .build();
 
         assertEquals(TEST_DOMAIN, request.getName());
@@ -33,6 +34,7 @@ class DomainRequestTest {
         assertEquals(1024, request.getDkimKeySize());
         assertTrue(request.getIps().containsAll(Arrays.asList(TEST_IP_1, TEST_IP_2)));
         assertEquals(WebScheme.HTTPS.getValue(), request.getWebScheme());
+        assertEquals(6000, request.getMessageTimeToLive());
     }
 
 }
