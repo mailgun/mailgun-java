@@ -5,6 +5,23 @@ All _notable_ changes to this project will be documented in this file.
 The format is based on _[Keep a Changelog][keepachangelog]_, and this project
 adheres to _[Semantic Versioning][semver]_.
 
+## [2.4.2] (released: 2026-07-31)
+### Updated
+- Updated and sync Key API
+- Updated and sync Account Management API
+- Updated and sync Custom Message Limit API
+- Updated and sync Subaccounts API
+- Updated and sync IP Address Warmup API
+- Updated IPs API
+- Added Dynamic IP Pools API
+- Added IP Pools API
+- Updated Domain Templates API
+- Updated Account Templates API
+- Update and sync Mailing Lists API
+- Update and sync Suppressions API
+- Update and sync Limits API
+- Update and sync Send Alerts API
+
 ## [2.4.1] (released: 2026-04-17)
 ### Updated
 - Updated Send Message API
@@ -121,6 +138,7 @@ adheres to _[Semantic Versioning][semver]_.
 - Import a list of complaints from CSV file API
 - Add Import a list of bounces from CSV file API
 
+[2.4.2]: https://github.com/mailgun/mailgun-java/compare/v2.4.1...v2.4.2
 [2.4.1]: https://github.com/mailgun/mailgun-java/compare/v2.4.0...v2.4.1
 [2.4]: https://github.com/mailgun/mailgun-java/compare/v2.3.0...v2.4.0
 [2.3.0]: https://github.com/mailgun/mailgun-java/compare/v2.2.1...v2.3.0

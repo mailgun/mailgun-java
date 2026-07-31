@@ -7,7 +7,7 @@ import lombok.Value;
 import lombok.extern.jackson.Jacksonized;
 
 /**
- * A failed entry in {@link CopyTemplateResponse#getFailedCopies()}.
+ * A failed entry returned in a {@link CopyTemplateResponse}.
  */
 @Value
 @Jacksonized

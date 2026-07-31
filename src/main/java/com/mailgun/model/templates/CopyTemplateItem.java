@@ -7,7 +7,7 @@ import lombok.Value;
 import lombok.extern.jackson.Jacksonized;
 
 /**
- * One target in {@link CopyTemplateRequest#getRequests()} for template copy operations.
+ * One target in a {@link CopyTemplateRequest} for template copy operations.
  */
 @Value
 @Jacksonized

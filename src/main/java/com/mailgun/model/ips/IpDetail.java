@@ -7,7 +7,7 @@ import lombok.Value;
 import lombok.extern.jackson.Jacksonized;
 
 /**
- * Detailed IP entry in {@link IPsResult#getDetails()}.
+ * Detailed IP entry returned in an {@link IPsResult}.
  *
  * @see <a href="https://documentation.mailgun.com/docs/mailgun/api-reference/send/mailgun/ips/get-v3-ips">List account IPs</a>
  */
