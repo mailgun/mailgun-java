@@ -1,7 +1,5 @@
 package com.mailgun.api.v5;
 
-import java.util.Collections;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,11 +9,8 @@ import com.mailgun.client.MailgunClient;
 import com.mailgun.enums.ApiVersion;
 import com.mailgun.enums.UserRole;
 import com.mailgun.model.users.User;
-import com.mailgun.model.users.UserAuth;
-import com.mailgun.model.users.UserEmailDetails;
 import com.mailgun.model.users.UsersListResponse;
 import com.mailgun.model.users.UsersPageRequest;
-import com.mailgun.util.StringUtil;
 import com.mailgun.utils.TestHeadersUtils;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
@@ -26,11 +21,27 @@ import static com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo;
 import static com.mailgun.constants.TestConstants.TEST_API_KEY;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class MailgunUsersApiTest extends WireMockBaseTest {
 
     private static final String USERS_PATH = "/" + ApiVersion.V_5.getValue() + "/users";
     private static final String USER_ID = "user-123";
+    private static final String USER_JSON = "{\"id\":\"" + USER_ID + "\","
+            + "\"activated\":true,\"name\":\"John Doe\",\"is_disabled\":false,"
+            + "\"email\":\"johndoe@example.com\",\"email_details\":{"
+            + "\"address\":\"johndoe@example.com\",\"is_valid\":true,\"reason\":\"\","
+            + "\"parts\":{\"domain\":\"example.com\",\"local_part\":\"johndoe\","
+            + "\"display_name\":\"John Doe\"}},\"role\":\"basic\",\"account_id\":\"account-456\","
+            + "\"opened_ip\":\"192.0.2.20\",\"is_master\":true,\"metadata\":{\"team\":\"delivery\"},"
+            + "\"tfa_enabled\":true,\"tfa_active\":true,"
+            + "\"tfa_created_at\":\"2022-12-20T16:52:01.892000\","
+            + "\"password_updated_at\":\"2022-12-21T16:52:01.892000\","
+            + "\"preferences\":{\"programming_language\":\"java\","
+            + "\"time_format\":\"%m/%d/%y %I:%M %p\",\"time_zone\":\"Europe/Kyiv\"},"
+            + "\"auth\":{\"method\":\"sinch\",\"prior_details\":{\"provider\":\"mailgun\"},"
+            + "\"prior_method\":\"password\"},\"github_user_id\":null,"
+            + "\"salesforce_user_id\":null,\"migration_status\":\"done\"}";
 
     private MailgunUsersApi mailgunUsersApi;
 
@@ -42,39 +53,22 @@ class MailgunUsersApiTest extends WireMockBaseTest {
 
     @Test
     void getUsersSuccess() {
-        User user = User.builder()
-                .id(USER_ID)
-                .name("John Doe")
-                .email("johndoe@example.com")
-                .role("basic")
-                .build();
-        UsersListResponse expected = UsersListResponse.builder()
-                .users(Collections.singletonList(user))
-                .total(1)
-                .build();
-
         stubFor(get(urlPathEqualTo(USERS_PATH))
                 .withHeader("Authorization", equalTo(TestHeadersUtils.getExpectedAuthHeader()))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader("Content-Type", "application/json")
-                        .withBody(StringUtil.asJsonString(expected))));
+                        .withBody("{\"users\":[" + USER_JSON + "],\"total\":1}")));
 
         UsersListResponse result = mailgunUsersApi.getUsers();
 
         assertNotNull(result);
-        assertEquals(expected, result);
         assertEquals(1, result.getTotal());
-        assertEquals(USER_ID, result.getUsers().get(0).getId());
+        assertCompleteUser(result.getUsers().get(0));
     }
 
     @Test
     void getUsersWithPageRequestSuccess() {
-        UsersListResponse expected = UsersListResponse.builder()
-                .users(Collections.emptyList())
-                .total(0)
-                .build();
-
         stubFor(get(urlPathEqualTo(USERS_PATH))
                 .withHeader("Authorization", equalTo(TestHeadersUtils.getExpectedAuthHeader()))
                 .withQueryParam("role", WireMock.equalTo("basic"))
@@ -83,7 +77,7 @@ class MailgunUsersApiTest extends WireMockBaseTest {
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader("Content-Type", "application/json")
-                        .withBody(StringUtil.asJsonString(expected))));
+                        .withBody("{\"users\":[],\"total\":0}")));
 
         UsersPageRequest pageRequest = UsersPageRequest.withRole(UserRole.BASIC, 10, 0);
         UsersListResponse result = mailgunUsersApi.getUsers(pageRequest);
@@ -94,60 +88,63 @@ class MailgunUsersApiTest extends WireMockBaseTest {
 
     @Test
     void getUserSuccess() {
-        User expected = User.builder()
-                .id(USER_ID)
-                .name("John Doe")
-                .activated(true)
-                .isDisabled(false)
-                .email("johndoe@example.com")
-                .emailDetails(UserEmailDetails.builder()
-                        .address("johndoe@example.com")
-                        .isValid(true)
-                        .build())
-                .role("admin")
-                .accountId("acc-456")
-                .isMaster(true)
-                .tfaEnabled(false)
-                .tfaActive(false)
-                .auth(UserAuth.builder().method("sinch").build())
-                .build();
-
         stubFor(get(urlPathEqualTo(USERS_PATH + "/" + USER_ID))
                 .withHeader("Authorization", equalTo(TestHeadersUtils.getExpectedAuthHeader()))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader("Content-Type", "application/json")
-                        .withBody(StringUtil.asJsonString(expected))));
+                        .withBody(USER_JSON)));
 
         User result = mailgunUsersApi.getUser(USER_ID);
 
         assertNotNull(result);
-        assertEquals(USER_ID, result.getId());
-        assertEquals("John Doe", result.getName());
-        assertEquals("admin", result.getRole());
+        assertCompleteUser(result);
     }
 
     @Test
     void getCurrentUserSuccess() {
-        User expected = User.builder()
-                .id(USER_ID)
-                .name("Jane Doe")
-                .email("janedoe@example.com")
-                .role("developer")
-                .build();
-
         stubFor(get(urlPathEqualTo(USERS_PATH + "/me"))
                 .withHeader("Authorization", equalTo(TestHeadersUtils.getExpectedAuthHeader()))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader("Content-Type", "application/json")
-                        .withBody(StringUtil.asJsonString(expected))));
+                        .withBody(USER_JSON)));
 
         User result = mailgunUsersApi.getCurrentUser();
 
         assertNotNull(result);
+        assertCompleteUser(result);
+    }
+
+    private static void assertCompleteUser(User result) {
         assertEquals(USER_ID, result.getId());
-        assertEquals("Jane Doe", result.getName());
-        assertEquals("developer", result.getRole());
+        assertEquals(true, result.getActivated());
+        assertEquals("John Doe", result.getName());
+        assertEquals(false, result.getIsDisabled());
+        assertEquals("johndoe@example.com", result.getEmail());
+        assertEquals("johndoe@example.com", result.getEmailDetails().getAddress());
+        assertEquals(true, result.getEmailDetails().getIsValid());
+        assertEquals("", result.getEmailDetails().getReason());
+        assertEquals("example.com", result.getEmailDetails().getParts().getDomain());
+        assertEquals("johndoe", result.getEmailDetails().getParts().getLocalPart());
+        assertEquals("John Doe", result.getEmailDetails().getParts().getDisplayName());
+        assertEquals("basic", result.getRole());
+        assertEquals("account-456", result.getAccountId());
+        assertEquals("192.0.2.20", result.getOpenedIp());
+        assertEquals(true, result.getIsMaster());
+        assertEquals("delivery", result.getMetadata().get("team"));
+        assertEquals(true, result.getTfaEnabled());
+        assertEquals(true, result.getTfaActive());
+        assertEquals("2022-12-20T16:52:01.892000", result.getTfaCreatedAt());
+        assertEquals("2022-12-21T16:52:01.892000", result.getPasswordUpdatedAt());
+        assertEquals("Europe/Kyiv", result.getPreferences().getTimeZone());
+        assertEquals("%m/%d/%y %I:%M %p", result.getPreferences().getTimeFormat());
+        assertEquals("java", result.getPreferences().getProgrammingLanguage());
+        assertEquals("sinch", result.getAuth().getMethod());
+        assertEquals("password", result.getAuth().getPriorMethod());
+        assertEquals("mailgun", result.getAuth().getPriorDetails().get("provider"));
+        assertNull(result.getGithubUserId());
+        assertNull(result.getSalesforceUserId());
+        assertEquals("done", result.getMigrationStatus());
     }
 }
