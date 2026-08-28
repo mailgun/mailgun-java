@@ -20,6 +20,13 @@ import com.mailgun.model.domains.UpdateDomainClickTrackingSettingsResponse;
 import com.mailgun.model.domains.UpdateDomainConnectionResponse;
 import com.mailgun.model.domains.UpdateDomainOpenTrackingSettingsResponse;
 import com.mailgun.model.domains.UpdateDomainUnsubscribeTrackingSettingsResponse;
+import com.mailgun.model.credentials.SmtpCredentialCreateRequest;
+import com.mailgun.model.credentials.SmtpCredentialDeleteResponse;
+import com.mailgun.model.credentials.SmtpCredentialOperationResponse;
+import com.mailgun.model.credentials.SmtpCredentialUpdateRequest;
+import com.mailgun.model.credentials.SmtpCredentialsDeleteResponse;
+import com.mailgun.model.credentials.SmtpCredentialsListQuery;
+import com.mailgun.model.credentials.SmtpCredentialsListResponse;
 import com.mailgun.model.domainkeys.DkimAuthorityRequest;
 import com.mailgun.model.domainkeys.DkimAuthorityResponse;
 import com.mailgun.model.domainkeys.DkimSelectorRequest;
@@ -181,6 +188,50 @@ public interface MailgunDomainsApi extends MailgunApi {
     Response deleteDomainFeignResponse(@Param("domain") String domain);
 
     /**
+     * Lists SMTP credential metadata for a domain using the default pagination values.
+     *
+     * @param domain Name of the domain
+     * @return credential metadata and total count
+     */
+    @RequestLine("GET /domains/{domain}/credentials")
+    SmtpCredentialsListResponse getCredentials(@Param("domain") String domain);
+
+    /**
+     * Lists SMTP credential metadata for a domain.
+     *
+     * @param domain Name of the domain
+     * @param query  optional skip and limit values
+     * @return credential metadata and total count
+     */
+    @RequestLine("GET /domains/{domain}/credentials")
+    SmtpCredentialsListResponse getCredentials(@Param("domain") String domain,
+                                               @QueryMap SmtpCredentialsListQuery query);
+
+    @RequestLine("GET /domains/{domain}/credentials")
+    Response getCredentialsFeignResponse(@Param("domain") String domain);
+
+    @RequestLine("GET /domains/{domain}/credentials")
+    Response getCredentialsFeignResponse(@Param("domain") String domain,
+                                         @QueryMap SmtpCredentialsListQuery query);
+
+    /**
+     * Creates one or more SMTP credentials for a domain.
+     *
+     * @param domain  Name of the domain
+     * @param request credential creation form
+     * @return operation result, including generated credentials when present
+     */
+    @Headers("Content-Type: multipart/form-data")
+    @RequestLine("POST /domains/{domain}/credentials")
+    SmtpCredentialOperationResponse createCredentials(@Param("domain") String domain,
+                                                      SmtpCredentialCreateRequest request);
+
+    @Headers("Content-Type: multipart/form-data")
+    @RequestLine("POST /domains/{domain}/credentials")
+    Response createCredentialsFeignResponse(@Param("domain") String domain,
+                                            SmtpCredentialCreateRequest request);
+
+    /**
      * <p>
      * Creates a new set of SMTP credentials for the defined domain.
      * </p>
@@ -205,6 +256,38 @@ public interface MailgunDomainsApi extends MailgunApi {
     @Headers("Content-Type: multipart/form-data")
     @RequestLine("POST /domains/{domain}/credentials")
     Response createNewCredentialsFeignResponse(@Param("domain") String domain, DomainCredentials request);
+
+    /**
+     * Deletes every SMTP credential for a domain.
+     *
+     * @param domain Name of the domain
+     * @return operation message and number of deleted credentials
+     */
+    @RequestLine("DELETE /domains/{domain}/credentials")
+    SmtpCredentialsDeleteResponse deleteAllCredentials(@Param("domain") String domain);
+
+    @RequestLine("DELETE /domains/{domain}/credentials")
+    Response deleteAllCredentialsFeignResponse(@Param("domain") String domain);
+
+    /**
+     * Updates an SMTP credential. When password is absent, Mailgun generates one.
+     *
+     * @param domain  Name of the domain
+     * @param spec    SMTP login specification
+     * @param request optional desired password
+     * @return operation result, including generated credentials when present
+     */
+    @Headers("Content-Type: multipart/form-data")
+    @RequestLine("PUT /domains/{domain}/credentials/{spec}")
+    SmtpCredentialOperationResponse updateCredentials(@Param("domain") String domain,
+                                                      @Param("spec") String spec,
+                                                      SmtpCredentialUpdateRequest request);
+
+    @Headers("Content-Type: multipart/form-data")
+    @RequestLine("PUT /domains/{domain}/credentials/{spec}")
+    Response updateCredentialsFeignResponse(@Param("domain") String domain,
+                                            @Param("spec") String spec,
+                                            SmtpCredentialUpdateRequest request);
 
     /**
      * <p>
@@ -259,6 +342,21 @@ public interface MailgunDomainsApi extends MailgunApi {
      */
     @RequestLine("DELETE /domains/{domain}/credentials/{login}")
     Response deleteCredentialsFeignResponse(@Param("domain") String domain, @Param("login") String login);
+
+    /**
+     * Deletes one SMTP credential and returns the deleted login specification.
+     *
+     * @param domain Name of the domain
+     * @param spec   SMTP login specification
+     * @return operation message and deleted specification
+     */
+    @RequestLine("DELETE /domains/{domain}/credentials/{spec}")
+    SmtpCredentialDeleteResponse deleteCredential(@Param("domain") String domain,
+                                                  @Param("spec") String spec);
+
+    @RequestLine("DELETE /domains/{domain}/credentials/{spec}")
+    Response deleteCredentialFeignResponse(@Param("domain") String domain,
+                                           @Param("spec") String spec);
 
     /**
      * <p>
