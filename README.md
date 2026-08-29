@@ -154,6 +154,22 @@ You can specify your own logLevel, retryer, logger, errorDecoder, options.
                 .options(new Request.Options(10, TimeUnit.SECONDS, 60, TimeUnit.SECONDS, true))
 ```
 
+For common settings, use the top-level builder configuration:
+
+```java
+MailgunMessagesApi mailgunMessagesApi = MailgunClient.builder(PRIVATE_API_KEY)
+        .region(MailgunRegion.EU)
+        .timeouts(10, 60, TimeUnit.SECONDS)
+        .proxy("proxy.example.com", 8080)
+        .retryPolicy(100, 1_000, 3)
+        .customHeader("X-Mailgun-On-Behalf-Of", SUBACCOUNT_ACCOUNT_ID)
+        .logging(Logger.Level.HEADERS)
+        .createApi(MailgunMessagesApi.class);
+```
+
+The default `ConsoleLogger` redacts authentication and cookie headers. Even when `FULL` is requested, it does not
+log request or response bodies. Supplying a custom logger makes the caller responsible for equivalent redaction.
+
 #### Mailgun client configuration with request interceptor for all API calls
 
 You can add your multiple custom:
@@ -2175,4 +2191,3 @@ Feel free to ask anything, and contribute:
 - Submit a pull request.
 
 If you have suggestions on improving the guides, please submit an issue in our [Official API Documentation repo](https://github.com/mailgun/documentation).
-
