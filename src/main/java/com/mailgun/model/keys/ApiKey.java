@@ -3,6 +3,7 @@ package com.mailgun.model.keys;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
+import lombok.ToString;
 import lombok.Value;
 import lombok.extern.jackson.Jacksonized;
 
@@ -47,5 +48,6 @@ public class ApiKey {
     String userName;
 
     /** Returned only once, when the key is created. */
+    @ToString.Exclude
     String secret;
 }

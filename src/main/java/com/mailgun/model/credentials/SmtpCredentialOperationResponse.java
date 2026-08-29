@@ -2,6 +2,7 @@ package com.mailgun.model.credentials;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Builder;
+import lombok.ToString;
 import lombok.Value;
 import lombok.extern.jackson.Jacksonized;
 
@@ -18,5 +19,6 @@ public class SmtpCredentialOperationResponse {
 
     String note;
 
+    @ToString.Exclude
     Map<String, String> credentials;
 }

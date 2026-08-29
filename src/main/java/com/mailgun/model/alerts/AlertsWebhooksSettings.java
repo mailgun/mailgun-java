@@ -3,6 +3,7 @@ package com.mailgun.model.alerts;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
+import lombok.ToString;
 import lombok.Value;
 import lombok.extern.jackson.Jacksonized;
 
@@ -18,6 +19,7 @@ import lombok.extern.jackson.Jacksonized;
 public class AlertsWebhooksSettings {
 
     @JsonProperty("signing_key")
+    @ToString.Exclude
     String signingKey;
 
 }

@@ -12,5 +12,6 @@ import lombok.ToString;
 @Builder
 public class SmtpCredentialUpdateRequest {
 
+    @ToString.Exclude
     String password;
 }

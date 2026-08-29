@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.List;
 
 import lombok.Builder;
+import lombok.ToString;
 import lombok.Value;
 import lombok.extern.jackson.Jacksonized;
 
@@ -23,6 +24,8 @@ public class ItemStorage {
 
     String region;
     String env;
+    @ToString.Exclude
     String key;
+    @ToString.Exclude
     List<String> url;
 }

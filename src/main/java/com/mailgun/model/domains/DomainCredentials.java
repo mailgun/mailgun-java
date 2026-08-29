@@ -31,7 +31,7 @@ public class DomainCredentials {
      * A password for the SMTP credentials. (Length Min 5, Max 32)
      * </p>
      */
+    @ToString.Exclude
     String password;
 
 }
-

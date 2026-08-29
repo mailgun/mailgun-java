@@ -53,6 +53,7 @@ public class DomainUpdateRequest {
      * Updates the domain's SMTP credentials password.
      */
     @FormProperty("smtp_password")
+    @ToString.Exclude
     String smtpPassword;
 
     /**

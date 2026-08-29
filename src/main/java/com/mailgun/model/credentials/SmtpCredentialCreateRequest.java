@@ -28,5 +28,6 @@ public class SmtpCredentialCreateRequest {
 
     @Singular("password")
     @FormProperty("password")
+    @ToString.Exclude
     List<String> passwords;
 }

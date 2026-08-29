@@ -150,6 +150,10 @@ public class MailgunClient {
          * <p>
          * You can override the default logger {@link MailgunClientBuilder#logger}.
          * </p>
+         * <p>
+         * The default {@link ConsoleLogger} redacts authentication headers and does not log request or response
+         * bodies. A custom logger is responsible for applying equivalent protection to credentials and message data.
+         * </p>
          *
          * @param logger implementation of {@link Logger}
          * @return Returns a reference to this object so that method calls can be chained together.

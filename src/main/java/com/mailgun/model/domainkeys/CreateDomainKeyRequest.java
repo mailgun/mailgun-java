@@ -39,11 +39,13 @@ public class CreateDomainKeyRequest {
     /**
      * Private key PEM file (RSA, PKCS #1 ASN.1 DER). Optional if generating; use when importing. Mutually exclusive with pemContent.
      */
+    @ToString.Exclude
     File pem;
 
     /**
      * Private key PEM as form-string. Optional; use when importing instead of file attachment. Mutually exclusive with pem.
      */
     @FormProperty("pem")
+    @ToString.Exclude
     String pemContent;
 }
