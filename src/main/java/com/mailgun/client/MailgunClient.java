@@ -13,8 +13,10 @@ import java.net.Proxy;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import feign.AsyncClient;
 import feign.AsyncFeign;
@@ -48,6 +50,12 @@ public class MailgunClient {
     private static final FormEncoder ENCODER = new FormEncoder(new JacksonEncoder(OBJECT_MAPPER));
     private static final JacksonDecoder DECODER = new JacksonDecoder(OBJECT_MAPPER);
     private static final FieldQueryMapEncoder QUERY_MAP_ENCODER = new FieldQueryMapEncoder();
+    private static final AtomicInteger ASYNC_THREAD_COUNTER = new AtomicInteger();
+    private static final ExecutorService DEFAULT_ASYNC_EXECUTOR = Executors.newCachedThreadPool(task -> {
+        Thread thread = new Thread(task, "mailgun-async-" + ASYNC_THREAD_COUNTER.incrementAndGet());
+        thread.setDaemon(true);
+        return thread;
+    });
 
     /**
      * Create a top-level {@link MailgunClientBuilder} with the default US region configuration.
@@ -93,6 +101,7 @@ public class MailgunClient {
         private Request.Options options = new Request.Options();
         private Client syncClient = new OkHttpClient();
         private AsyncClient<Object> asyncClient;
+        private ExecutorService executor = DEFAULT_ASYNC_EXECUTOR;
         private final Map<String, String> customHeaders = new LinkedHashMap<>();
 
         private String baseUrl = DEFAULT_BASE_URL_US_REGION;
@@ -132,6 +141,19 @@ public class MailgunClient {
          */
         public MailgunClientBuilder client(AsyncClient<Object> client) {
             this.asyncClient = Objects.requireNonNull(client, "client");
+            return this;
+        }
+
+        /**
+         * Configure the executor used by the default {@link AsyncClient}. The caller retains ownership of the
+         * executor and is responsible for shutting it down. This setting is ignored when a custom async client is
+         * supplied through {@link #client(AsyncClient)}.
+         *
+         * @param executor executor service for asynchronous requests
+         * @return this builder
+         */
+        public MailgunClientBuilder executor(ExecutorService executor) {
+            this.executor = Objects.requireNonNull(executor, "executor");
             return this;
         }
 
@@ -384,7 +406,7 @@ public class MailgunClient {
 
         private AsyncClient<Object> getAsyncClient() {
             return asyncClient == null
-                ? new AsyncClient.Default<>(syncClient, Executors.newSingleThreadExecutor())
+                ? new AsyncClient.Default<>(syncClient, executor)
                 : asyncClient;
         }
 

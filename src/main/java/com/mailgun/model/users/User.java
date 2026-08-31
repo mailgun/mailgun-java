@@ -2,11 +2,14 @@ package com.mailgun.model.users;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.mailgun.enums.EnumWithValue;
+import com.mailgun.enums.UserRole;
 import lombok.Builder;
 import lombok.Value;
 import lombok.extern.jackson.Jacksonized;
 
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Mailgun user entity.
@@ -78,4 +81,9 @@ public class User {
 
     @JsonProperty("migration_status")
     String migrationStatus;
+
+    /** Return the documented user role, while {@link #getRole()} preserves any unknown raw value. */
+    public Optional<UserRole> getRoleEnum() {
+        return EnumWithValue.fromValue(UserRole.class, role);
+    }
 }

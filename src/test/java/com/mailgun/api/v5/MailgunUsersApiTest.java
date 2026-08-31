@@ -79,7 +79,11 @@ class MailgunUsersApiTest extends WireMockBaseTest {
                         .withHeader("Content-Type", "application/json")
                         .withBody("{\"users\":[],\"total\":0}")));
 
-        UsersPageRequest pageRequest = UsersPageRequest.withRole(UserRole.BASIC, 10, 0);
+        UsersPageRequest pageRequest = UsersPageRequest.builder()
+                .roleEnum(UserRole.BASIC)
+                .limit(10)
+                .skip(0)
+                .build();
         UsersListResponse result = mailgunUsersApi.getUsers(pageRequest);
 
         assertNotNull(result);
@@ -129,6 +133,7 @@ class MailgunUsersApiTest extends WireMockBaseTest {
         assertEquals("johndoe", result.getEmailDetails().getParts().getLocalPart());
         assertEquals("John Doe", result.getEmailDetails().getParts().getDisplayName());
         assertEquals("basic", result.getRole());
+        assertEquals(UserRole.BASIC, result.getRoleEnum().orElseThrow());
         assertEquals("account-456", result.getAccountId());
         assertEquals("192.0.2.20", result.getOpenedIp());
         assertEquals(true, result.getIsMaster());

@@ -170,6 +170,16 @@ MailgunMessagesApi mailgunMessagesApi = MailgunClient.builder(PRIVATE_API_KEY)
 The default `ConsoleLogger` redacts authentication and cookie headers. Even when `FULL` is requested, it does not
 log request or response bodies. Supplying a custom logger makes the caller responsible for equivalent redaction.
 
+Asynchronous APIs use a shared daemon executor by default. To control its capacity and lifecycle, supply an
+`ExecutorService`; the caller remains responsible for shutting down a custom executor:
+
+```java
+ExecutorService executor = Executors.newFixedThreadPool(4);
+MailgunMessagesApi asyncApi = MailgunClient.builder(PRIVATE_API_KEY)
+        .executor(executor)
+        .createAsyncApi(MailgunMessagesApi.class);
+```
+
 #### Mailgun client configuration with request interceptor for all API calls
 
 You can add your multiple custom:

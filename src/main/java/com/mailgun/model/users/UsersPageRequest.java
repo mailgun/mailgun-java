@@ -31,6 +31,14 @@ public class UsersPageRequest {
      */
     Integer skip;
 
+    public static class UsersPageRequestBuilder {
+
+        public UsersPageRequestBuilder roleEnum(UserRole role) {
+            this.role = role != null ? role.getValue() : null;
+            return this;
+        }
+    }
+
     /**
      * Create a request that filters by {@link UserRole}.
      */

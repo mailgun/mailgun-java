@@ -2,6 +2,8 @@ package com.mailgun.api.v1;
 
 import com.mailgun.api.WireMockBaseTest;
 import com.mailgun.client.MailgunClient;
+import com.mailgun.enums.ApiKeyKind;
+import com.mailgun.enums.ApiKeyRole;
 import com.mailgun.model.ResponseWithMessage;
 import com.mailgun.model.keys.ApiKeyCreateRequest;
 import com.mailgun.model.keys.ApiKeyCreateResponse;
@@ -74,7 +76,7 @@ class MailgunKeysApiTest extends WireMockBaseTest {
 
         ApiKeysListResponse result = api.listApiKeys(ApiKeysListQuery.builder()
                 .domain_name(TEST_DOMAIN)
-                .kind("domain")
+                .kindEnum(ApiKeyKind.DOMAIN)
                 .build());
 
         assertEquals(0, result.getTotalCount());
@@ -100,14 +102,16 @@ class MailgunKeysApiTest extends WireMockBaseTest {
 
         ApiKeyCreateResponse result = api.createApiKey(ApiKeyCreateRequest.builder()
                 .domainName(TEST_DOMAIN)
-                .kind("domain")
+                .kindEnum(ApiKeyKind.DOMAIN)
                 .description("sending key")
                 .expiration(3600)
-                .role("sending")
+                .roleEnum(ApiKeyRole.SENDING)
                 .build());
 
         assertEquals("key created", result.getMessage());
         assertEquals(KEY_ID, result.getKey().getId());
+        assertEquals(ApiKeyKind.DOMAIN, result.getKey().getKindEnum().orElseThrow());
+        assertEquals(ApiKeyRole.SENDING, result.getKey().getRoleEnum().orElseThrow());
         assertEquals("test-created-api-key", result.getKey().getSecret());
     }
 

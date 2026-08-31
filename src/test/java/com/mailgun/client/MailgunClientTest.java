@@ -12,6 +12,8 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
@@ -45,6 +47,12 @@ class MailgunClientTest {
 
         @RequestLine("GET /ping")
         Response ping();
+    }
+
+    private interface AsyncTestApi extends MailgunApi {
+
+        @RequestLine("GET /ping")
+        CompletableFuture<Response> ping();
     }
 
 //    Default configuration.
@@ -126,15 +134,52 @@ class MailgunClientTest {
 
     @Test
     void clientMethodTest() {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
         AsyncClient<Object> customAsyncClient = new AsyncClient.Default<>(
                 new Client.Default(null, null),
-                Executors.newSingleThreadExecutor()
+                executor
         );
 
-        MailgunClient.MailgunClientBuilder builder = MailgunClient.config(TEST_API_KEY)
-                .client(customAsyncClient);
+        try {
+            MailgunClient.MailgunClientBuilder builder = MailgunClient.config(TEST_API_KEY)
+                    .client(customAsyncClient);
 
-        assertNotNull(builder);
+            assertNotNull(builder);
+        } finally {
+            executor.shutdownNow();
+        }
+    }
+
+    @Test
+    void customExecutorIsUsedForAsyncRequestsTest() {
+        RecordingClient client = new RecordingClient();
+        ExecutorService executor = Executors.newSingleThreadExecutor(task -> new Thread(task, "custom-mailgun-test"));
+
+        try {
+            AsyncTestApi api = MailgunClient.builder(TEST_API_KEY)
+                .syncClient(client)
+                .executor(executor)
+                .createAsyncApi(AsyncTestApi.class);
+
+            api.ping().join();
+
+            assertEquals("custom-mailgun-test", client.executionThread.getName());
+        } finally {
+            executor.shutdownNow();
+        }
+    }
+
+    @Test
+    void defaultAsyncExecutorUsesDaemonThreadsTest() {
+        RecordingClient client = new RecordingClient();
+        AsyncTestApi api = MailgunClient.builder(TEST_API_KEY)
+            .syncClient(client)
+            .createAsyncApi(AsyncTestApi.class);
+
+        api.ping().join();
+
+        assertTrue(client.executionThread.isDaemon());
+        assertTrue(client.executionThread.getName().startsWith("mailgun-async-"));
     }
 
     @Test
@@ -183,11 +228,13 @@ class MailgunClientTest {
 
         private Request request;
         private Request.Options options;
+        private Thread executionThread;
 
         @Override
         public Response execute(Request request, Request.Options options) throws IOException {
             this.request = request;
             this.options = options;
+            this.executionThread = Thread.currentThread();
             return Response.builder()
                 .status(200)
                 .reason("OK")

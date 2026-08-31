@@ -3,6 +3,7 @@ package com.mailgun.api.v5;
 import com.mailgun.api.WireMockBaseTest;
 import com.mailgun.client.MailgunClient;
 import com.mailgun.enums.ApiVersion;
+import com.mailgun.enums.SubaccountStatus;
 import com.mailgun.model.ResponseWithMessage;
 import com.mailgun.model.custommessagelimit.CustomMessageLimitResponse;
 import com.mailgun.model.custommessagelimit.CustomMessageLimitSuccessResponse;
@@ -139,6 +140,7 @@ class MailgunSubaccountsApiTest extends WireMockBaseTest {
                 .build());
 
         assertEquals("disabled", result.getSubaccount().getStatus());
+        assertEquals(SubaccountStatus.DISABLED, result.getSubaccount().getStatusEnum().orElseThrow());
     }
 
     @Test
