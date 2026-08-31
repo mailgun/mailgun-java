@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mailgun.enums.DomainState;
 import com.mailgun.enums.SpamAction;
 import com.mailgun.enums.WebScheme;
+
+import feign.form.FormProperty;
 import lombok.Builder;
 import lombok.Value;
 import lombok.extern.jackson.Jacksonized;
@@ -152,6 +154,9 @@ public class Domain {
      * </p>
      */
     Boolean wildcard;
+
+    @JsonProperty("message_ttl")
+    Integer messageTimeToLive;
 
     /**
      * <p>

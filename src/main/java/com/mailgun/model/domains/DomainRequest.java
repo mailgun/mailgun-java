@@ -131,6 +131,19 @@ public class DomainRequest {
     @FormProperty("web_scheme")
     String webScheme;
 
+    /**
+     * <p>
+     * Specifies the time-to-live (TTL) in seconds for retrieving both incoming and outgoing messages.
+     * </p>
+     * <p>
+     * Note: The maximum TTL value is determined by your subscription plan.
+     * </p>
+     * 
+     * @see <a href="http://mailgun.com/pricing">Pricing</a>
+     */
+    @FormProperty("message_ttl")
+    Integer messageTimeToLive;
+
     public static class DomainRequestBuilder {
 
         /**
